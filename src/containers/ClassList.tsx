@@ -2,7 +2,7 @@ import React from 'react';
 
 import ClassTicket from '../components/ClassTicket';
 import Image from '../resources/logo.svg';
-import Classes from '../mockData/classDescriptions/classes.json';
+import { classes } from '../mockData/classDescriptions/classes';
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
@@ -26,7 +26,7 @@ class ClassList extends React.Component {
             <div className={'flex justify-center'}>
                 <div className={'w-2/3 max-height-10-proc'}>
                     <Slider {...settings}>
-                        {Classes.map((value, index) =>
+                        {classes.map((value, index) =>
                             <ClassTicket
                                 key={index}
                                 text={value.name}
