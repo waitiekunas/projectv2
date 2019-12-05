@@ -5,7 +5,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 import Image from "../components/Image copy";
-import { TitleImage } from "../images/index-photo.jpg"
+import TitleImage from "../images/index-photo.jpg"
 import ClassListFullContent from '../containers/ClassListFullContent'
 
 const IndexPage = () => (
