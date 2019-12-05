@@ -5,14 +5,13 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 import Image from "../components/Image copy";
-import TitleImage from "../images/index-photo.jpg"
 import ClassListFullContent from '../containers/ClassListFullContent'
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
     <Image
-      imageUri={TitleImage}
+      imageUri={"../images/index-photo.jpg"}
       imgHeader={'Fact:'}
       imgText={'Size of the box and qtty of boxes as well as position can be adjusted'}
       showText={true}
