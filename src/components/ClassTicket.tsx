@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Image from './Image';
+import Image from './Image copy';
 
 const ClassTicket = (props: any) => {
     return (
