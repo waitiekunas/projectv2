@@ -30,7 +30,7 @@ class ClassList extends React.Component {
                             <ClassTicket
                                 key={index}
                                 text={value.name}
-                                imageUri={"/images/logo192.png"} />)}
+                                imageUri={"public/images/logo192.png"} />)}
                     </Slider>
                 </div>
 
