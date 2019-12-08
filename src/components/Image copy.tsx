@@ -6,7 +6,7 @@ const Image = (props: any) => {
         <div className={`${props.additionalClass} relative`}>
             <img src={props.imageUri} alt={'description'} />
             {props.showText &&
-                <div className="image-text-block flex justify-center flex-col">
+                <div className="image-text-block flex justify-center flex-col opacity-50">
                     <h4 className={'pt-4'}>{props.imgHeader}</h4>
                     <p>{props.imgText}</p>
                 </div>}
