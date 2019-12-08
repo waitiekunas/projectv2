@@ -8,6 +8,7 @@ import Image from "../components/Image copy";
 import ClassListFullContent from '../containers/ClassListFullContent'
 import logo from "../../public/images/index-photo.jpg"
 
+
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
