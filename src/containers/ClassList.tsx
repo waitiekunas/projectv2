@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ClassTicket from '../components/ClassTicket';
-import logo from '../../public/images/logo192.png';
+import logo from '/images/logo192.png';
 import { classes } from '../mockData/classDescriptions/classes';
 import Slider from "react-slick";
 
@@ -30,7 +30,7 @@ class ClassList extends React.Component {
                             <ClassTicket
                                 key={index}
                                 text={value.name}
-                                imageUri={logo} />)}
+                                imageUri={"/images/logo192.png"} />)}
                     </Slider>
                 </div>
 

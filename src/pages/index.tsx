@@ -6,14 +6,14 @@ import SEO from "../components/seo"
 
 import Image from "../components/Image copy";
 import ClassListFullContent from '../containers/ClassListFullContent'
-import logo from "../../public/images/index-photo.jpg"
+import logo from "/images/index-photo.jpg"
 
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
     <Image
-      imageUri={logo}
+      imageUri={"/images/index-photo.jpg"}
       imgHeader={'Fact:'}
       imgText={'Size of the box and qtty of boxes as well as position can be adjusted'}
       showText={true}
