@@ -4,7 +4,7 @@ import logo from '/images/logo192.png';
 const Logo = (props: any) => {
     return (
         <div>
-            <img src={'public/images/logo192.png'} className="logo" alt="logo" />
+            <img src={'/images/logo192.png'} className="logo" alt="logo" />
         </div>
     )
 }

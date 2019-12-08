@@ -13,7 +13,7 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
     <Image
-      imageUri={"public/images/index-photo.jpg"}
+      imageUri={"/images/index-photo.jpg"}
       imgHeader={'Fact:'}
       imgText={'Size of the box and qtty of boxes as well as position can be adjusted'}
       showText={true}
