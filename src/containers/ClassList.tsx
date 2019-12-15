@@ -19,7 +19,7 @@ class ClassList extends React.Component {
             autoplay: true,
             arrows: false,
             autoplaySpeed: 3000,
-            draggable: false,
+            draggable: true,
             initialSlide: 0
         };
         return (

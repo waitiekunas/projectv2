@@ -4,7 +4,7 @@ import React from "react"
 
 import NavBar from '../containers/NavBar';
 
-const Header = ({ siteTitle }) => (
+const Header = ({ siteTitle }: any) => (
   <header
     style={{
       marginBottom: `1.45rem`,

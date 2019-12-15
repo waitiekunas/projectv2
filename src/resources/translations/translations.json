@@ -1,0 +1,30 @@
+    {
+        "layoutComponenents": {
+            "buttons": [
+                {
+                    "label": "dropDownButton",
+                    "description": {
+                        "LTU": "Mokymai"
+                    }
+                },
+                {
+                    "label": "subscriptions",
+                    "description": {
+                        "LTU": "Mokymų planai"
+                    }
+                },
+                {
+                    "label": "contacts",
+                    "description": {
+                        "LTU": "Kontaktai"
+                    }
+                },
+                {
+                    "label": "signUp-signIn",
+                    "description": {
+                        "LTU": "Mano erdvė"
+                    }
+                }
+            ]
+        }
+    }

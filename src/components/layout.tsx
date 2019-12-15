@@ -14,7 +14,7 @@ import "./layout.css"
 import "../styles/main.scss"
 
 import Footer from "../containers/Footer";
-
+import { connect } from "react-redux"
 
 
 
