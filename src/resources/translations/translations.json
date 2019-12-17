@@ -35,6 +35,18 @@
                 "description": {
                     "LTU": "Užsiregistruoti"
                 }
+            },
+            {
+                "label": "toRegister",
+                "description": {
+                    "LTU": "Į registraciją"
+                }
+            },
+            {
+                "label": "toLogin",
+                "description": {
+                    "LTU": "Į prisijungimą"
+                }
             }
         ]
     }

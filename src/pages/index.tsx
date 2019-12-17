@@ -6,14 +6,10 @@ import SEO from "../components/seo"
 
 import Image from "../components/Image copy";
 import ClassListFullContent from '../containers/ClassListFullContent'
-import { Property } from '@babel/types';
-import { getTranslations } from '../utils/utils'
 import { Languages } from "../enums/languages/languages";
-import AppState from "../interfaces/IAppState";
 
 import { connect, useDispatch } from 'react-redux';
 import { getLanguage } from '../state/actions/lang';
-import { GET_LANGUAGE } from "../state/actions/actions";
 
 
 type MyProps = {
