@@ -1,6 +1,6 @@
 import { Languages } from "../../enums/languages/languages";
 
-export default interface TranslationItem {
+export interface TranslationItem {
     label: string;
     description: Description;
 }

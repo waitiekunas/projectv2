@@ -1,7 +1,6 @@
 import React from 'react';
 
 import ClassTicket from '../components/ClassTicket';
-import logo from '/images/logo192.png';
 import { classes } from '../mockData/classDescriptions/classes';
 import Slider from "react-slick";
 

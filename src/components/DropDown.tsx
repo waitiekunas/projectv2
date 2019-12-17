@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Button from './Button';
-import { Property } from '@babel/types';
 import Link from './Link';
 import translations from '../resources/translations/translations.json';
 import { connect } from 'react-redux';
@@ -24,15 +23,21 @@ class DropDown extends React.Component<MyProps, MyState> {
 
         };
     }
+    handleClick(e) {
+        e.preventDefault();
+        console.log('clicked')
+    }
 
     render() {
         const language = this.props.language
-        const translation = translations.layoutComponenents.buttons
+        const translation = translations.buttons
         return (
             <div className='flex-col flex justify-center h-full'>
                 <div className='dropdown'>
                     <Button
-                        className={'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
+                        handleClick={this.handleClick}
+                        classButtonDiv='flex-col'
+                        classButton={'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
                         buttonTexts={translation}
                         label={'dropDownButton'}
                         language={language} />

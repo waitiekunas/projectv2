@@ -45,10 +45,7 @@ class IndexPage extends React.Component<MyProps, MyState>{
           imgText={'Size of the box and qtty of boxes as well as position can be adjusted'}
           showText={true}
           additionalClass={'max-height-40-proc'} />
-        <ClassListFullContent
-          getTranslations={getTranslations}
-          language={this.state.language}
-        />
+        <ClassListFullContent />
       </Layout>
     )
   }
