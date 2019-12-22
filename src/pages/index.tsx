@@ -10,6 +10,7 @@ import { Languages } from "../enums/languages/languages";
 
 import { connect, useDispatch } from 'react-redux';
 import { getLanguage } from '../state/actions/lang';
+import store from '../state/createStore';
 
 
 type MyProps = {
@@ -28,7 +29,6 @@ class IndexPage extends React.Component<MyProps, MyState>{
       language: props.language,
     };
   }
-
 
   render() {
     console.log(this.state.language)

@@ -1,10 +1,10 @@
 import { GET_LANGUAGE } from "../actions/actions";
-import initialState from "../initialState";
+import { Language } from "../initialState";
 
-export default (state = initialState, action: any) => {
+export default (state = Language, action: any) => {
     switch (action.type) {
         case GET_LANGUAGE:
-            return { ...state, language: action.language };
+            return { ...state, language: action.payload };
         default:
             return state;
     }

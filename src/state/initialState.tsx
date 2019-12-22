@@ -1,7 +1,10 @@
+import { ILanguage, ILoggedIn } from '../interfaces/state/IState'
 import { Languages } from "../enums/languages/languages";
-import { IApp } from "../interfaces/IAppState";
-const initialState: IApp = {
-    language: Languages.LITHUANIA,
-};
 
-export default initialState
+
+export const Language: ILanguage = {
+    language: Languages.ENGLISH
+}
+export const isLoggedIn: ILoggedIn = {
+    isLoggedIn: false
+}

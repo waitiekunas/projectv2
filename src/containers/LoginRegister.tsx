@@ -1,29 +1,40 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import Button from '../components/Button'
 import Login from '../components/Login'
 import Register from '../components/Register'
 import translations from '../resources/translations/translations.json'
 import { Languages } from '../enums/languages/languages';
+import { loginUser } from '../backEnd/LoginUtils'
+import { tryLogin } from '../state/actions/loginRegister';
+import { bindActionCreators } from 'redux';
+
+
 
 type MyProps = {
     language: Languages
     show: boolean,
     handleClick: Function
+    dispatch: any
 }
 type MyState = {
     showLogin: boolean
     showRegister: boolean
+    loginName: string
+    password: string
 }
 class LoginRegister extends React.Component<MyProps, MyState> {
     constructor(props: MyProps) {
         super(props);
         this.state = {
             showLogin: true,
-            showRegister: false
+            showRegister: false,
+            loginName: '',
+            password: ''
         }
     }
+
 
     handleParentClick = (e) => {
         e.preventDefault();
@@ -43,8 +54,20 @@ class LoginRegister extends React.Component<MyProps, MyState> {
             showRegister: this.state.showRegister
         })
     }
-
+    handleChange = (state, value) => {
+        this.setState({
+            [state]: value
+        } as MyState)
+    }
+    handleLogin = () => {
+        this.props.dispatch(
+            tryLogin(loginUser({
+                username: this.state.loginName,
+                password: this.state.password
+            })))
+    }
     render() {
+
         const translation = translations.buttons
         const { language, show, handleClick } = this.props
         const { showLogin } = this.state
@@ -55,13 +78,13 @@ class LoginRegister extends React.Component<MyProps, MyState> {
                     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 fixed w-1/2 max-w-lg" style={{ top: '25%' }} onClick={this.handleChildClick}>
                         {
                             showLogin ?
-                                <Login /> :
-                                <Register />
+                                <Login handleChange={this.handleChange} /> :
+                                <Register handleChange={this.handleChange} />
                         }
                         <div className="flex items-center justify-center">
                             <div className='flex justify-around w-full py-5'>
                                 <Button
-                                    handleClick={showLogin ? handleClick : this.handleViewChange}
+                                    handleClick={showLogin ? this.handleLogin : this.handleViewChange}
                                     classButtonDiv='flex-col'
                                     classButton={'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
                                     buttonTexts={translation}
@@ -84,6 +107,7 @@ class LoginRegister extends React.Component<MyProps, MyState> {
 }
 
 const mapStateToProps = state => ({
-    language: state.languageRed.language
+    language: state.language.language
 });
-export default connect(mapStateToProps, null)(LoginRegister)
+
+export default connect(mapStateToProps)(LoginRegister)

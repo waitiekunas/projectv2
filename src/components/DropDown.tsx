@@ -53,6 +53,6 @@ class DropDown extends React.Component<MyProps, MyState> {
 }
 
 const mapStateToProps = state => ({
-    language: state.languageRed.language
+    language: state.language.language
 });
 export default connect(mapStateToProps, null)(DropDown)

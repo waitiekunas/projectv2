@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "logineName": "test",
+        "loginName": "test",
         "password": "test",
         "name": "name",
         "surname": "surname",
@@ -10,7 +10,7 @@
     },
     {
         "id": 2,
-        "logineName": "test2",
+        "loginName": "test2",
         "password": "test2",
         "name": "name",
         "surname": "surname",

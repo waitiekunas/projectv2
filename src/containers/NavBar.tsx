@@ -22,7 +22,7 @@ class NavBar extends React.Component<MyProps, MyState> {
     constructor(props: MyProps) {
         super(props);
         this.state = {
-            loginRegisterShow: false
+            loginRegisterShow: false,
         };
     }
     handleClick = (e) => {
@@ -71,6 +71,7 @@ class NavBar extends React.Component<MyProps, MyState> {
                         classButton={"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"} />
 
                     <LoginRegister
+                        language={language}
                         show={loginRegisterShow}
                         handleClick={this.handleChange}
                     />
@@ -82,6 +83,6 @@ class NavBar extends React.Component<MyProps, MyState> {
 
 
 const mapStateToProps = state => ({
-    language: state.languageRed.language
+    language: state.language.language
 });
-export default connect(mapStateToProps, null)(NavBar)
+export default connect(mapStateToProps)(NavBar)

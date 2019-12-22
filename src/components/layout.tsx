@@ -14,11 +14,12 @@ import "./layout.css"
 import "../styles/main.scss"
 
 import Footer from "../containers/Footer";
-import { connect } from "react-redux"
+import { connect } from 'react-redux';
 
 
 
-const Layout = ({ children }: any) => {
+
+const Layout = ({ children, isLoggedIn }: any) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -31,6 +32,8 @@ const Layout = ({ children }: any) => {
 
   return (
     <>
+      <h4>is logged in: {isLoggedIn ? 'true' : 'false'}</h4>
+      {console.log(isLoggedIn)}
       <Header siteTitle={data.site.siteMetadata.title} />
       <div
         style={{
@@ -43,12 +46,17 @@ const Layout = ({ children }: any) => {
           <Footer />
         </footer>
       </div>
+
     </>
   )
 }
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  isLoggedIn: PropTypes.bool
 }
 
-export default Layout
+const mapStateToProps = state => ({
+  isLoggedIn: state.isLoggedIn.isLoggedIn
+});
+export default connect(mapStateToProps)(Layout)

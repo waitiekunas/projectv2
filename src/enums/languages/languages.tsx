@@ -1,3 +1,4 @@
 export enum Languages {
-    LITHUANIA = "LTU"
+    LITHUANIA = "LTU",
+    ENGLISH = "ENG"
 }
