@@ -1,7 +1,7 @@
 import mockData from '../mockData/users/users.json'
 import { IRegisterInput } from '../interfaces/loginRegister/IRegister.jsx';
 
-
+declare var require: any
 export const loginUser = ({ username, password }) => {
     return backEndLogin(username, password)
 }
@@ -21,7 +21,8 @@ const backEndRegister = (userData: IRegisterInput): boolean => {
     if (alreadyExists) {
         return false
     } else {
-
+        let newUser = returnNewUser(userData)
+        addNewUser(newUser)
         return true
     }
 }
@@ -43,6 +44,23 @@ const createUserId = () => {
         numberLength = number.length
     }
     return number
+}
+const returnNewUser = (userData: IRegisterInput): IRegisterInput => {
+    let user = userData
+    user.id = createUserId()
+    user.registerDate = createISODateString()
+    debugger
+    return user;
+}
+const addNewUser = (user: IRegisterInput) => {
+    let users = JSON.parse(mockData)
+    users.push(user)
+    let json = JSON.stringify(users)
+    const writeJsonFile = require('write-json-file')
+        (async () => {
+            await writeJsonFile('../mockData/users/users.json', json)
+        })
+    console.log(mockData)
 }
 //TODO: Update user
 

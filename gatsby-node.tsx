@@ -5,3 +5,10 @@
  */
 
 // You can delete this file if you're not using it
+// exports.onCreateWebpackConfig = ({
+//     actions //, stage, getConfig, rules, loaders, 
+// }) => {
+//     actions.setWebpackConfig({
+//         externals: ['canvas'],
+//     });
+// }

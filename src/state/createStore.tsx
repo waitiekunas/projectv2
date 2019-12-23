@@ -1,6 +1,5 @@
 import { createStore } from 'redux';
 import { allReducers } from '../state/reducers';
-import initialState from './initialState'
 
 
 // preloadedState will be passed in by the plugin
