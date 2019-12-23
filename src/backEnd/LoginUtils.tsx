@@ -6,8 +6,6 @@ export const loginUser = ({ username, password }) => {
 }
 
 const backEndLogin = (username: string, password: string): boolean => {
-    debugger
-    console.log(mockData)
     return mockData.filter(user =>
         user.loginName === username && user.password === password
     ).length > 0;

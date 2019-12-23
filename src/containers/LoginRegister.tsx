@@ -8,7 +8,6 @@ import translations from '../resources/translations/translations.json'
 import { Languages } from '../enums/languages/languages';
 import { loginUser } from '../backEnd/LoginUtils'
 import { tryLogin } from '../state/actions/loginRegister';
-import { bindActionCreators } from 'redux';
 
 
 
@@ -23,6 +22,7 @@ type MyState = {
     showRegister: boolean
     loginName: string
     password: string
+    isLoggedIn: boolean
 }
 class LoginRegister extends React.Component<MyProps, MyState> {
     constructor(props: MyProps) {
@@ -31,7 +31,8 @@ class LoginRegister extends React.Component<MyProps, MyState> {
             showLogin: true,
             showRegister: false,
             loginName: '',
-            password: ''
+            password: '',
+            isLoggedIn: false
         }
     }
 
@@ -60,11 +61,14 @@ class LoginRegister extends React.Component<MyProps, MyState> {
         } as MyState)
     }
     handleLogin = () => {
+        this.handleChange('isLoggedIn', loginUser({
+            username: this.state.loginName,
+            password: this.state.password
+        }))
         this.props.dispatch(
-            tryLogin(loginUser({
-                username: this.state.loginName,
-                password: this.state.password
-            })))
+            tryLogin(this.state.isLoggedIn))
+        this.props.handleClick('isLoggedIn', this.state.isLoggedIn)
+        this.props.handleClick('loginRegisterShow', !this.state.isLoggedIn)
     }
     render() {
 

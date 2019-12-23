@@ -15,7 +15,7 @@
         "emitDecoratorMetadata": true,
         "noEmit": true,
         "skipLibCheck": true,
-        "--resolveJsonModule": true,
+        "resolveJsonModule": true,
     },
     "include": [
         "node_modules/redux-thunk"

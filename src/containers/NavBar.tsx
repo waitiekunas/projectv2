@@ -6,15 +6,19 @@ import DropDown from '../components/DropDown';
 import { Languages } from '../enums/languages/languages';
 import translations from '../resources/translations/translations.json';
 import LoginRegister from './LoginRegister'
+import { tryLogin } from '../state/actions/loginRegister';
+
 
 import { connect } from 'react-redux';
 
 
 type MyProps = {
     language: Languages
+    dispatch: any
 };
 type MyState = {
     loginRegisterShow: boolean
+    isLoggedIn: boolean
 };
 
 class NavBar extends React.Component<MyProps, MyState> {
@@ -23,6 +27,7 @@ class NavBar extends React.Component<MyProps, MyState> {
         super(props);
         this.state = {
             loginRegisterShow: false,
+            isLoggedIn: false
         };
     }
     handleClick = (e) => {
@@ -38,9 +43,14 @@ class NavBar extends React.Component<MyProps, MyState> {
             [state]: value
         } as MyState)
     }
+    handleLogout = () => {
+        this.handleChange('isLoggedIn', false);
+        this.props.dispatch(
+            tryLogin(false))
+    }
     render() {
-        const { language } = this.props;
-        const { loginRegisterShow } = this.state
+        const { language, dispatch } = this.props;
+        const { loginRegisterShow, isLoggedIn } = this.state
         const translation = translations.buttons
         return (
             <div className='flex justify-center max-height-10-proc'>
@@ -63,10 +73,10 @@ class NavBar extends React.Component<MyProps, MyState> {
                         language={language}
                         classButton={"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"} />
                     <Button
-                        handleClick={this.handleLoginRegisterView}
+                        handleClick={isLoggedIn ? this.handleLogout : this.handleLoginRegisterView}
                         classButtonDiv={'flex-col'}
                         buttonTexts={translation}
-                        label={'signUp-signIn'}
+                        label={isLoggedIn ? 'logout' : 'signUp-signIn'}
                         language={language}
                         classButton={"bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"} />
 
@@ -74,6 +84,7 @@ class NavBar extends React.Component<MyProps, MyState> {
                         language={language}
                         show={loginRegisterShow}
                         handleClick={this.handleChange}
+                        dispatch={dispatch}
                     />
                 </div>
             </div>
