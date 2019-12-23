@@ -1,4 +1,5 @@
 import mockData from '../mockData/users/users.json'
+import { IRegisterInput } from '../interfaces/loginRegister/IRegister.jsx';
 
 
 export const loginUser = ({ username, password }) => {
@@ -11,3 +12,37 @@ const backEndLogin = (username: string, password: string): boolean => {
     ).length > 0;
 
 }
+export const registerUser = (userData: IRegisterInput): boolean => {
+    return backEndRegister(userData)
+}
+
+const backEndRegister = (userData: IRegisterInput): boolean => {
+    const alreadyExists = checkIfUserExists(userData)
+    if (alreadyExists) {
+        return false
+    } else {
+
+        return true
+    }
+}
+const checkIfUserExists = (userData: IRegisterInput): boolean => {
+    return mockData.filter(user =>
+        user.loginName === userData.loginName
+    ).length > 0;
+}
+
+export const createISODateString = () => {
+    return new Date().toISOString()
+}
+const createUserId = () => {
+    let number = Math.floor(Math.random() * 1000000).toString()
+    let numberLength = number.length
+    const zero = '0'
+    while (numberLength < 6) {
+        number = zero.concat(number)
+        numberLength = number.length
+    }
+    return number
+}
+//TODO: Update user
+
