@@ -16,12 +16,12 @@
         "noEmit": true,
         "skipLibCheck": true,
         "resolveJsonModule": true,
-        "types": [
-            "node"
-        ],
-        "typeRoots": [
-            "./node_modules/@types"
-        ]
+        // "types": [
+        //     "node"
+        // ],
+        // "typeRoots": [
+        //     "./node_modules/@types"
+        // ]
     },
     "include": [
         "node_modules/redux-thunk"

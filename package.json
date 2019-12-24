@@ -31,7 +31,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^4.4.1",
     "tailwindcss": "^1.1.4",
-    "write-json-file": "^4.2.1"
+    "write-files-atomic": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",

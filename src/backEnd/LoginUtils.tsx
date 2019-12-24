@@ -1,13 +1,12 @@
-import mockData from '../mockData/users/users.json'
+import { users } from '../mockData/users/users'
 import { IRegisterInput } from '../interfaces/loginRegister/IRegister.jsx';
 
-declare var require: any
 export const loginUser = ({ username, password }) => {
     return backEndLogin(username, password)
 }
 
 const backEndLogin = (username: string, password: string): boolean => {
-    return mockData.filter(user =>
+    return users.filter(user =>
         user.loginName === username && user.password === password
     ).length > 0;
 
@@ -27,7 +26,7 @@ const backEndRegister = (userData: IRegisterInput): boolean => {
     }
 }
 const checkIfUserExists = (userData: IRegisterInput): boolean => {
-    return mockData.filter(user =>
+    return users.filter(user =>
         user.loginName === userData.loginName
     ).length > 0;
 }
@@ -53,14 +52,16 @@ const returnNewUser = (userData: IRegisterInput): IRegisterInput => {
     return user;
 }
 const addNewUser = (user: IRegisterInput) => {
-    let users = JSON.parse(mockData)
     users.push(user)
-    let json = JSON.stringify(users)
-    const writeJsonFile = require('write-json-file')
-        (async () => {
-            await writeJsonFile('../mockData/users/users.json', json)
-        })
-    console.log(mockData)
+}
+
+export const checkIfUserNotEmpty = (user: IRegisterInput) => {
+    if (user.loginName && user.name && user.password && user.surname) {
+        return true
+    } else {
+        alert("All fields must have value")
+        return false
+    }
 }
 //TODO: Update user
 
