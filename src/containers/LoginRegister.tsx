@@ -6,9 +6,9 @@ import Login from '../components/Login'
 import Register from '../components/Register'
 import translations from '../resources/translations/translations.json'
 import { Languages } from '../enums/languages/languages';
-import { loginUser } from '../backEnd/LoginUtils'
+import { loginUser, registerUser, checkIfUserNotEmpty } from '../backEnd/LoginUtils'
 import { tryLogin } from '../state/actions/loginRegister';
-import { bindActionCreators } from 'redux';
+import { IRegisterInput } from '../interfaces/loginRegister/IRegister';
 
 
 
@@ -23,6 +23,10 @@ type MyState = {
     showRegister: boolean
     loginName: string
     password: string
+    isLoggedIn: boolean
+    registerInfo: IRegisterInput
+    name: string
+    surname: string
 }
 class LoginRegister extends React.Component<MyProps, MyState> {
     constructor(props: MyProps) {
@@ -31,11 +35,21 @@ class LoginRegister extends React.Component<MyProps, MyState> {
             showLogin: true,
             showRegister: false,
             loginName: '',
-            password: ''
+            password: '',
+            isLoggedIn: false,
+            name: "",
+            surname: "",
+            registerInfo: {
+                id: "",
+                loginName: "",
+                password: "",
+                name: "",
+                surname: "",
+                registerDate: "",
+                lastLoginDate: ""
+            }
         }
     }
-
-
     handleParentClick = (e) => {
         e.preventDefault();
         this.props.handleClick('loginRegisterShow', false);
@@ -58,19 +72,43 @@ class LoginRegister extends React.Component<MyProps, MyState> {
         this.setState({
             [state]: value
         } as MyState)
+        debugger
     }
     handleLogin = () => {
+        this.handleChange('isLoggedIn', loginUser({
+            username: this.state.loginName,
+            password: this.state.password
+        }))
         this.props.dispatch(
-            tryLogin(loginUser({
-                username: this.state.loginName,
-                password: this.state.password
-            })))
+            tryLogin(this.state.isLoggedIn))
+        this.props.handleClick('isLoggedIn', this.state.isLoggedIn)
+        this.props.handleClick('loginRegisterShow', !this.state.isLoggedIn)
+        debugger
+    }
+    handleRegister = () => {
+        this.formulateUser();
+        if (checkIfUserNotEmpty(this.state.registerInfo)) {
+            registerUser(this.state.registerInfo)
+            console.log("registered")
+        }
+        debugger
+    }
+    formulateUser = () => {
+        this.handleChange('registerInfo', {
+            id: "",
+            loginName: this.state.loginName,
+            password: this.state.password,
+            name: this.state.name,
+            surname: this.state.surname,
+            registerDate: "",
+            lastLoginDate: ""
+        })
     }
     render() {
 
         const translation = translations.buttons
-        const { language, show, handleClick } = this.props
-        const { showLogin } = this.state
+        const { language, show } = this.props
+        const { showLogin, registerInfo } = this.state
         const styleClasses = 'flex justify-center fixed z-10'
         return (
             <div className={show ? styleClasses : 'hidden'} style={show ? { width: '100vw', height: '120%', backgroundColor: 'rgba(0,0,0,0.5)', top: '0%' } : {}} onClick={this.handleParentClick}>
@@ -91,7 +129,7 @@ class LoginRegister extends React.Component<MyProps, MyState> {
                                     label={showLogin ? 'login' : 'toLogin'}
                                     language={language} />
                                 <Button
-                                    handleClick={showLogin ? this.handleViewChange : handleClick}
+                                    handleClick={showLogin ? this.handleViewChange : this.handleRegister}
                                     classButtonDiv='flex-col'
                                     classButton={'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
                                     buttonTexts={translation}
