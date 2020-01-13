@@ -1,0 +1,35 @@
+$maxIpad: "screen and (max-width : 768px)";
+$maxIpadPro: "screen and (max-width : 1024px)";
+$mobile: "screen and (max-width : 760px)";
+$screen: "screen and (min-width : 1024px)";
+
+
+@media #{$maxIpad} {
+    .navbar-btn{
+        height :100%;
+    }
+   
+}
+@media #{$maxIpadPro} {
+    .navbar-btn{
+        height :50%;
+    }
+    .dropdown{
+        position: relative;
+        top: 25%;
+        height:100%;
+    }
+  
+}
+@media #{$mobile} {
+    button{
+        font-size: xx-small;
+    }
+   
+}
+    .navbar-btn-cont{
+        width:20%;
+    }
+
+
+

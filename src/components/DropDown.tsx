@@ -32,12 +32,12 @@ class DropDown extends React.Component<MyProps, MyState> {
         const language = this.props.language
         const translation = translations.buttons
         return (
-            <div className='flex-col flex justify-center h-full'>
+            <div className='flex-col navbar-btn-cont flex justify-center h-full'>
                 <div className='dropdown'>
                     <Button
                         handleClick={this.handleClick}
-                        classButtonDiv='flex-col'
-                        classButton={'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
+                        classButtonDiv='flex-col navbar-btn flex-col flex justify-center'
+                        classButton={'h-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
                         buttonTexts={translation}
                         label={'dropDownButton'}
                         language={language} />
