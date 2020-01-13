@@ -2,7 +2,8 @@ import { users } from '../mockData/users/users'
 import { IRegisterInput } from '../interfaces/loginRegister/IRegister.jsx';
 
 export const loginUser = ({ username, password }) => {
-    return backEndLogin(username, password)
+    let test = backEndLogin(username, password);
+    return test
 }
 
 const backEndLogin = (username: string, password: string): boolean => {

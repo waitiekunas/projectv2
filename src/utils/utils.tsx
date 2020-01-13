@@ -7,3 +7,12 @@ export const getTranslations = (arr: Array<TranslationItem>, language: Languages
 }
 
 export const getLanguage = () => Languages.LITHUANIA;
+
+export const checkPasswordInput = (elementId: string, value: string) => {
+    if (value && value.length < 15) {
+        document.getElementById(elementId).setAttribute('style', 'display: none')
+        document.getElementById(elementId)
+    } else {
+        document.getElementById(elementId).setAttribute('style', 'display: block')
+    }
+}

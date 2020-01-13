@@ -72,18 +72,21 @@ class LoginRegister extends React.Component<MyProps, MyState> {
         this.setState({
             [state]: value
         } as MyState)
-        debugger
     }
     handleLogin = () => {
-        this.handleChange('isLoggedIn', loginUser({
+        let login = loginUser({
             username: this.state.loginName,
             password: this.state.password
-        }))
+        })
+        this.handleChange('isLoggedIn', login)
         this.props.dispatch(
-            tryLogin(this.state.isLoggedIn))
-        this.props.handleClick('isLoggedIn', this.state.isLoggedIn)
-        this.props.handleClick('loginRegisterShow', !this.state.isLoggedIn)
-        debugger
+            tryLogin(login))
+        this.props.handleClick('isLoggedIn', login)
+        this.props.handleClick('loginRegisterShow', !login)
+        this.setState({
+            loginName: '',
+            password: ''
+        })
     }
     handleRegister = () => {
         this.formulateUser();
@@ -116,8 +119,13 @@ class LoginRegister extends React.Component<MyProps, MyState> {
                     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 fixed w-1/2 max-w-lg" style={{ top: '25%' }} onClick={this.handleChildClick}>
                         {
                             showLogin ?
-                                <Login handleChange={this.handleChange} /> :
-                                <Register handleChange={this.handleChange} />
+                                <Login
+                                    handleChange={this.handleChange}
+                                    username={this.state.loginName}
+                                    password={this.state.password} /> :
+                                <Register
+                                    handleChange={this.handleChange}
+                                    registerInfo={this.state.registerInfo} />
                         }
                         <div className="flex items-center justify-center">
                             <div className='flex justify-around w-full py-5'>
