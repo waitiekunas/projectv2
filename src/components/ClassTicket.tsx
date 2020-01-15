@@ -7,10 +7,10 @@ const ClassTicket = (props: any) => {
         <div>
             <div className={'max-height-10-proc'}>
                 <Image
-                    additionalClass={'max-height-80-proc flex justify-center'}
+                    additionalClass={'m-1 max-height-80-proc flex justify-center'}
                     imageUri={props.imageUri}
                     showText={false} />
-                <div className={'flex justify-center'}>
+                <div className={'flex justify-center m-1'}>
                     <h4>{props.text}</h4>
                 </div>
 

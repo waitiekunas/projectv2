@@ -37,7 +37,7 @@ class DropDown extends React.Component<MyProps, MyState> {
                     <Button
                         handleClick={this.handleClick}
                         classButtonDiv='flex-col navbar-btn flex-col flex justify-center'
-                        classButton={'h-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
+                        classButton={'button-navbar-padding h-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded'}
                         buttonTexts={translation}
                         label={'dropDownButton'}
                         language={language} />

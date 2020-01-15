@@ -3,7 +3,7 @@ import logo from '/images/logo192.png';
 
 const Logo = (props: any) => {
     return (
-        <div>
+        <div className={props.class}>
             <img src={'/images/logo192.png'} className="logo" alt="logo" />
         </div>
     )

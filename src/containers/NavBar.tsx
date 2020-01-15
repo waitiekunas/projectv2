@@ -52,7 +52,7 @@ class NavBar extends React.Component<MyProps, MyState> {
         const { language, dispatch } = this.props;
         const { loginRegisterShow, isLoggedIn } = this.state
         const translation = translations.buttons
-        const btnClasses = 'navbar-btn bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+        const btnClasses = 'button-navbar-padding navbar-btn bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded'
         return (
             <div className='flex justify-center max-height-10-proc'>
                 <div className='nav_bar flex justify-around w-full py-5'>
@@ -64,7 +64,7 @@ class NavBar extends React.Component<MyProps, MyState> {
                         label={'subscriptions'}
                         language={language}
                         classButton={btnClasses} />
-                    <Logo />
+                    <Logo class={'navbar-btn-cont flex justify-center'} />
 
                     <Button
                         handleClick={this.handleClick}

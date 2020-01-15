@@ -14,19 +14,27 @@ type MyProps = {
 const Register = (props: MyProps) => {
     const handleName = (e) => {
         e.preventDefault()
-        props.handleChange('name', e.target.value)
+        let r = props.registerInfo
+        r.name = e.target.value
+        props.handleChange('registerInfo', r)
     }
     const handleSurname = (e) => {
         e.preventDefault()
-        props.handleChange('surname', e.target.value)
+        let r = props.registerInfo
+        r.surname = e.target.value
+        props.handleChange('registerInfo', r)
     }
     const handleUsername = (e) => {
         e.preventDefault()
-        props.handleChange('loginName', e.target.value)
+        let r = props.registerInfo
+        r.loginName = e.target.value
+        props.handleChange('registerInfo', r)
     }
     const handlePassword = (e) => {
         e.preventDefault()
-        props.handleChange('password', e.target.value)
+        let r = props.registerInfo
+        r.password = e.target.value
+        props.handleChange('registerInfo', r)
     }
     return (
         <div>

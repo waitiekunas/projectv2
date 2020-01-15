@@ -9,11 +9,11 @@ const Login = (props: MyProps) => {
 
     const handleLogin = (e) => {
         e.preventDefault()
-        this.props.handleChange('loginName', e.target.value)
+        props.handleChange('loginName', e.target.value)
     }
     const handlePassword = (e) => {
         e.preventDefault()
-        this.props.handleChange('password', e.target.value)
+        props.handleChange('password', e.target.value)
     }
     return (
         <div>
