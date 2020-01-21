@@ -60,7 +60,6 @@ export const checkIfUserNotEmpty = (user: IRegisterInput) => {
     if (user.loginName && user.name && user.password && user.surname) {
         return true
     } else {
-        alert("All fields must have value")
         return false
     }
 }

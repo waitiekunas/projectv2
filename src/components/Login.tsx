@@ -4,6 +4,8 @@ type MyProps = {
     handleChange: Function
     username: string
     password: string
+    emptyField: boolean
+
 }
 const Login = (props: MyProps) => {
 
@@ -17,6 +19,10 @@ const Login = (props: MyProps) => {
     }
     return (
         <div>
+            {props.emptyField ?
+                <p id="empty-password-info" className="text-red-500 text-xs italic">Some fields are empty.</p>
+                : null
+            }
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                     Username</label>
@@ -26,8 +32,7 @@ const Login = (props: MyProps) => {
             <div className="mb-6">
                 <div className="block text-gray-700 text-sm font-bold mb-2">
                     Password</div>
-                <input className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={props.password} id="password" type="password" placeholder="******************" onChange={handlePassword}></input>
-                <p id="empty-password-info" className="text-red-500 text-xs italic">Please choose a password.</p>
+                <input className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`} value={props.password} id="password" type="password" placeholder="******************" onChange={handlePassword}></input>
             </div>
         </div>
     )

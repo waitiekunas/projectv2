@@ -27,6 +27,8 @@ type MyState = {
     registerInfo: IRegisterInput
     name: string
     surname: string
+    emptyLoginField: boolean
+    emptyRegisterField: boolean
 }
 class LoginRegister extends React.Component<MyProps, MyState> {
     constructor(props: MyProps) {
@@ -47,7 +49,9 @@ class LoginRegister extends React.Component<MyProps, MyState> {
                 surname: "",
                 registerDate: "",
                 lastLoginDate: ""
-            }
+            },
+            emptyLoginField: false,
+            emptyRegisterField: false
         }
     }
     handleParentClick = (e) => {
@@ -74,27 +78,43 @@ class LoginRegister extends React.Component<MyProps, MyState> {
         } as MyState)
     }
     handleLogin = () => {
-        let login = loginUser({
-            username: this.state.loginName,
-            password: this.state.password
-        })
-        this.handleChange('isLoggedIn', login)
-        this.props.dispatch(
-            tryLogin(login))
-        this.props.handleClick('isLoggedIn', login)
-        this.props.handleClick('loginRegisterShow', !login)
-        this.setState({
-            loginName: '',
-            password: ''
-        })
+        if (this.state.loginName && this.state.password) {
+            let login = loginUser({
+                username: this.state.loginName,
+                password: this.state.password
+            })
+            this.handleChange('isLoggedIn', login)
+            this.props.dispatch(
+                tryLogin(login))
+            this.props.handleClick('isLoggedIn', login)
+            this.props.handleClick('loginRegisterShow', !login)
+            this.setState({
+                loginName: '',
+                password: '',
+                emptyLoginField: login,
+
+            })
+        } else {
+            this.setState({
+                emptyLoginField: true
+            })
+        }
     }
     handleRegister = () => {
         this.formulateUser();
         if (checkIfUserNotEmpty(this.state.registerInfo)) {
             registerUser(this.state.registerInfo)
             console.log("registered")
+            this.props.handleClick('loginRegisterShow', false)
+            this.setState({
+                emptyRegisterField: false
+            })
+        } else {
+            this.props.handleClick('loginRegisterShow', true)
+            this.setState({
+                emptyRegisterField: true
+            })
         }
-        debugger
     }
     formulateUser = () => {
         this.handleChange('registerInfo', {
@@ -122,10 +142,12 @@ class LoginRegister extends React.Component<MyProps, MyState> {
                                 <Login
                                     handleChange={this.handleChange}
                                     username={this.state.loginName}
-                                    password={this.state.password} /> :
+                                    password={this.state.password}
+                                    emptyField={this.state.emptyLoginField} /> :
                                 <Register
                                     handleChange={this.handleChange}
-                                    registerInfo={this.state.registerInfo} />
+                                    registerInfo={this.state.registerInfo}
+                                    emptyField={this.state.emptyRegisterField} />
                         }
                         <div className="flex items-center justify-center">
                             <div className='flex justify-around w-full py-5'>

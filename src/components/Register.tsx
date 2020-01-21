@@ -10,6 +10,7 @@ type MyProps = {
         lastLoginDate: string
     }
     handleChange: Function
+    emptyField: boolean
 }
 const Register = (props: MyProps) => {
     const handleName = (e) => {
@@ -38,6 +39,11 @@ const Register = (props: MyProps) => {
     }
     return (
         <div>
+            {
+                props.emptyField ?
+                    <p className="text-red-500 text-xs italic">All fields must have value</p>
+                    : null
+            }
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                     Name</label>
@@ -59,8 +65,7 @@ const Register = (props: MyProps) => {
             <div className="mb-6">
                 <div className="block text-gray-700 text-sm font-bold mb-2">
                     Password</div>
-                <input className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={props.registerInfo.password} id="password" type="password" placeholder="******************" onChange={handlePassword}></input>
-                <p className="text-red-500 text-xs italic">Please choose a password.</p>
+                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={props.registerInfo.password} id="password" type="password" placeholder="******************" onChange={handlePassword}></input>
             </div>
         </div>
     )
