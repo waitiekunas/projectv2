@@ -133,10 +133,11 @@ class LoginRegister extends React.Component<MyProps, MyState> {
         const { language, show } = this.props
         const { showLogin, registerInfo } = this.state
         const styleClasses = 'flex justify-center fixed z-10'
+        const buttonClassName = 'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
         return (
             <div className={show ? styleClasses : 'hidden'} style={show ? { width: '100vw', height: '120%', backgroundColor: 'rgba(0,0,0,0.5)', top: '0%' } : {}} onClick={this.handleParentClick}>
                 <div className="w-full max-w-lg flex justify-center">
-                    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 fixed w-1/2 max-w-lg" style={{ top: '25%' }} onClick={this.handleChildClick}>
+                    <div className="login-register-component bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 fixed w-1/2 max-w-lg" style={{ top: '25%' }} onClick={this.handleChildClick}>
                         {
                             showLogin ?
                                 <Login
@@ -150,18 +151,18 @@ class LoginRegister extends React.Component<MyProps, MyState> {
                                     emptyField={this.state.emptyRegisterField} />
                         }
                         <div className="flex items-center justify-center">
-                            <div className='flex justify-around w-full py-5'>
+                            <div className=' flex justify-around w-full py-5'>
                                 <Button
                                     handleClick={showLogin ? this.handleLogin : this.handleViewChange}
-                                    classButtonDiv='flex-col'
-                                    classButton={'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
+                                    classButtonDiv='login-register-button flex-col'
+                                    classButton={buttonClassName}
                                     buttonTexts={translation}
                                     label={showLogin ? 'login' : 'toLogin'}
                                     language={language} />
                                 <Button
                                     handleClick={showLogin ? this.handleViewChange : this.handleRegister}
-                                    classButtonDiv='flex-col'
-                                    classButton={'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'}
+                                    classButtonDiv='login-register-button flex-col'
+                                    classButton={buttonClassName}
                                     buttonTexts={translation}
                                     label={showLogin ? 'toRegister' : 'register'}
                                     language={language} />

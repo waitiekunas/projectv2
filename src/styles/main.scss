@@ -1,12 +1,10 @@
 @import "./output.css";
 
 @import "tailwindcss/base";
-
 @import "tailwindcss/components";
-
 @import "tailwindcss/utilities";
 
 @import "./landingPage/dropdown.scss";
-
 @import "./landingPage/landingPage.scss";
 @import "./landingPage/navbar.scss";
+@import "./landingPage/loginRegister.scss";

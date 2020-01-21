@@ -1,0 +1,12 @@
+@import "../screens.scss";
+
+
+
+@media #{$mobile}{
+    .login-register-component{
+        width: 90%;
+    }
+    .login-register-button{
+        width: 45%;
+    }
+}
