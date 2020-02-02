@@ -63,5 +63,7 @@ export const checkIfUserNotEmpty = (user: IRegisterInput) => {
         return false
     }
 }
+
+
 //TODO: Update user
 

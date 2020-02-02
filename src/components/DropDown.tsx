@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Button from './Button';
-import Link from './Link';
+import { Link } from "gatsby"
 import translations from '../resources/translations/translations.json';
 import { connect } from 'react-redux';
 import { Languages } from '../enums/languages/languages';
+import { getClassesField } from '../utils/utils'
 
 
 
@@ -31,6 +32,7 @@ class DropDown extends React.Component<MyProps, MyState> {
     render() {
         const language = this.props.language
         const translation = translations.buttons
+        const topicNames = getClassesField('topic')
         return (
             <div className='flex-col navbar-btn-cont flex justify-center h-full'>
                 <div className='dropdown'>
@@ -42,9 +44,11 @@ class DropDown extends React.Component<MyProps, MyState> {
                         label={'dropDownButton'}
                         language={language} />
                     <div className="dropdown-content flex justify-around flex-col">
-                        <Link class={"dropdown-link"} href="#" linkText={"Link 1"} searchFilter={{}} />
-                        <Link class={"dropdown-link"} href="#" linkText={"Link 2"} searchFilter={{}} />
-                        <Link class={"dropdown-link"} href="#" linkText={"Link 3"} searchFilter={{}} />
+                        {
+                            topicNames.map((value, index) =>
+                                <Link className={"dropdown-link"} to={`/topics-screen/`} state={{ topic: value }} key={index}>{value}</Link>
+                            )
+                        }
                     </div>
                 </div>
             </div>

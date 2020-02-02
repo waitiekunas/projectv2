@@ -1,14 +1,1 @@
-{
-    "app": [
-        "/app-88bf00090ffdf68d0722.js"
-    ],
-    "component---src-pages-404-tsx": [
-        "/component---src-pages-404-tsx-c42a5033e4ef17c18de5.js"
-    ],
-    "component---src-pages-index-tsx": [
-        "/component---src-pages-index-tsx-f9d1705f99be2a35ed9f.js"
-    ],
-    "component---src-pages-page-2-tsx": [
-        "/component---src-pages-page-2-tsx-cdcb2c30cc11b01ba68d.js"
-    ]
-}
+{"app":["/app-eded7a3078103d31f81c.js"],"component---src-pages-404-tsx":["/component---src-pages-404-tsx-c42a5033e4ef17c18de5.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx-6ffed4053c7092e26f4a.js"],"component---src-pages-topics-screen-tsx":["/component---src-pages-topics-screen-tsx-4daed3e97bb536b6fcd2.js"]}
