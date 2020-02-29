@@ -43,6 +43,9 @@ class TopicsContainer extends React.Component<MyProps, MyState>{
                                 <ClassTicket
                                     key={index}
                                     text={value.name}
+                                    id={value.id}
+                                    description={value.description}
+                                    authorDesc={value.authorDesc}
                                     imageUri={"/images/logo192.png"} />
                             </TopicWrapper>
 

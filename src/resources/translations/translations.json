@@ -53,6 +53,12 @@
                 "description": {
                     "LTU": "Atsijungti"
                 }
+            },
+            {
+                "label": "startLesson",
+                "description": {
+                    "LTU": "Pradėti pamoką"
+                }
             }
         ]
     }

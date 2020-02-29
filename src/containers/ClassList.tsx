@@ -29,6 +29,9 @@ class ClassList extends React.Component {
                             <ClassTicket
                                 key={index}
                                 text={value.name}
+                                id={value.id}
+                                description={value.description}
+                                authorDesc={value.authorDesc}
                                 imageUri={"/images/logo192.png"} />)}
                     </Slider>
                 </div>
