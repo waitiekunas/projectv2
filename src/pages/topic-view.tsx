@@ -14,7 +14,7 @@ const TopicView = ({ location }) => (
       showText={false}
       additionalClass={'max-height-40-proc'} />
     <TopicDescription
-      topicInfo={location.state.classInfo} />
+      topicInfo={location.state && location.state.classInfo} />
   </Layout>
 )
 
