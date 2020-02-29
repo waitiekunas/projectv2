@@ -47,6 +47,9 @@ const TopicDescription = (props: any) => {
         e.preventDefault()
         alert("Lesson started")
     }
+    const authorPhoto = props.topicInfo ? props.topicInfo.authorDesc.photo : null;
+    const authorDescription = props.topicInfo ? props.topicInfo.authorDesc.description : null;
+    const topicDesc = props.topicInfo ? props.topicInfo.description : null;
     return (
         <div>
             <Wrapper>
@@ -56,12 +59,12 @@ const TopicDescription = (props: any) => {
                         <AuthorPhotoArea>
                             <Image
                                 additionalClass={''}
-                                imageUri={props.topicInfo.authorDesc.photo}
+                                imageUri={authorPhoto}
                                 showText={false} />
                         </AuthorPhotoArea>
-                        <AuthorDescriptionArea>{props.topicInfo.authorDesc.description}</AuthorDescriptionArea>
+                        <AuthorDescriptionArea>{authorDescription}</AuthorDescriptionArea>
                     </AuthorInfoArea>
-                    <TextArea>{props.topicInfo.description}</TextArea>
+                    <TextArea>{topicDesc}</TextArea>
                     <Wrapper>
                         <Button
                             handleClick={handleClick}
