@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import Image from '../components/Image copy';
 import Button from '../components/Button';
+import BuyPoster from '../components/BuyPoster'
 import translations from '../resources/translations/translations.json';
 
 
@@ -54,7 +55,14 @@ const TopicDescription = (props: any) => {
         <div>
             <Wrapper>
                 <ContentArea>
-                    {props.isLoggedIn ? <div>CONTENT</div> : null}
+                    {props.isLoggedIn ?
+                        null
+                        : <BuyPoster
+                            additionalClass={''}
+                            imageUri={"/images/wide-index-photo.jpg"}
+                            showText={true}
+                            imgHeader={"dont have?"}
+                            imgText={"Buy!"} />}
                     <AuthorInfoArea>
                         <AuthorPhotoArea>
                             <Image

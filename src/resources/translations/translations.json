@@ -59,6 +59,12 @@
                 "description": {
                     "LTU": "Pradėti pamoką"
                 }
+            },
+            {
+                "label": "buyNow",
+                "description": {
+                    "LTU": "Pirkti"
+                }
             }
         ]
     }
