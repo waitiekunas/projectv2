@@ -9,10 +9,6 @@ import TopicDescription from "../containers/TopicDescription"
 const TopicView = ({ location }) => (
   <Layout>
     <SEO title="Topic-view" />
-    <Image
-      imageUri={"/images/wide-index-photo.jpg"}
-      showText={false}
-      additionalClass={'max-height-40-proc'} />
     <TopicDescription
       topicInfo={location.state && location.state.classInfo} />
   </Layout>

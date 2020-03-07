@@ -69,6 +69,9 @@ class TopicDescription extends React.Component<MyProps, MyState> {
         e.preventDefault();
         this.setState({ clicked: !this.state.clicked });
     }
+    handleChildClick = (state, value) => {
+        this.setState({ [state]: value } as MyState);
+    }
 
     render() {
         const authorPhoto = this.props.topicInfo ? this.props.topicInfo.authorDesc.photo : null;
@@ -109,6 +112,9 @@ class TopicDescription extends React.Component<MyProps, MyState> {
                         </Wrapper>
 
                     </ContentArea>
+                    {
+                        this.state.clicked ? <LessonFlow handleClick={this.handleChildClick} /> : null
+                    }
                 </Wrapper>
 
             </div>
