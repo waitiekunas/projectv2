@@ -22,7 +22,7 @@ const ContentArea = styled.div`
     width: 80%;
 `
 const TextArea = styled.p`
-    text-align: center;
+    text-align: justify;
     padding: 1rem;
 `
 
@@ -31,15 +31,30 @@ const AuthorInfoArea = styled.div`
     padding: 1rem;
     @media (max-width: 767px) {
         flex-direction: column;
+        justify-content: center;
     }
 `
 const AuthorPhotoArea = styled.div`
     width: 25%;
     padding: 1rem;
+    @media (max-width: 767px) {
+       width: 50%;
+       align-self: center;
+    }
 `
 const AuthorDescriptionArea = styled.div`
     width: 70%;
     padding: 1rem;
+    @media (max-width: 767px) {
+        width: auto;
+        padding: 1rem;
+
+     }
+`
+const ButtonWrapper = styled.div`
+    height: auto;
+    display: flex;
+    justify-content: center;
 `
 type MyProps = {
     topicInfo: {
@@ -77,7 +92,7 @@ class TopicDescription extends React.Component<MyProps, MyState> {
         const authorPhoto = this.props.topicInfo ? this.props.topicInfo.authorDesc.photo : null;
         const authorDescription = this.props.topicInfo ? this.props.topicInfo.authorDesc.description : null;
         const topicDesc = this.props.topicInfo ? this.props.topicInfo.description : null;
-        const btnClasses = 'button-navbar-padding navbar-btn bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded'
+        const btnClasses = 'button-navbar-padding bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded'
         const translation = translations.buttons
         return (
             <div>
@@ -101,7 +116,7 @@ class TopicDescription extends React.Component<MyProps, MyState> {
                             <AuthorDescriptionArea>{authorDescription}</AuthorDescriptionArea>
                         </AuthorInfoArea>
                         <TextArea>{topicDesc}</TextArea>
-                        <Wrapper>
+                        <ButtonWrapper>
                             <Button
                                 handleClick={this.handleClick}
                                 classButtonDiv={'flex-col navbar-btn-cont'}
@@ -109,7 +124,7 @@ class TopicDescription extends React.Component<MyProps, MyState> {
                                 label={'starLesson'}
                                 language={this.props.language}
                                 classButton={btnClasses} />
-                        </Wrapper>
+                        </ButtonWrapper>
 
                     </ContentArea>
                     {
