@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import PDFViewer from 'pdf-viewer-reactjs'
 import { Player } from 'video-react';
+import { getClassMaterials, getLessonMaterial } from '../backEnd/ClassesUtils'
 
 const Wrapper = styled.div`
     width:100%;
@@ -19,50 +20,75 @@ const MainScreen = styled.div`
 `
 type MyProps = {
     handleClick: Function
+    topicId: number
 }
 type MyState = {
     pdfView: boolean
     videoView: boolean
+    topicId: number
+    currentStep: number
+    materialInfo: any
 }
 class LessonFlow extends React.Component<MyProps, MyState> {
     constructor(props: MyProps) {
         super(props);
         this.state = {
-            pdfView: true,
-            videoView: false
+            pdfView: null,
+            videoView: false,
+            topicId: this.props.topicId,
+            currentStep: 0,
+            materialInfo: {}
         }
 
     }
+    componentDidMount() {
+
+        this.setState({
+            materialInfo: getClassMaterials(this.state.topicId),
+            currentStep: this.state.currentStep + 1
+        })
+    }
+
     handleClick = (e) => {
         e.preventDefault();
         this.props.handleClick('clicked', false);
     }
     handleBack = (e) => {
         e.preventDefault();
-        this.setState({ 'pdfView': true })
-        this.setState({ 'videoView': false })
+        if (this.state.currentStep - 1 > 0) {
+            this.setState({ currentStep: this.state.currentStep - 1 })
+        }
+        //handle end of lesson)
     }
     handleForward = (e) => {
         e.preventDefault();
-        this.setState({ 'pdfView': false })
-        this.setState({ 'videoView': true })
+        if (this.state.currentStep + 1 <= this.state.materialInfo.qtty) {
+            this.setState({ currentStep: this.state.currentStep + 1 })
+        }
+        //handle end of lesson
+
     }
     render() {
+        let { topicId, currentStep } = this.state;
+        let material = getLessonMaterial(topicId, currentStep - 1)
+        let linkMaterial = material && material.link
+        let type = material && material.type
 
+        debugger
         return (
             <Wrapper >
                 <MainScreen >
-                    {this.state.pdfView ?
+                    {type === 'pdf' ?
                         <PDFViewer
                             document={{
-                                url: '/mock/pdfMock.pdf'
+                                url: linkMaterial
                             }}
                             canvasCss='canvas'
 
                         /> : null}
-                    {this.state.videoView ?
+                    {type === 'video' ?
                         <Player>
-                            <source src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" />
+                            <source src={linkMaterial.toString()} />
                         </Player> : null}
                     <button className='red' onClick={this.handleBack}>Atgal</button>
                     <div></div>

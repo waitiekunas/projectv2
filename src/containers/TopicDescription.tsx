@@ -58,6 +58,7 @@ const ButtonWrapper = styled.div`
 `
 type MyProps = {
     topicInfo: {
+        id: number
         authorDesc: {
             photo: string,
             description: string
@@ -70,6 +71,7 @@ type MyProps = {
 
 type MyState = {
     clicked: boolean
+    selectedClassId: number
 }
 
 class TopicDescription extends React.Component<MyProps, MyState> {
@@ -77,12 +79,16 @@ class TopicDescription extends React.Component<MyProps, MyState> {
         super(props);
         this.state = {
             clicked: false,
+            selectedClassId: 0
         }
     }
 
     handleClick = (e) => {
         e.preventDefault();
-        this.setState({ clicked: !this.state.clicked });
+        this.setState({
+            clicked: !this.state.clicked,
+            selectedClassId: this.props.topicInfo.id
+        });
     }
     handleChildClick = (state, value) => {
         this.setState({ [state]: value } as MyState);
@@ -128,7 +134,7 @@ class TopicDescription extends React.Component<MyProps, MyState> {
 
                     </ContentArea>
                     {
-                        this.state.clicked ? <LessonFlow handleClick={this.handleChildClick} /> : null
+                        this.state.clicked ? <LessonFlow handleClick={this.handleChildClick} topicId={this.state.selectedClassId} /> : null
                     }
                 </Wrapper>
 
