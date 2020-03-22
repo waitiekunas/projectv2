@@ -11,6 +11,7 @@ import { Languages } from "../enums/languages/languages";
 import { connect, useDispatch } from 'react-redux';
 import { getLanguage } from '../state/actions/lang';
 import store from '../state/createStore';
+import { Box } from '../components/Box/Box';
 
 
 type MyProps = {
