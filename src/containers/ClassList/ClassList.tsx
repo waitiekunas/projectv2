@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ClassTicket from '../components/ClassTicket';
-import { classes } from '../mockData/classDescriptions/classes';
+import ClassTicket from '../../components/ClassTicket/ClassTicket';
+import { classes } from '../../mockData/classDescriptions/classes';
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";

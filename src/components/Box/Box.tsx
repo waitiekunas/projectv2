@@ -30,9 +30,18 @@ export type Props = {
         height?: string | Array<string>;
         maxWidth?: string | Array<string>;
         maxHeight?: string | Array<string>;
+        minWidth?: string | Array<string>;
+        minHeight?: string | Array<string>;
+    },
+    align?: {
+        self?:
+        | 'center'
+        | 'flex-end'
+        | 'flex-start'
     }
+    className?: string
 }
 
-export const Box: React.FC<Props> = ({ children, ...rest }) => {
-    return <StyledBox {...rest}>{children}</StyledBox>
+export const Box: React.FC<Props> = ({ children, className, ...rest }) => {
+    return <StyledBox className={className} {...rest}>{children}</StyledBox>
 }

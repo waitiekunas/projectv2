@@ -83,7 +83,17 @@ const sizeStyle = ({ size }: BoxProps) =>
             ? responsive(size.maxHeight, 'max-height')
             : css`
         max-height: ${size.maxHeight};
-        `}         
+        `}
+    ${Array.isArray(size.minHeight)
+            ? responsive(size.minHeight, 'min-height')
+            : css`
+        min-height: ${size.minHeight};
+        `}  
+     ${Array.isArray(size.minWidth)
+            ? responsive(size.minWidth, 'min-width')
+            : css`
+        min-width: ${size.minWidth};
+        `}           
  `;
 const responsive = (array: Array<string>, value: string) =>
     css`
@@ -97,9 +107,19 @@ const responsive = (array: Array<string>, value: string) =>
         ${value}: ${array[0]}
        }
         `
+const alignStyle = ({ align }: BoxProps) =>
+    align &&
+    css`
+${Array.isArray(align.self)
+            ? responsive(align.self, 'align-self')
+            : css`
+    align-self: ${align.self}
+    `}
 
+`
 export const StyledBox = styled.div`
     ${(props: BoxProps) => (props.margin || props.padding) && spacingStyle(props)}
     ${(props: BoxProps) => props.flex && flexStyle(props)}    
     ${(props: BoxProps) => props.size && sizeStyle(props)}
+    ${(props: BoxProps) => props.align && alignStyle(props)}
     `

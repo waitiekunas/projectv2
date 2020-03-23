@@ -9,11 +9,11 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
-import Header from "./header"
+import Header from "../Header/header"
 import "./layout.css"
-import "../styles/main.scss"
+import "../../styles/main.scss"
 
-import Footer from "../containers/Footer";
+import Footer from "../../containers/Footer/Footer";
 import { connect } from 'react-redux';
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import Button from '../components/Button'
-import translations from '../resources/translations/translations.json'
+import Button from '../Button/Button'
+import { translations } from '../../resources/translations/translations'
 import styled from "styled-components"
 
 const TextBox = styled.div`

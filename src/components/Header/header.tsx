@@ -2,7 +2,7 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 
-import NavBar from '../containers/NavBar';
+import NavBar from '../../containers/NavBar/NavBar';
 
 const Header = ({ siteTitle }: any) => (
   <header

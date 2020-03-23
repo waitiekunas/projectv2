@@ -5,12 +5,14 @@ import styled from "styled-components"
 
 import { connect } from 'react-redux';
 
-import Image from '../components/Image copy';
-import Button from '../components/Button';
-import BuyPoster from '../components/BuyPoster'
-import translations from '../resources/translations/translations.json';
-import LessonFlow from './LessonFlow';
-import { Languages } from "../enums/languages/languages";
+import Image from '../../components/Image/Image';
+import Button from '../../components/Button/Button';
+import BuyPoster from '../../components/BuyPosyer/BuyPoster'
+import { translations } from '../../resources/translations/translations';
+import LessonFlow from '../LessonFlow/LessonFlow';
+import { Languages } from "../../enums/languages/languages";
+import { Box } from "../../components/Box/Box";
+import { DEFAULT_BUTTON_CLASSES } from "../../Constants/Constants";
 
 
 
@@ -122,15 +124,30 @@ class TopicDescription extends React.Component<MyProps, MyState> {
                             <AuthorDescriptionArea>{authorDescription}</AuthorDescriptionArea>
                         </AuthorInfoArea>
                         <TextArea>{topicDesc}</TextArea>
-                        <ButtonWrapper>
-                            <Button
-                                handleClick={this.handleClick}
-                                classButtonDiv={'flex-col navbar-btn-cont'}
-                                buttonTexts={translation}
-                                label={'starLesson'}
-                                language={this.props.language}
-                                classButton={btnClasses} />
-                        </ButtonWrapper>
+                        <Box size={{
+                            width: "100%",
+                            height: "42px"
+                        }}
+                            flex={{
+                                direction: "row",
+                                justify: "center"
+                            }}
+                        >
+                            <Box size={{
+                                maxWidth: "200px",
+                                width: "25%",
+                                height: "42px"
+                            }}
+                                align={{ self: "center" }}
+                            >
+                                <Button
+                                    handleClick={this.handleClick}
+                                    buttonTexts={translation}
+                                    label={'starLesson'}
+                                    language={this.props.language}
+                                    classButton={DEFAULT_BUTTON_CLASSES} />
+                            </Box>
+                        </Box>
 
                     </ContentArea>
                     {
@@ -138,7 +155,7 @@ class TopicDescription extends React.Component<MyProps, MyState> {
                     }
                 </Wrapper>
 
-            </div>
+            </div >
         )
     }
 }

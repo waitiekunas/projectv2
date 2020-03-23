@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components"
 
-import Copyright from '../components/Copyright';
+import Copyright from '../../components/Copyright/Copyright';
 
 const FooterStyle = styled.div`
     margin-top: 5%;

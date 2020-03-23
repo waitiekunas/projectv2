@@ -1,10 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import Image from "../components/Image copy"
-import TopicsContainer from "../containers/TopicsContainer"
+import Layout from "../components/Layout/layout"
+import SEO from "../components/Seo/seo"
+import Image from "../components/Image/Image"
+import TopicsContainer from "../containers/TopicsContainer/TopicsContainer"
 
 const TopicsScreen = ({ location }) => (
   <Layout>

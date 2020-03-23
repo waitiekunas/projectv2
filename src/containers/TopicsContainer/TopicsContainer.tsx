@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from "styled-components"
-import ClassTicket from '../components/ClassTicket';
+import ClassTicket from '../../components/ClassTicket/ClassTicket';
 
-import { getClassesByTopic } from '../utils/utils'
+import { getClassesByTopic } from '../../utils/utils'
 
 type MyProps = {
     topic: string

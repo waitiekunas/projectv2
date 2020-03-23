@@ -1,11 +1,11 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Layout from "../components/Layout/layout"
+import SEO from "../components/Seo/seo"
 
-import Image from "../components/Image copy";
-import ClassListFullContent from '../containers/ClassListFullContent'
+import Image from "../components/Image/Image";
+import ClassListFullContent from '../containers/ClassListFullContent/ClassListFullContent'
 import { Languages } from "../enums/languages/languages";
 
 import { connect, useDispatch } from 'react-redux';

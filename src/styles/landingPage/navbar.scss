@@ -17,22 +17,8 @@
     }
 }
 
-@media #{$maxIpad} {
-    .navbar-btn{
-        height :100%;
-     
-    }
-   
-}
 @media #{$maxIpadPro} {
-    .navbar-btn{
-        height :50%;
-    }
-    .dropdown{
-        position: relative;
-        top: 25%;
-        height:100%;
-    }
+
     .button-navbar-padding{
         padding-top: 0rem;
         padding-bottom: 0rem;

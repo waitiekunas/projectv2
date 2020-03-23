@@ -5,6 +5,6 @@ export interface TranslationItem {
     description: Description;
 }
 interface Description {
-    LTU: Languages.LITHUANIA;
+    LTU: string;
 }
 

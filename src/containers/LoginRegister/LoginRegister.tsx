@@ -1,22 +1,22 @@
 import React from 'react'
 import { connect, useDispatch } from 'react-redux';
 
-import Button from '../components/Button'
-import Login from '../components/Login'
-import Register from '../components/Register'
-import translations from '../resources/translations/translations.json'
-import { Languages } from '../enums/languages/languages';
-import { loginUser, registerUser, checkIfUserNotEmpty } from '../backEnd/LoginUtils'
-import { tryLogin } from '../state/actions/loginRegister';
-import { IRegisterInput } from '../interfaces/loginRegister/IRegister';
+import Button from '../../components/Button/Button'
+import Login from '../../components/Login/Login'
+import Register from '../../components/Register/Register'
+import { translations } from '../../resources/translations/translations'
+import { Languages } from '../../enums/languages/languages';
+import { loginUser, registerUser, checkIfUserNotEmpty } from '../../backEnd/LoginUtils'
+import { tryLogin } from '../../state/actions/loginRegister';
+import { IRegisterInput } from '../../interfaces/loginRegister/IRegister';
 
 
 
 type MyProps = {
-    language: Languages
-    show: boolean,
-    handleClick: Function
-    dispatch: any
+    language?: Languages
+    show?: boolean
+    handleClick?: Function
+    dispatch?: any
 }
 type MyState = {
     showLogin: boolean

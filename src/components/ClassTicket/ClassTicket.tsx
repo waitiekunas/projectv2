@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "gatsby"
 
-import Image from './Image copy';
+import Image from '../Image/Image';
 
 const ClassTicket = (props: any) => {
     const handleClick = (e) => {
@@ -9,7 +9,7 @@ const ClassTicket = (props: any) => {
         props.handleChange('loginName', e.target.value)
     }
     return (
-        <div>
+        <>
             <Link className={"class-ticket"} to={`/topic-view/`} state={{ classInfo: props }}>
                 <div className={'max-height-10-proc'}>
                     <Image
@@ -22,7 +22,7 @@ const ClassTicket = (props: any) => {
 
                 </div>
             </Link>
-        </div>
+        </>
     )
 }
 

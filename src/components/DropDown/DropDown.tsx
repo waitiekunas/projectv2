@@ -1,11 +1,12 @@
 import React from 'react';
 
-import Button from './Button';
+import Button from '../Button/Button';
 import { Link } from "gatsby"
-import translations from '../resources/translations/translations.json';
+import { translations } from '../../resources/translations/translations';
 import { connect } from 'react-redux';
-import { Languages } from '../enums/languages/languages';
-import { getClassesField } from '../utils/utils'
+import { Languages } from '../../enums/languages/languages';
+import { getClassesField } from '../../utils/utils'
+import { Box } from '../Box/Box';
 
 
 
@@ -34,7 +35,17 @@ class DropDown extends React.Component<MyProps, MyState> {
         const translation = translations.buttons
         const topicNames = getClassesField('topic')
         return (
-            <div className='flex-col navbar-btn-cont flex justify-center h-full'>
+            <Box size={{
+                maxWidth: "200px",
+                width: "25%",
+                height: "42px"
+            }}
+                flex={{
+                    direction: "column",
+                    justify: "center"
+                }}
+                align={{ self: "center" }}
+            >
                 <div className='dropdown'>
                     <Button
                         handleClick={this.handleClick}
@@ -51,7 +62,7 @@ class DropDown extends React.Component<MyProps, MyState> {
                         }
                     </div>
                 </div>
-            </div>
+            </Box>
         )
     }
 }
