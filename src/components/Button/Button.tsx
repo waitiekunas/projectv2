@@ -10,7 +10,8 @@ type MyProps = {
     label: string
     classButtonDiv?: string
     classButton: string,
-    handleClick: any
+    handleClick: any,
+    style?: {}
 }
 const Button = (props: MyProps) => {
     const { buttonTexts, language, label, handleClick } = props
@@ -18,7 +19,7 @@ const Button = (props: MyProps) => {
         <Box className={props.classButtonDiv ? props.classButtonDiv : "h-full w-full"}
             flex={{ justify: 'center' }}
             size={{ height: '42px' }}>
-            <button className={props.classButton} onClick={handleClick}>{getTranslations(buttonTexts, language, label)}</button>
+            <button className={props.classButton} style={props.style} onClick={handleClick}>{getTranslations(buttonTexts, language, label)}</button>
         </Box>
     )
 }

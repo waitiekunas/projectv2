@@ -12,18 +12,25 @@ import { connect } from 'react-redux';
 import { Languages } from '../../enums/languages/languages';
 
 
-const Wrapper = styled.div`
-    width:100%;
+const Background = styled.div`
+    width:150%;
     position: fixed;
     height: 100%;
     top: 0%;
-    display: flex;
-    justify-content: center;
+   
     background-color: rgba(0,0,0,0.5);
 `
 const MainScreen = styled.div`
     width: 85%;
-    
+    z-index: 10;
+`
+const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width:100%;
+    position: absolute;
+    top: 5%;
 `
 type MyProps = {
     handleClick: Function
@@ -76,6 +83,14 @@ class LessonFlow extends React.Component<MyProps, MyState> {
         //handle end of lesson
 
     }
+    addId = () => {
+        do {
+            document.getElementsByClassName('has-background-black')[0] && document.getElementsByClassName('has-background-black')[0].setAttribute('id', 'customHeight')
+            debugger
+        } while (document.getElementsByClassName('has-background-black').length === 0)
+
+    }
+
     render() {
         let { topicId, currentStep } = this.state;
         let material = getLessonMaterial(topicId, currentStep - 1)
@@ -83,85 +98,97 @@ class LessonFlow extends React.Component<MyProps, MyState> {
         let type = material && material.type
 
         return (
-            <Wrapper >
-                <MainScreen >
-                    {type === 'pdf' ?
-                        <PDFViewer
-                            document={{
-                                url: linkMaterial
-                            }}
-                            canvasCss='canvas'
+            <>
 
-                        /> : null}
-                    {type === 'video' ?
-                        <Player>
-                            <source src={linkMaterial.toString()} />
-                        </Player> : null}
+                <Background >
+                </Background>
+                <Wrapper>
+                    <MainScreen >
+                        {
+                            type === 'pdf' &&
+                            <PDFViewer
+                                document={{
+                                    url: linkMaterial
+                                }}
+                                canvasCss='canvas'
 
-                    <Box flex={{ justify: "around" }}>
-                        <Box size={{
-                            maxWidth: "200px",
-                            width: "25%",
-                            height: "42px"
-                        }}
-                            flex={{
-                                direction: "column",
-                                justify: "center"
-                            }}
-                            align={{ self: "center" }}
-                        >
-                            <Button
-                                language={this.props.language}
-                                label="back"
-                                buttonTexts={translations.buttons}
-                                handleClick={this.handleBack}
-                                classButton={DEFAULT_BUTTON_CLASSES}
                             />
-                        </Box>
-
-                        <Box size={{
-                            maxWidth: "200px",
-                            width: "25%",
-                            height: "42px"
                         }}
-                            flex={{
-                                direction: "column",
-                                justify: "center"
-                            }}
-                            align={{ self: "center" }}
-                        >
-                            <Button
-                                language={this.props.language}
-                                label="forward"
-                                buttonTexts={translations.buttons}
-                                handleClick={this.handleForward}
-                                classButton={DEFAULT_BUTTON_CLASSES}
-                            />
-                        </Box>
+                        {type === 'pdf' && this.addId()}
+                        {type === 'video' ?
+                            <Player>
+                                <source src={linkMaterial.toString()} />
+                            </Player> : null}
 
-                        <Box size={{
-                            maxWidth: "200px",
-                            width: "25%",
-                            height: "42px"
-                        }}
-                            flex={{
-                                direction: "column",
-                                justify: "center"
-                            }}
-                            align={{ self: "center" }}
+                        <Box
+                            flex={{ justify: "around" }}
+                            margin={{ top: '12px' }}
                         >
-                            <Button
-                                language={this.props.language}
-                                label="close"
-                                buttonTexts={translations.buttons}
-                                handleClick={this.handleClick}
-                                classButton={DEFAULT_BUTTON_CLASSES}
-                            />
+                            <Box size={{
+                                maxWidth: "200px",
+                                width: "25%",
+                                height: "42px"
+                            }}
+                                flex={{
+                                    direction: "column",
+                                    justify: "center"
+                                }}
+                                align={{ self: "center" }}
+                            >
+                                <Button
+                                    language={this.props.language}
+                                    label="back"
+                                    buttonTexts={translations.buttons}
+                                    handleClick={this.handleBack}
+                                    classButton={DEFAULT_BUTTON_CLASSES}
+                                />
+                            </Box>
+
+                            <Box size={{
+                                maxWidth: "200px",
+                                width: "25%",
+                                height: "42px"
+                            }}
+                                flex={{
+                                    direction: "column",
+                                    justify: "center"
+                                }}
+                                align={{ self: "center" }}
+                            >
+                                <Button
+                                    language={this.props.language}
+                                    label="forward"
+                                    buttonTexts={translations.buttons}
+                                    handleClick={this.handleForward}
+                                    classButton={DEFAULT_BUTTON_CLASSES}
+                                    style={{ background: '#4299e1' }}
+                                />
+                            </Box>
+
+                            <Box size={{
+                                maxWidth: "200px",
+                                width: "25%",
+                                height: "42px"
+                            }}
+                                flex={{
+                                    direction: "column",
+                                    justify: "center"
+                                }}
+                                align={{ self: "center" }}
+                            >
+                                <Button
+                                    language={this.props.language}
+                                    label="close"
+                                    buttonTexts={translations.buttons}
+                                    handleClick={this.handleClick}
+                                    classButton={DEFAULT_BUTTON_CLASSES}
+                                    style={{ background: '#4299e1' }}
+                                />
+                            </Box>
                         </Box>
-                    </Box>
-                </MainScreen>
-            </Wrapper>
-        )
+                    </MainScreen>
+                </Wrapper>
+            </>)
     }
 }
 const mapStateToProps = state => ({

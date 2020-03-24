@@ -1,5 +1,29 @@
+@import "../screens.scss";
 .canvas{
     width: 100%;
     display: flex;
     justify-content: center;
+}
+canvas{
+    max-width: 100%;
+}
+
+@media #{$maxIpad} {
+    .are-small{
+        display: flex;
+        justify-content: space-evenly!important;
+    }
+    #customHeight {
+        height: auto;
+    }
+}
+@media #{$mobile} {
+    .are-small{
+        display: flex;
+        justify-content: center!important;
+    }
+    #customHeight {
+        height: auto;
+    }
+    
 }
