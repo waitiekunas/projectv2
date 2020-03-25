@@ -111,10 +111,10 @@ class LessonFlow extends React.Component<MyProps, MyState> {
                                     url: linkMaterial
                                 }}
                                 canvasCss='canvas'
-
+                                nacbarWrapper='customHeight'
                             />
                         }}
-                        {type === 'pdf' && this.addId()}
+
                         {type === 'video' ?
                             <Player>
                                 <source src={linkMaterial.toString()} />
@@ -122,7 +122,7 @@ class LessonFlow extends React.Component<MyProps, MyState> {
 
                         <Box
                             flex={{ justify: "around" }}
-                            margin={{ top: '12px' }}
+                            margin={{ top: ['32px', '32px', '12px'] }}
                         >
                             <Box size={{
                                 maxWidth: "200px",

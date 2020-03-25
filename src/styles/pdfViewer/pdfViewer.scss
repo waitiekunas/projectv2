@@ -13,17 +13,20 @@ canvas{
         display: flex;
         justify-content: space-evenly!important;
     }
-    #customHeight {
-        height: auto;
-    }
 }
 @media #{$mobile} {
     .are-small{
         display: flex;
         justify-content: center!important;
     }
-    #customHeight {
-        height: auto;
-    }
-    
+}
+.is-gapless{
+    background: black;
+    width: 100%;
+    position: absolute;
+    border-radius: 6px;
+}
+.container{
+    display: flex!important;
+    justify-content: center;
 }
