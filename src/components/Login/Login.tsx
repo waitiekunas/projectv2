@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react"
-import axios from "axios"
-import Button from "../Button/Button"
-import { Languages } from "../../enums/languages/languages"
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+
+import { Languages } from '../../enums/languages/languages';
+import Button from '../Button/Button';
 
 type MyProps = {
   login: (login: any) => void
@@ -13,16 +14,19 @@ const Login = (props: MyProps) => {
   const [login, setLogin] = useState(false)
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
+  // https://training-app-finance.herokuapp.com/user/login
   useEffect(() => {
     if (userName && password) {
       axios({
         method: "post",
-        url: "http://localhost:3000/user/login",
+        url: "https://training-app-finance.herokuapp.com/user/login",
         data: {
           username: userName,
           password: password,
         },
-      }).then(res => props.login(res.data))
+      }).then(res => {
+        props.login(res.data)
+      })
     }
   }, [login])
 

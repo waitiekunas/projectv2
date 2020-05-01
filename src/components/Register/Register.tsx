@@ -20,7 +20,7 @@ const Register = (props: MyProps) => {
     if (!disabled) {
       axios({
         method: "post",
-        url: "http://localhost:3000/user/register",
+        url: "https://training-app-finance.herokuapp.com/user/register",
         data: {
           userData: formulateUser(),
         },
