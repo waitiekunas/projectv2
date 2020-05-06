@@ -1,8 +1,9 @@
-import React from "react"
-import { getTranslations } from "../../utils/utils"
-import { TranslationItem } from "../../interfaces/translations/ITranslations"
-import { Languages } from "../../enums/languages/languages"
-import { Box } from "../Box/Box"
+import React from 'react';
+
+import { Languages } from '../../enums/languages/languages';
+import { TranslationItem } from '../../interfaces/translations/ITranslations';
+import { getTranslations } from '../../utils/utils';
+import { Box } from '../Box/Box';
 
 type MyProps = {
   buttonTexts: Array<TranslationItem>
@@ -28,7 +29,7 @@ const Button = (props: MyProps) => {
         onClick={handleClick}
         disabled={props.disabled}
       >
-        {getTranslations(buttonTexts, language, label)}
+        {getTranslations(language, label)}
       </button>
     </Box>
   )

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react"
-import axios from "axios"
-import Button from "../Button/Button"
-import { Languages } from "../../enums/languages/languages"
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+
+import { Languages } from '../../enums/languages/languages';
+import Button from '../Button/Button';
 
 type MyProps = {
   register: (register: any) => void
@@ -20,7 +21,7 @@ const Register = (props: MyProps) => {
     if (!disabled) {
       axios({
         method: "post",
-        url: "https://training-app-finance.herokuapp.com/user/register",
+        url: "http://localhost:5000/user/register",
         data: {
           userData: formulateUser(),
         },

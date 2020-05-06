@@ -14,6 +14,7 @@ const Login = (props: MyProps) => {
   const [login, setLogin] = useState(false)
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
+  // https://localhost:5000/user/login
   // https://training-app-finance.herokuapp.com/user/login
   useEffect(() => {
     if (userName && password) {
