@@ -66,11 +66,6 @@ type MyProps = {
   isLoggedIn: boolean
 }
 
-type MyState = {
-  clicked: boolean
-  selectedClassId: number
-}
-
 const TopicDescription = (props: MyProps) => {
   const [clicked, setClicked] = useState(false)
   const [selectedClassId, setSelectedClassId] = useState(0)
@@ -87,7 +82,7 @@ const TopicDescription = (props: MyProps) => {
   const authorDescription = props.topicInfo?.authorDesc.description
   const topicDesc = props.topicInfo?.description
 
-  const translation = translations.buttons
+  const translation = translations
   return (
     <div>
       <Wrapper>
@@ -138,28 +133,27 @@ const TopicDescription = (props: MyProps) => {
                 classButton={DEFAULT_BUTTON_CLASSES}
               />
             </Box>
-
-            {props.isLoggedIn && (
-              <Box
-                size={{
-                  maxWidth: "200px",
-                  width: "25%",
-                  height: "42px",
-                }}
-                align={{ self: "center" }}
-                margin={{ top: "0.5rem" }}
-              >
-                <Link to={`/upload-screen/`}>
-                  <Button
-                    handleClick={() => null}
-                    buttonTexts={translation}
-                    label={"upload"}
-                    language={props.language}
-                    classButton={DEFAULT_BUTTON_CLASSES}
-                  />
-                </Link>
-              </Box>
-            )}
+            {/* {props.isLoggedIn && ( */}
+            <Box
+              size={{
+                maxWidth: "200px",
+                width: "25%",
+                height: "42px",
+              }}
+              align={{ self: "center" }}
+              margin={{ top: "0.5rem" }}
+            >
+              <Link to={`/upload-screen/`}>
+                <Button
+                  handleClick={() => null}
+                  buttonTexts={translation}
+                  label={"upload"}
+                  language={props.language}
+                  classButton={DEFAULT_BUTTON_CLASSES}
+                />
+              </Link>
+            </Box>
+            {/* // )} */}
           </Box>
         </ContentArea>
         {clicked ? (

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { Box } from '../../components/Box/Box';
+import FileInput from '../../components/FileInput/FileInput';
 import { Input } from '../../components/Input/Input';
+import { TextArea } from '../../components/TextArea/TextArea';
 import { Languages } from '../../enums/languages/languages';
 import { getTranslations } from '../../utils/utils';
 
@@ -11,6 +13,9 @@ type MyProps = {
 }
 
 const UploadContainer = (props: MyProps) => {
+  const [lessonName, setLessonName] = useState("")
+  const [lessonDescription, setLessonDescription] = useState("")
+
   return (
     <Box
       size={{
@@ -42,23 +47,26 @@ const UploadContainer = (props: MyProps) => {
         >
           <Box
             size={{
-              width: "50%",
+              width: ["100%", "100%", "50%"],
             }}
             flex={{
-              justify: "start",
+              justify: ["center", "center", "start"],
             }}
           >
             {getTranslations(props.language, "lessonName")}
           </Box>
           <Box
             size={{
-              width: "50%",
+              width: ["100%", "100%", "50%"],
             }}
             flex={{
-              justify: "start",
+              justify: ["center", "center", "start"],
             }}
           >
-            <Input value={""} handleChange={() => null} />
+            <Input
+              value={lessonName}
+              handleChange={e => setLessonName(e.target.value)}
+            />
           </Box>
         </Box>
         <Box
@@ -75,23 +83,26 @@ const UploadContainer = (props: MyProps) => {
         >
           <Box
             size={{
-              width: "50%",
+              width: ["100%", "100%", "50%"],
             }}
             flex={{
-              justify: "start",
+              justify: ["center", "center", "start"],
             }}
           >
             {getTranslations(props.language, "lessonDescription")}
           </Box>
           <Box
             size={{
-              width: "50%",
+              width: ["100%", "100%", "50%"],
             }}
             flex={{
-              justify: "start",
+              justify: ["center", "center", "start"],
             }}
           >
-            sss
+            <TextArea
+              value={lessonDescription}
+              handleChange={e => setLessonDescription(e.target.value)}
+            />
           </Box>
         </Box>
         <Box
@@ -108,23 +119,23 @@ const UploadContainer = (props: MyProps) => {
         >
           <Box
             size={{
-              width: "50%",
+              width: ["100%", "100%", "50%"],
             }}
             flex={{
-              justify: "start",
+              justify: ["center", "center", "start"],
             }}
           >
             {getTranslations(props.language, "lessonCover")}
           </Box>
           <Box
             size={{
-              width: "50%",
+              width: ["100%", "100%", "50%"],
             }}
             flex={{
-              justify: "start",
+              justify: ["center", "center", "start"],
             }}
           >
-            sss
+            <FileInput handleChange={() => null} handleSubmit={() => null} />
           </Box>
         </Box>
         <Box
@@ -141,23 +152,23 @@ const UploadContainer = (props: MyProps) => {
         >
           <Box
             size={{
-              width: "50%",
+              width: ["100%", "100%", "50%"],
             }}
             flex={{
-              justify: "start",
+              justify: ["center", "center", "start"],
             }}
           >
             {getTranslations(props.language, "lessonMaterial")}
           </Box>
           <Box
             size={{
-              width: "50%",
+              width: ["100%", "100%", "50%"],
             }}
             flex={{
-              justify: "start",
+              justify: ["center", "center", "start"],
             }}
           >
-            sss
+            <FileInput handleChange={() => null} handleSubmit={() => null} />
           </Box>
         </Box>
       </Box>

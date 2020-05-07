@@ -113,4 +113,10 @@ export const translations = [
       LTU: "Pamokos medžiaga:",
     },
   },
+  {
+    label: "uploadImage",
+    description: {
+      LTU: "Įkelkite paveikslėlį",
+    },
+  },
 ]

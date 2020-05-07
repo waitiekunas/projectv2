@@ -1,20 +1,20 @@
 import React from 'react';
 
 import { Box } from '../Box/Box';
-import { StyledInput } from './style';
+import { StyledArea } from './style';
 
 type MyProps = {
   value: any
   handleChange: (e?: any) => void
 }
-export const Input = (props: MyProps) => {
+export const TextArea = (props: MyProps) => {
   return (
     <Box
       size={{
         width: "100%",
       }}
     >
-      <StyledInput value={props.value} onChange={props.handleChange} />
+      <StyledArea value={props.value} onChange={props.handleChange} />
     </Box>
   )
 }
