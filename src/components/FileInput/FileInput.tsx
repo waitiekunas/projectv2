@@ -1,50 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
+import { getTranslations } from '../../utils/utils';
 import { Box } from '../Box/Box';
-import Button from '../Button/Button';
+import { StyledLabel } from './style';
 
 type MyProps = {
-  handleSubmit: (e: any) => void
-  handleChange: (e: any) => void
+  onChange: (e: any) => void
   language?: Languages
+  label: string
+  value: any[]
+  dispatch?: any
 }
 
-const FileInput = (props: MyProps) => {
+const FileInput = ({ value, onChange, ...rest }: MyProps) => {
+  const [val, setVal] = useState<File[]>([])
+  useEffect(() => {
+    setVal(value)
+  }, [value])
+  const joinFileName = () => (
+    <ul>
+      {val.map((f, index) => (
+        <li key={index}>{f.name}</li>
+      ))}
+    </ul>
+  )
+
   return (
     <Box
       size={{
         width: "100%",
       }}
+      padding={{
+        bottom: "8px",
+      }}
     >
-      <form onSubmit={props.handleSubmit}>
-        <input type={"file"} onChange={props.handleChange} />
-        <Box
-          flex={{
-            justify: "start",
-          }}
-        >
-          <Box
-            size={{
-              width: "50%",
+      <Box
+        size={{
+          width: "50%",
+        }}
+      >
+        <StyledLabel className={DEFAULT_BUTTON_CLASSES}>
+          {getTranslations(rest.language, rest.label)}
+          <input
+            {...rest}
+            style={{ display: "none" }}
+            type="file"
+            onChange={e => {
+              onChange([...e.target.files])
             }}
-            padding={{
-              top: "0.25rem",
-            }}
-          >
-            <Button
-              handleClick={props.handleSubmit}
-              buttonTexts={translations}
-              label={"uploadImage"}
-              language={props.language}
-              classButton={DEFAULT_BUTTON_CLASSES}
-            />
-          </Box>
-        </Box>
-      </form>
+          />
+        </StyledLabel>
+      </Box>
+      {Boolean(val.length) && <div>Selected files: {joinFileName()}</div>}
     </Box>
   )
 }

@@ -12,6 +12,7 @@ export const TextArea = (props: MyProps) => {
     <Box
       size={{
         width: "100%",
+        height: "100%",
       }}
     >
       <StyledArea value={props.value} onChange={props.handleChange} />

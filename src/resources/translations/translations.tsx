@@ -119,4 +119,16 @@ export const translations = [
       LTU: "Įkelkite paveikslėlį",
     },
   },
+  {
+    label: "uploadFile",
+    description: {
+      LTU: "Įkelkite failą",
+    },
+  },
+  {
+    label: "uploadLesson",
+    description: {
+      LTU: "Įkelkite pamoką",
+    },
+  },
 ]
