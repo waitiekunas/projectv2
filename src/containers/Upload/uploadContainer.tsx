@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { Box } from '../../components/Box/Box';
@@ -20,7 +21,8 @@ const UploadContainer = (props: MyProps) => {
   const [lessonDescription, setLessonDescription] = useState("")
   const [uploadedImage, setUploadedImage] = useState<any>([])
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
-
+  const [disabled, setDisabled] = useState(true)
+  const [upload, setUpload] = useState(true)
   const handleFileUpload = useCallback(
     (file: File[]) => {
       const files = uploadedFiles.concat(file)
@@ -28,6 +30,32 @@ const UploadContainer = (props: MyProps) => {
     },
     [uploadedFiles]
   )
+  useEffect(() => {
+    allFieldsHaveValue()
+  })
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "http://localhost:5000/admin/upload",
+      data: {
+        lessonName: lessonName,
+        lessonDescription: lessonDescription,
+        image: uploadedImage,
+        material: uploadedFiles,
+        loginName: "test",
+      },
+    })
+  }, [upload])
+  const allFieldsHaveValue = () => {
+    let tempDisabled = true
+    if (lessonName && lessonDescription && uploadedFiles.length > 0) {
+      tempDisabled = false
+    }
+    setDisabled(tempDisabled)
+  }
+  const handleUpload = () => {
+    setUpload(!upload)
+  }
   return (
     <Box
       size={{
@@ -45,6 +73,31 @@ const UploadContainer = (props: MyProps) => {
           all: "5%",
         }}
       >
+        {disabled && (
+          <Box
+            size={{
+              width: "100%",
+            }}
+            flex={{
+              justify: "center",
+              direction: ["column", "column", "row"],
+            }}
+            padding={{
+              all: "0.5rem",
+            }}
+          >
+            <Box
+              size={{
+                width: ["100%", "100%", "30%"],
+              }}
+              flex={{
+                justify: ["center", "center", "start"],
+              }}
+            >
+              All field must have value
+            </Box>
+          </Box>
+        )}
         <Box
           size={{
             width: "100%",
@@ -211,11 +264,12 @@ const UploadContainer = (props: MyProps) => {
             }}
           >
             <Button
-              handleClick={() => null}
+              handleClick={() => handleUpload()}
               buttonTexts={translations}
               label={"uploadLesson"}
               language={props.language}
               classButton={DEFAULT_BUTTON_CLASSES}
+              disabled={disabled}
             />
           </Box>
         </Box>
