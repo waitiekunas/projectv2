@@ -5,7 +5,7 @@ import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { getTranslations } from '../../utils/utils';
 import { Box } from '../Box/Box';
-import { StyledLabel } from './style';
+import { StyledLabel, StyledSpan } from './style';
 
 type MyProps = {
   onChange: (e: any) => void
@@ -13,21 +13,25 @@ type MyProps = {
   label: string
   value: any[]
   dispatch?: any
+  onDelete: (index: number) => void
 }
 
 const FileInput = ({ value, onChange, ...rest }: MyProps) => {
-  const [val, setVal] = useState<File[]>([])
+  const [val, setVal] = useState<File[]>(value)
   useEffect(() => {
     setVal(value)
   }, [value])
   const joinFileName = () => (
     <ul>
       {val.map((f, index) => (
-        <li key={index}>{f.name}</li>
+        <li key={index}>
+          {f.name}{" "}
+          <StyledSpan onClick={() => rest.onDelete(index)}>X</StyledSpan>
+        </li>
       ))}
     </ul>
   )
-
+  debugger
   return (
     <Box
       size={{
@@ -36,25 +40,55 @@ const FileInput = ({ value, onChange, ...rest }: MyProps) => {
       padding={{
         bottom: "8px",
       }}
+      flex={{
+        direction: "column",
+      }}
     >
       <Box
         size={{
-          width: "50%",
+          width: "100%",
+        }}
+        flex={{
+          justify: ["center", "center", "start"],
+        }}
+        padding={{
+          bottom: "8px",
         }}
       >
-        <StyledLabel className={DEFAULT_BUTTON_CLASSES}>
-          {getTranslations(rest.language, rest.label)}
-          <input
-            {...rest}
-            style={{ display: "none" }}
-            type="file"
-            onChange={e => {
-              onChange([...e.target.files])
-            }}
-          />
-        </StyledLabel>
+        <Box
+          size={{
+            width: "50%",
+          }}
+        >
+          <StyledLabel className={DEFAULT_BUTTON_CLASSES}>
+            {getTranslations(rest.language, rest.label)}
+            <input
+              {...rest}
+              style={{ display: "none" }}
+              type="file"
+              onChange={e => {
+                onChange([...e.target.files])
+              }}
+            />
+          </StyledLabel>
+        </Box>
       </Box>
-      {Boolean(val.length) && <div>Selected files: {joinFileName()}</div>}
+      {Boolean(val.length) && (
+        <Box
+          flex={{
+            direction: "column",
+          }}
+        >
+          Selected files:
+          <Box
+            flex={{
+              direction: "row",
+            }}
+          >
+            {joinFileName()}
+          </Box>
+        </Box>
+      )}
     </Box>
   )
 }

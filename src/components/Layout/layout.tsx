@@ -4,20 +4,16 @@
  *
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
+import '../../styles/main.scss';
+import './layout.css';
 
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
-
-import Header from "../Header/header"
-import "./layout.css"
-import "../../styles/main.scss"
-
-import Footer from "../../containers/Footer/Footer";
+import { graphql, useStaticQuery } from 'gatsby';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-
-
+import Footer from '../../containers/Footer/Footer';
+import Header from '../Header/header';
 
 const Layout = ({ children, isLoggedIn }: any) => {
   const data = useStaticQuery(graphql`
@@ -32,7 +28,7 @@ const Layout = ({ children, isLoggedIn }: any) => {
 
   return (
     <>
-      <h4>is logged in: {isLoggedIn ? 'true' : 'false'}</h4>
+      <h4>is logged in: {isLoggedIn ? "true" : "false"}</h4>
       {console.log(isLoggedIn)}
       <Header siteTitle={data.site.siteMetadata.title} />
       <div
@@ -46,17 +42,16 @@ const Layout = ({ children, isLoggedIn }: any) => {
           <Footer />
         </footer>
       </div>
-
     </>
   )
 }
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  isLoggedIn: PropTypes.bool
+  isLoggedIn: PropTypes.bool,
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.isLoggedIn.isLoggedIn
-});
+  isLoggedIn: state.isLoggedIn.isLoggedIn,
+})
 export default connect(mapStateToProps)(Layout)

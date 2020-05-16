@@ -22,29 +22,47 @@ const UploadContainer = (props: MyProps) => {
   const [uploadedImage, setUploadedImage] = useState<any>([])
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const [disabled, setDisabled] = useState(true)
-  const [upload, setUpload] = useState(true)
-  const handleFileUpload = useCallback(
-    (file: File[]) => {
-      const files = uploadedFiles.concat(file)
-      setUploadedFiles(files)
+  const [upload, setUpload] = useState(false)
+  const handleFileUpload = useCallback((file: File[]) => {
+    const files = uploadedFiles.concat(file)
+    setUploadedFiles(files)
+    debugger
+  }, [])
+  const handleImageDelete = useCallback(
+    (key: number) => {
+      setUploadedImage([])
     },
-    [uploadedFiles]
+    [uploadedImage]
   )
+  const handleFileDelete = useCallback((key: number) => {
+    let array = uploadedFiles
+    debugger
+    array.splice(key, 1)
+    setUploadedFiles(array)
+    debugger
+  }, [])
   useEffect(() => {
     allFieldsHaveValue()
   })
   useEffect(() => {
-    axios({
-      method: "post",
-      url: "http://localhost:5000/admin/upload",
-      data: {
-        lessonName: lessonName,
-        lessonDescription: lessonDescription,
-        image: uploadedImage,
-        material: uploadedFiles,
-        loginName: "test",
-      },
-    })
+    if (upload) {
+      const img = new FormData()
+      img.append(uploadedImage[0].name, uploadedImage[0])
+      const files = new FormData()
+      uploadedFiles.forEach(file => files.append(file.name, file))
+      axios({
+        method: "post",
+        url: "http://localhost:5000/admin/upload",
+        data: {
+          lessonName: lessonName,
+          lessonDescription: lessonDescription,
+          image: img,
+          material: uploadedFiles,
+          loginName: "test",
+        },
+      }).then(res => console.log(res))
+    }
+    setUpload(false)
   }, [upload])
   const allFieldsHaveValue = () => {
     let tempDisabled = true
@@ -56,6 +74,7 @@ const UploadContainer = (props: MyProps) => {
   const handleUpload = () => {
     setUpload(!upload)
   }
+
   return (
     <Box
       size={{
@@ -98,6 +117,7 @@ const UploadContainer = (props: MyProps) => {
             </Box>
           </Box>
         )}
+
         <Box
           size={{
             width: "100%",
@@ -205,6 +225,7 @@ const UploadContainer = (props: MyProps) => {
               onChange={setUploadedImage}
               label={"uploadImage"}
               value={uploadedImage}
+              onDelete={handleImageDelete}
             />
           </Box>
         </Box>
@@ -243,6 +264,7 @@ const UploadContainer = (props: MyProps) => {
               onChange={handleFileUpload}
               label={"uploadFile"}
               value={uploadedFiles}
+              onDelete={handleFileDelete}
             />
           </Box>
         </Box>
