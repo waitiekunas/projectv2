@@ -23,44 +23,66 @@ const UploadContainer = (props: MyProps) => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
   const [disabled, setDisabled] = useState(true)
   const [upload, setUpload] = useState(false)
-  const handleFileUpload = useCallback((file: File[]) => {
-    const files = uploadedFiles.concat(file)
-    setUploadedFiles(files)
-    debugger
-  }, [])
+  const [imageErrorMessage, setImageErrorMessage] = useState("")
+  const [fileErrorMessage, setFileErrorMessage] = useState("")
+  const handleFileUpload = useCallback(
+    (file: File[]) => {
+      let message = ""
+      let files = uploadedFiles
+      if (file[0].type.includes("pdf") || file[0].type.includes("video")) {
+        files = uploadedFiles.concat(file)
+      } else {
+        message = "Here you can upload only '.pdf' or a video file"
+      }
+      setFileErrorMessage(message)
+      setUploadedFiles(files)
+      debugger
+    },
+    [uploadedFiles]
+  )
   const handleImageDelete = useCallback(
     (key: number) => {
       setUploadedImage([])
     },
     [uploadedImage]
   )
-  const handleFileDelete = useCallback((key: number) => {
-    let array = uploadedFiles
-    debugger
-    array.splice(key, 1)
-    setUploadedFiles(array)
-    debugger
-  }, [])
+  const handleFileDelete = useCallback(
+    (key: number) => {
+      let array = uploadedFiles
+      array.splice(key, 1)
+      setUploadedFiles(array)
+      debugger
+    },
+    [uploadedFiles]
+  )
+  const handleImageUpload = useCallback(
+    (file: File[]) => {
+      let message = ""
+      let newFile = uploadedImage
+      if (file[0].type.includes("image")) {
+        newFile = file
+      } else {
+        message = "File you tried to upload is not an image"
+      }
+      setUploadedImage(newFile)
+      setImageErrorMessage(message)
+    },
+    [uploadedImage]
+  )
   useEffect(() => {
     allFieldsHaveValue()
   })
   useEffect(() => {
     if (upload) {
-      const img = new FormData()
-      img.append(uploadedImage[0].name, uploadedImage[0])
-      const files = new FormData()
-      uploadedFiles.forEach(file => files.append(file.name, file))
-      axios({
-        method: "post",
-        url: "http://localhost:5000/admin/upload",
-        data: {
-          lessonName: lessonName,
-          lessonDescription: lessonDescription,
-          image: img,
-          material: uploadedFiles,
-          loginName: "test",
-        },
-      }).then(res => console.log(res))
+      let files = new FormData()
+      files.append("image", uploadedImage[0])
+      uploadedFiles.forEach(file => files.append("file", file))
+      files.append("lessonName", lessonName)
+      files.append("lessonDescription", lessonName)
+      files.append("lessonAuthor", "test")
+      axios.post("http://localhost:5000/admin/upload", files, {}).then(res => {
+        console.log(res.statusText)
+      })
     }
     setUpload(false)
   }, [upload])
@@ -69,7 +91,7 @@ const UploadContainer = (props: MyProps) => {
     if (lessonName && lessonDescription && uploadedFiles.length > 0) {
       tempDisabled = false
     }
-    setDisabled(tempDisabled)
+    setDisabled(false)
   }
   const handleUpload = () => {
     setUpload(!upload)
@@ -222,10 +244,11 @@ const UploadContainer = (props: MyProps) => {
             }}
           >
             <FileInput
-              onChange={setUploadedImage}
+              onChange={handleImageUpload}
               label={"uploadImage"}
               value={uploadedImage}
               onDelete={handleImageDelete}
+              errorMessage={imageErrorMessage}
             />
           </Box>
         </Box>
@@ -265,6 +288,7 @@ const UploadContainer = (props: MyProps) => {
               label={"uploadFile"}
               value={uploadedFiles}
               onDelete={handleFileDelete}
+              errorMessage={fileErrorMessage}
             />
           </Box>
         </Box>

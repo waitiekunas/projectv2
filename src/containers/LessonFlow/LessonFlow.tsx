@@ -1,14 +1,15 @@
+import axios from 'axios';
 import PDFViewer from 'pdf-viewer-reactjs';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Player } from 'video-react';
 
-import { getClassMaterials, getLessonMaterial } from '../../backEnd/ClassesUtils';
 import { Box } from '../../components/Box/Box';
 import Button from '../../components/Button/Button';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
+import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
 import { translations } from '../../resources/translations/translations';
 
 const Background = styled.div`
@@ -36,161 +37,158 @@ type MyProps = {
   topicId: number
   language: Languages
 }
-type MyState = {
-  pdfView: boolean
-  videoView: boolean
-  topicId: number
-  currentStep: number
-  materialInfo: any
-}
-class LessonFlow extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props)
-    this.state = {
-      pdfView: null,
-      videoView: false,
-      topicId: this.props.topicId,
-      currentStep: 0,
-      materialInfo: {},
-    }
-  }
-  componentDidMount() {
-    this.setState({
-      materialInfo: getClassMaterials(this.state.topicId),
-      currentStep: this.state.currentStep + 1,
-    })
-  }
 
-  handleClick = e => {
+const LessonFlow = (props: MyProps) => {
+  const [topicId, setTopicId] = useState(props.topicId)
+  const [currentStep, setCurrentStep] = useState(0)
+  const [materialInfo, setMaterialInfo] = useState<LessonMaterial[]>([])
+  const [disableForwardButton, setDisabledForwardButton] = useState(false)
+  const [disableBackButton, setDisableBackButton] = useState(true)
+  useEffect(() => {
+    let topicInfo = new FormData()
+    topicInfo.append("id", topicId.toString())
+    axios
+      .post("http://localhost:5000/lesson/getLesson", topicInfo)
+      .then(res => {
+        setMaterialInfo(res.data)
+      })
+  }, [])
+  useEffect(() => {
+    setDisabledForwardButton(currentStep + 1 === materialInfo.length)
+    setDisableBackButton(currentStep === 0)
+  }, [currentStep])
+
+  const handleClick = e => {
     e.preventDefault()
-    this.props.handleClick()
+    props.handleClick()
   }
-  handleBack = e => {
+  const handleBack = e => {
     e.preventDefault()
-    if (this.state.currentStep - 1 > 0) {
-      this.setState({ currentStep: this.state.currentStep - 1 })
+    let step = currentStep
+    if (currentStep > 0) {
+      step -= 1
     }
+    setCurrentStep(step)
     //handle end of lesson)
   }
-  handleForward = e => {
+  const handleForward = e => {
     e.preventDefault()
-    if (this.state.currentStep + 1 <= this.state.materialInfo.qtty) {
-      this.setState({ currentStep: this.state.currentStep + 1 })
+    let step = currentStep
+    if (currentStep + 1 < materialInfo.length) {
+      step += 1
     }
+    setCurrentStep(step)
     //handle end of lesson
   }
-  addId = () => {
+  const addId = () => {
     do {
       document.getElementsByClassName("has-background-black")[0] &&
         document
           .getElementsByClassName("has-background-black")[0]
           .setAttribute("id", "customHeight")
-      debugger
     } while (
       document.getElementsByClassName("has-background-black").length === 0
     )
   }
 
-  render() {
-    let { topicId, currentStep } = this.state
-    let material = getLessonMaterial(topicId, currentStep - 1)
-    let linkMaterial = material && material.link
-    let type = material && material.type
-
-    return (
-      <>
-        <Background></Background>
-        <Wrapper>
-          <MainScreen>
-            {type === "pdf" && (
-              <PDFViewer
-                document={{
-                  url: linkMaterial,
-                }}
-                canvasCss="canvas"
-                nacbarWrapper="customHeight"
-              />
-            )}
-            }
-            {type === "video" ? (
-              <Player>
-                <source src={linkMaterial.toString()} />
-              </Player>
-            ) : null}
+  let material = materialInfo && materialInfo[currentStep]
+  let linkMaterial = material?.resource_id
+  let type = material?.type
+  return (
+    <>
+      <Background></Background>
+      <Wrapper>
+        <MainScreen>
+          {type?.includes("pdf") && (
+            <PDFViewer
+              document={{
+                url: linkMaterial,
+              }}
+              canvasCss="canvas"
+              nacbarWrapper="customHeight"
+            />
+          )}
+          }
+          {type?.includes("video") ? (
+            <Player>
+              <source src={linkMaterial?.toString()} />
+            </Player>
+          ) : null}
+          <Box
+            flex={{ justify: "around" }}
+            margin={{ top: ["32px", "32px", "12px"] }}
+          >
             <Box
-              flex={{ justify: "around" }}
-              margin={{ top: ["32px", "32px", "12px"] }}
+              size={{
+                maxWidth: "200px",
+                width: "25%",
+                height: "42px",
+              }}
+              flex={{
+                direction: "column",
+                justify: "center",
+              }}
+              align={{ self: "center" }}
             >
-              <Box
-                size={{
-                  maxWidth: "200px",
-                  width: "25%",
-                  height: "42px",
-                }}
-                flex={{
-                  direction: "column",
-                  justify: "center",
-                }}
-                align={{ self: "center" }}
-              >
-                <Button
-                  language={this.props.language}
-                  label="back"
-                  buttonTexts={translations.buttons}
-                  handleClick={this.handleBack}
-                  classButton={DEFAULT_BUTTON_CLASSES}
-                />
-              </Box>
-
-              <Box
-                size={{
-                  maxWidth: "200px",
-                  width: "25%",
-                  height: "42px",
-                }}
-                flex={{
-                  direction: "column",
-                  justify: "center",
-                }}
-                align={{ self: "center" }}
-              >
-                <Button
-                  language={this.props.language}
-                  label="forward"
-                  buttonTexts={translations.buttons}
-                  handleClick={this.handleForward}
-                  classButton={DEFAULT_BUTTON_CLASSES}
-                  style={{ background: "#4299e1" }}
-                />
-              </Box>
-
-              <Box
-                size={{
-                  maxWidth: "200px",
-                  width: "25%",
-                  height: "42px",
-                }}
-                flex={{
-                  direction: "column",
-                  justify: "center",
-                }}
-                align={{ self: "center" }}
-              >
-                <Button
-                  language={this.props.language}
-                  label="close"
-                  buttonTexts={translations.buttons}
-                  handleClick={this.handleClick}
-                  classButton={DEFAULT_BUTTON_CLASSES}
-                  style={{ background: "#4299e1" }}
-                />
-              </Box>
+              <Button
+                language={props.language}
+                label="back"
+                buttonTexts={translations}
+                handleClick={handleBack}
+                classButton={DEFAULT_BUTTON_CLASSES}
+                disabled={disableBackButton}
+              />
             </Box>
-          </MainScreen>
-        </Wrapper>
-      </>
-    )
-  }
+
+            <Box
+              size={{
+                maxWidth: "200px",
+                width: "25%",
+                height: "42px",
+              }}
+              flex={{
+                direction: "column",
+                justify: "center",
+              }}
+              align={{ self: "center" }}
+            >
+              <Button
+                language={props.language}
+                label="forward"
+                buttonTexts={translations}
+                handleClick={handleForward}
+                classButton={DEFAULT_BUTTON_CLASSES}
+                style={{ background: "#4299e1" }}
+                disabled={disableForwardButton}
+              />
+            </Box>
+
+            <Box
+              size={{
+                maxWidth: "200px",
+                width: "25%",
+                height: "42px",
+              }}
+              flex={{
+                direction: "column",
+                justify: "center",
+              }}
+              align={{ self: "center" }}
+            >
+              <Button
+                language={props.language}
+                label="close"
+                buttonTexts={translations}
+                handleClick={handleClick}
+                classButton={DEFAULT_BUTTON_CLASSES}
+                style={{ background: "#4299e1" }}
+              />
+            </Box>
+          </Box>
+        </MainScreen>
+      </Wrapper>
+    </>
+  )
 }
 const mapStateToProps = state => ({
   language: state.language.language,

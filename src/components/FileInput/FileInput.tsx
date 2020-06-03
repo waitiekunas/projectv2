@@ -12,15 +12,17 @@ type MyProps = {
   language?: Languages
   label: string
   value: any[]
-  dispatch?: any
   onDelete: (index: number) => void
+  errorMessage?: string
 }
 
-const FileInput = ({ value, onChange, ...rest }: MyProps) => {
+const FileInput = ({ value, onChange, errorMessage, ...rest }: MyProps) => {
   const [val, setVal] = useState<File[]>(value)
+  const [errorMsg, setErrorMessage] = useState(errorMessage)
   useEffect(() => {
     setVal(value)
-  }, [value])
+    setErrorMessage(errorMessage)
+  }, [value, errorMessage])
   const joinFileName = () => (
     <ul>
       {val.map((f, index) => (
@@ -31,7 +33,6 @@ const FileInput = ({ value, onChange, ...rest }: MyProps) => {
       ))}
     </ul>
   )
-  debugger
   return (
     <Box
       size={{
@@ -73,6 +74,7 @@ const FileInput = ({ value, onChange, ...rest }: MyProps) => {
           </StyledLabel>
         </Box>
       </Box>
+      <span>{errorMsg}</span>
       {Boolean(val.length) && (
         <Box
           flex={{

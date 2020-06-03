@@ -4,7 +4,8 @@ export const classMaterial = [
     material: [
       {
         type: "pdf",
-        link: "/mock/pdfMock.pdf",
+        link:
+          "https://res.cloudinary.com/dp4tmfc4f/image/upload/v1589890200/psh1bnaqnnyo2pylmjlk.pdf",
       },
       {
         type: "video",
