@@ -44,6 +44,7 @@ const LessonFlow = (props: MyProps) => {
   const [materialInfo, setMaterialInfo] = useState<LessonMaterial[]>([])
   const [disableForwardButton, setDisabledForwardButton] = useState(false)
   const [disableBackButton, setDisableBackButton] = useState(true)
+  const [flow, setFlow] = useState<any[]>([null])
   useEffect(() => {
     let topicInfo = new FormData()
     topicInfo.append("id", topicId.toString())
@@ -57,7 +58,32 @@ const LessonFlow = (props: MyProps) => {
     setDisabledForwardButton(currentStep + 1 === materialInfo.length)
     setDisableBackButton(currentStep === 0)
   }, [currentStep])
+  useEffect(() => {
+    let array = []
+    materialInfo?.forEach(lesson => {
+      if (lesson?.type.includes("pdf")) {
+        array.push(
+          <PDFViewer
+            document={{
+              url: lesson.resource_id,
+            }}
+            canvasCss="canvas"
+            nacbarWrapper="customHeight"
+          />
+        )
+      } else if (lesson?.type.includes("video")) {
+        array.push(
+          <Player>
+            <source src={lesson.resource_id} />
+          </Player>
+        )
+      } else {
+        array.push(null)
+      }
+    })
 
+    setFlow(array)
+  }, [materialInfo])
   const handleClick = e => {
     e.preventDefault()
     props.handleClick()
@@ -91,6 +117,15 @@ const LessonFlow = (props: MyProps) => {
     )
   }
 
+  const renderPDFViewer = (link: string) => (
+    <PDFViewer
+      document={{
+        url: link,
+      }}
+      canvasCss="canvas"
+      nacbarWrapper="customHeight"
+    />
+  )
   let material = materialInfo && materialInfo[currentStep]
   let linkMaterial = material?.resource_id
   let type = material?.type
@@ -99,21 +134,7 @@ const LessonFlow = (props: MyProps) => {
       <Background></Background>
       <Wrapper>
         <MainScreen>
-          {type?.includes("pdf") && (
-            <PDFViewer
-              document={{
-                url: linkMaterial,
-              }}
-              canvasCss="canvas"
-              nacbarWrapper="customHeight"
-            />
-          )}
-          }
-          {type?.includes("video") ? (
-            <Player>
-              <source src={linkMaterial?.toString()} />
-            </Player>
-          ) : null}
+          {flow[currentStep]}
           <Box
             flex={{ justify: "around" }}
             margin={{ top: ["32px", "32px", "12px"] }}
