@@ -1,9 +1,11 @@
-import { Languages } from "../../enums/languages/languages";
-
+import { Languages } from '../../enums/languages/languages';
 
 export interface ILanguage {
-    language: Languages
+  language: Languages
 }
 export interface ILoggedIn {
-    isLoggedIn: boolean
+  isLoggedIn: boolean
+}
+export interface IUserId {
+  userId: number
 }

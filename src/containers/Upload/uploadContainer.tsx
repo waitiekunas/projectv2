@@ -14,6 +14,7 @@ import { getTranslations } from '../../utils/utils';
 
 type MyProps = {
   language: Languages
+  userId: number
 }
 
 const UploadContainer = (props: MyProps) => {
@@ -25,6 +26,9 @@ const UploadContainer = (props: MyProps) => {
   const [upload, setUpload] = useState(false)
   const [imageErrorMessage, setImageErrorMessage] = useState("")
   const [fileErrorMessage, setFileErrorMessage] = useState("")
+  const [authorImage, setAuthorImage] = useState<any[]>([])
+  const [imageAuthorErrorMessage, setImageAuthorErrorMessage] = useState("")
+  const [authorDescription, setAuthorDescription] = useState("")
   const handleFileUpload = useCallback(
     (file: File[]) => {
       let message = ""
@@ -36,7 +40,6 @@ const UploadContainer = (props: MyProps) => {
       }
       setFileErrorMessage(message)
       setUploadedFiles(files)
-      debugger
     },
     [uploadedFiles]
   )
@@ -45,6 +48,12 @@ const UploadContainer = (props: MyProps) => {
       setUploadedImage([])
     },
     [uploadedImage]
+  )
+  const handleAuthorImageDelete = useCallback(
+    (key: number) => {
+      setAuthorImage([])
+    },
+    [authorImage]
   )
   const handleFileDelete = useCallback(
     (key: number) => {
@@ -69,17 +78,37 @@ const UploadContainer = (props: MyProps) => {
     },
     [uploadedImage]
   )
+  const handleAuthorImageUpload = useCallback(
+    (file: File[]) => {
+      let message = ""
+      let newFile = authorImage
+      if (file[0].type.includes("image")) {
+        newFile = file
+      } else {
+        message = "File you tried to upload is not an image"
+      }
+      setAuthorImage(newFile)
+      setImageAuthorErrorMessage(message)
+    },
+    [uploadedImage]
+  )
   useEffect(() => {
     allFieldsHaveValue()
   })
   useEffect(() => {
     if (upload) {
       let files = new FormData()
+      if (authorImage.length > 0) {
+        files.append("authorImage", authorImage[0])
+      }
+      if (authorDescription) {
+        files.append("authorDescription", authorDescription)
+      }
       files.append("image", uploadedImage[0])
       uploadedFiles.forEach(file => files.append("file", file))
       files.append("lessonName", lessonName)
-      files.append("lessonDescription", lessonName)
-      files.append("lessonAuthor", "test")
+      files.append("lessonDescription", lessonDescription)
+      files.append("userId", props.userId.toString())
       axios.post("http://localhost:5000/admin/upload", files, {}).then(res => {
         console.log(res.statusText)
       })
@@ -96,7 +125,7 @@ const UploadContainer = (props: MyProps) => {
   const handleUpload = () => {
     setUpload(!upload)
   }
-
+  console.log(props.userId)
   return (
     <Box
       size={{
@@ -298,6 +327,82 @@ const UploadContainer = (props: MyProps) => {
           }}
           flex={{
             justify: "center",
+            direction: ["column", "column", "row"],
+          }}
+          padding={{
+            all: "0.5rem",
+          }}
+        >
+          <Box
+            size={{
+              width: ["100%", "100%", "30%"],
+            }}
+            flex={{
+              justify: ["center", "center", "start"],
+            }}
+          >
+            {getTranslations(props.language, "authorPicture")}
+          </Box>
+          <Box
+            size={{
+              width: ["100%", "100%", "70%"],
+            }}
+            flex={{
+              justify: ["center", "center", "start"],
+            }}
+          >
+            <FileInput
+              onChange={handleAuthorImageUpload}
+              label={"uploadImage"}
+              value={authorImage}
+              onDelete={handleAuthorImageDelete}
+              errorMessage={imageAuthorErrorMessage}
+            />
+          </Box>
+        </Box>
+        <Box
+          size={{
+            width: "100%",
+            height: "50%",
+          }}
+          flex={{
+            justify: "center",
+            direction: ["column", "column", "row"],
+          }}
+          padding={{
+            all: "0.5rem",
+          }}
+        >
+          <Box
+            size={{
+              width: ["100%", "100%", "30%"],
+            }}
+            flex={{
+              justify: ["center", "center", "start"],
+            }}
+          >
+            {getTranslations(props.language, "authorDescription")}
+          </Box>
+          <Box
+            size={{
+              width: ["100%", "100%", "70%"],
+            }}
+            flex={{
+              justify: ["center", "center", "start"],
+            }}
+          >
+            <TextArea
+              value={authorDescription}
+              handleChange={e => setAuthorDescription(e.target.value)}
+            />
+          </Box>
+        </Box>
+        <Box
+          size={{
+            width: "100%",
+          }}
+          flex={{
+            justify: "center",
             direction: ["row"],
           }}
           padding={{
@@ -325,5 +430,6 @@ const UploadContainer = (props: MyProps) => {
 }
 const mapStateToProps = state => ({
   language: state.language.language,
+  userId: state.userId.userId,
 })
 export default connect(mapStateToProps)(UploadContainer)

@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { Link } from 'gatsby';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -61,6 +62,7 @@ type MyProps = {
       description: string
     }
     description: string
+    authorId: number
   }
   language: Languages
   isLoggedIn: boolean
@@ -69,7 +71,16 @@ type MyProps = {
 const TopicDescription = (props: MyProps) => {
   const [clicked, setClicked] = useState(false)
   const [selectedClassId, setSelectedClassId] = useState(0)
-
+  const [authorInfo, setAuthorInfo] = useState<any>()
+  useEffect(() => {
+    let author = new FormData()
+    author.append("id", props.topicInfo.authorId.toString())
+    axios
+      .post("http://localhost:5000/lesson/getAuthorInfo", author)
+      .then(res => {
+        setAuthorInfo(res.data)
+      })
+  }, [])
   const handleClick = e => {
     e.preventDefault()
     setClicked(!clicked)
@@ -78,8 +89,6 @@ const TopicDescription = (props: MyProps) => {
 
   const closeChildScreen = useCallback(() => setClicked(false), [false])
 
-  const authorPhoto = props.topicInfo?.authorDesc.photo
-  const authorDescription = props.topicInfo?.authorDesc.description
   const topicDesc = props.topicInfo?.description
 
   const translation = translations
@@ -100,11 +109,13 @@ const TopicDescription = (props: MyProps) => {
             <AuthorPhotoArea>
               <Image
                 additionalClass={""}
-                imageUri={authorPhoto}
+                imageUri={authorInfo[0]?.photo_url}
                 showText={false}
               />
             </AuthorPhotoArea>
-            <AuthorDescriptionArea>{authorDescription}</AuthorDescriptionArea>
+            <AuthorDescriptionArea>
+              {authorInfo[0]?.description}
+            </AuthorDescriptionArea>
           </AuthorInfoArea>
           <TextArea>{topicDesc}</TextArea>
           <Box

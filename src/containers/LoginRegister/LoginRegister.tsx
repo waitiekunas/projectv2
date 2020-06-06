@@ -1,14 +1,12 @@
-import React from "react"
-import { connect, useDispatch } from "react-redux"
+import React from 'react';
+import { connect } from 'react-redux';
 
-import Button from "../../components/Button/Button"
-import Login from "../../components/Login/Login"
-import Register from "../../components/Register/Register"
-import { translations } from "../../resources/translations/translations"
-import { Languages } from "../../enums/languages/languages"
-import { registerUser, checkIfUserNotEmpty } from "../../backEnd/LoginUtils"
-import { tryLogin } from "../../state/actions/loginRegister"
-import { IRegisterInput } from "../../interfaces/loginRegister/IRegister"
+import Login from '../../components/Login/Login';
+import Register from '../../components/Register/Register';
+import { Languages } from '../../enums/languages/languages';
+import { translations } from '../../resources/translations/translations';
+import { tryLogin } from '../../state/actions/loginRegister';
+import { setUserId } from '../../state/actions/user';
 
 type MyProps = {
   language?: Languages
@@ -55,7 +53,8 @@ class LoginRegister extends React.Component<MyProps, MyState> {
       [state]: value,
     } as MyState)
   }
-  handleLogin = (login: boolean) => {
+  handleLogin = (login: boolean, id: number) => {
+    this.props.dispatch(setUserId(id))
     this.props.dispatch(tryLogin(login))
     this.props.handleClick("isLoggedIn", login)
     login && this.props.handleClick("loginRegisterShow", !login)
@@ -67,7 +66,7 @@ class LoginRegister extends React.Component<MyProps, MyState> {
   }
 
   render() {
-    const translation = translations.buttons
+    const translation = translations
     const { language, show } = this.props
     const { showLogin } = this.state
     const styleClasses = "flex justify-center fixed z-10"

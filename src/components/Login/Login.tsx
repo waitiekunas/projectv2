@@ -5,7 +5,7 @@ import { Languages } from '../../enums/languages/languages';
 import Button from '../Button/Button';
 
 type MyProps = {
-  login: (login: any) => void
+  login: (login: boolean, id: number) => void
   translation: any
   language: Languages
   handleViewChange: (e) => void
@@ -26,7 +26,7 @@ const Login = (props: MyProps) => {
           password: password,
         },
       }).then(res => {
-        props.login(res.data)
+        props.login(res.data.login, res.data.id)
       })
     }
   }, [login])

@@ -44,7 +44,10 @@ export const ClassList = () => {
                   description:
                     "Suspendisse volutpat cursus nisi eget egestas. Suspendisse nunc dui, ultricies at felis sit amet, blandit pulvinar risus. Fusce laoreet velit neque, ac imperdiet magna facilisis in. Ut sed bibendum leo. Cras consequat eleifend augue, et laoreet libero cursus in. Praesent euismod purus libero, non vehicula nibh fringilla dapibus. Nunc sed nulla sit amet nibh dignissim ornare.",
                 }}
-                imageUri={"/images/logo192.png"}
+                imageUri={
+                  value.image_url ? value.image_url : "/images/logo192.png"
+                }
+                authorId={value.lesson_author}
               />
             ))}
         </Slider>
