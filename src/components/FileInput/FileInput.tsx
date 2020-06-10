@@ -68,7 +68,9 @@ const FileInput = ({ value, onChange, errorMessage, ...rest }: MyProps) => {
               style={{ display: "none" }}
               type="file"
               onChange={e => {
-                onChange([...e.target.files])
+                if (e.target.files.length > 0) {
+                  onChange([...e.target.files])
+                }
               }}
             />
           </StyledLabel>

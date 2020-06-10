@@ -109,12 +109,12 @@ const TopicDescription = (props: MyProps) => {
             <AuthorPhotoArea>
               <Image
                 additionalClass={""}
-                imageUri={authorInfo[0]?.photo_url}
+                imageUri={authorInfo && authorInfo[0].photo_url}
                 showText={false}
               />
             </AuthorPhotoArea>
             <AuthorDescriptionArea>
-              {authorInfo[0]?.description}
+              {authorInfo && authorInfo[0].description}
             </AuthorDescriptionArea>
           </AuthorInfoArea>
           <TextArea>{topicDesc}</TextArea>
