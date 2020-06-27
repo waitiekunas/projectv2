@@ -1,15 +1,15 @@
-import React from "react"
-import axios from "axios"
-import Button from "../../components/Button/Button"
-import Logo from "../../components/Logo/Logo"
-import DropDown from "../../components/DropDown/DropDown"
-import { Languages } from "../../enums/languages/languages"
-import { translations } from "../../resources/translations/translations"
-import LoginRegister from "../LoginRegister/LoginRegister"
-import { tryLogin } from "../../state/actions/loginRegister"
-import { DEFAULT_BUTTON_CLASSES } from "../../Constants/Constants"
-import { connect } from "react-redux"
-import { Box } from "../../components/Box/Box"
+import React from 'react';
+import { connect } from 'react-redux';
+
+import { Box } from '../../components/Box/Box';
+import Button from '../../components/Button/Button';
+import DropDown from '../../components/DropDown/DropDown';
+import Logo from '../../components/Logo/Logo';
+import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
+import { Languages } from '../../enums/languages/languages';
+import { translations } from '../../resources/translations/translations';
+import { tryLogin } from '../../state/actions/loginRegister';
+import LoginRegister from '../LoginRegister/LoginRegister';
 
 type MyProps = {
   language: Languages
@@ -49,52 +49,12 @@ class NavBar extends React.Component<MyProps, MyState> {
   render() {
     const { language, dispatch } = this.props
     const { loginRegisterShow, isLoggedIn } = this.state
-    const translation = translations.buttons
     return (
       <div className="flex justify-center max-height-10-proc">
         <div className="nav_bar flex justify-around w-full py-5">
           <DropDown />
-          <Box
-            size={{
-              maxWidth: "200px",
-              width: "25%",
-              height: "42px",
-            }}
-            flex={{
-              direction: "column",
-              justify: "center",
-            }}
-            align={{ self: "center" }}
-          >
-            <Button
-              handleClick={this.handleClick}
-              buttonTexts={translation}
-              label={"subscriptions"}
-              language={language}
-              classButton={DEFAULT_BUTTON_CLASSES}
-            />
-          </Box>
+
           <Logo class={"navbar-btn-cont flex justify-center"} />
-          <Box
-            size={{
-              maxWidth: "200px",
-              width: "25%",
-              height: "42px",
-            }}
-            flex={{
-              direction: "column",
-              justify: "center",
-            }}
-            align={{ self: "center" }}
-          >
-            <Button
-              handleClick={this.handleClick}
-              buttonTexts={translation}
-              label={"contacts"}
-              language={language}
-              classButton={DEFAULT_BUTTON_CLASSES}
-            />
-          </Box>
           <Box
             size={{
               maxWidth: "200px",
@@ -111,7 +71,7 @@ class NavBar extends React.Component<MyProps, MyState> {
               handleClick={
                 isLoggedIn ? this.handleLogout : this.handleLoginRegisterView
               }
-              buttonTexts={translation}
+              buttonTexts={translations}
               label={isLoggedIn ? "logout" : "signUp-signIn"}
               language={language}
               classButton={DEFAULT_BUTTON_CLASSES}

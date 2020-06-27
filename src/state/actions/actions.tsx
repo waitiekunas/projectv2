@@ -1,3 +1,5 @@
-export const GET_LANGUAGE = "GET_LANGAUGE"
+export const GET_LANGUAGE = "GET_LANGUAGE"
 export const LOGIN = "LOGIN"
 export const SET_USER_ID = "SET_USER_ID"
+export const SET_LOOKUPS = "SET_LOOKUPS"
+export const SET_LESSONS = "SET_LESSONS"

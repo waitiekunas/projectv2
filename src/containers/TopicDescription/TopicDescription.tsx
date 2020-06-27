@@ -105,18 +105,21 @@ const TopicDescription = (props: MyProps) => {
               imgText={"Buy!"}
             />
           )}
-          <AuthorInfoArea>
-            <AuthorPhotoArea>
-              <Image
-                additionalClass={""}
-                imageUri={authorInfo && authorInfo[0].photo_url}
-                showText={false}
-              />
-            </AuthorPhotoArea>
-            <AuthorDescriptionArea>
-              {authorInfo && authorInfo[0].description}
-            </AuthorDescriptionArea>
-          </AuthorInfoArea>
+
+          {authorInfo && (
+            <AuthorInfoArea>
+              <AuthorPhotoArea>
+                <Image
+                  additionalClass={""}
+                  imageUri={authorInfo[0].photo_url}
+                  showText={false}
+                />
+              </AuthorPhotoArea>
+              <AuthorDescriptionArea>
+                {authorInfo[0].description}
+              </AuthorDescriptionArea>
+            </AuthorInfoArea>
+          )}
           <TextArea>{topicDesc}</TextArea>
           <Box
             size={{

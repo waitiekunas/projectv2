@@ -7,10 +7,6 @@ export const getClassesFieldFromBack = (field: string): Array<string> => {
   })
   return Array.from(new Set(allValues))
 }
-//TODO: interface for Object
-export const getClassesByTopicFromBack = (topic: string): Array<any> => {
-  return classes.filter(value => value.topic === topic)
-}
 
 export const getClassMaterials = (idLesson: number) => {
   let lesson = classMaterial.filter(value => value.id === idLesson)

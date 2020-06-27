@@ -9,3 +9,6 @@ export interface ILoggedIn {
 export interface IUserId {
   userId: number
 }
+export interface ILookups {
+  lookups: string[]
+}

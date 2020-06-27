@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import ClassTicket from '../../components/ClassTicket/ClassTicket';
@@ -7,7 +8,6 @@ import { getClassesByTopic } from '../../utils/utils';
 type MyProps = {
   topic: string
 }
-type MyState = {}
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -22,33 +22,29 @@ const TopicWrapper = styled.div`
   width: 25%;
   margin: 0px;
 `
-class TopicsContainer extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props)
-    this.state = {}
-  }
-
-  render() {
-    const classes = getClassesByTopic(this.props.topic)
-    return (
-      <Wrapper>
-        <TopicsWrapper className={"TopicsWrapper"}>
-          {classes.map((value, index) => (
-            <TopicWrapper key={index} className={"TopicWrapper"}>
-              <ClassTicket
-                key={index}
-                text={value.name}
-                id={value.id}
-                description={value.description}
-                authorDesc={value.authorDesc}
-                imageUri={"/images/logo192.png"}
-              />
-            </TopicWrapper>
-          ))}
-        </TopicsWrapper>
-      </Wrapper>
-    )
-  }
+const TopicsContainer = (props: MyProps) => {
+  const lessons = useSelector((state: any) => state.lessons.lessons)
+  const classes = getClassesByTopic(lessons, props.topic)
+  return (
+    <Wrapper>
+      <TopicsWrapper className={"TopicsWrapper"}>
+        {classes.map((value, index) => (
+          <TopicWrapper key={index} className={"TopicWrapper"}>
+            <ClassTicket
+              key={index}
+              text={value.lesson_name}
+              id={value.id}
+              description={value.lesson_description}
+              imageUri={
+                value.image_url ? value.image_url : "/images/logo192.png"
+              }
+              authorId={value.lesson_author}
+            />
+          </TopicWrapper>
+        ))}
+      </TopicsWrapper>
+    </Wrapper>
+  )
 }
 
 export default TopicsContainer

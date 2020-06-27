@@ -1,4 +1,4 @@
-import { getClassesByTopicFromBack, getClassesFieldFromBack } from '../backEnd/ClassesUtils';
+import { getClassesFieldFromBack } from '../backEnd/ClassesUtils';
 import { Languages } from '../enums/languages/languages';
 import { translations } from '../resources/translations/translations';
 
@@ -22,6 +22,15 @@ export const getClassesField = (field: string): Array<string> => {
   return getClassesFieldFromBack(field)
 }
 
-export const getClassesByTopic = (topic: string): Array<any> => {
-  return getClassesByTopicFromBack(topic)
+export const getClassesByTopic = (
+  lessons: any[],
+  topic: string
+): Array<any> => {
+  let filteredLessons = []
+  lessons.forEach(lesson => {
+    if (lesson.topic === topic) {
+      filteredLessons.push(lesson)
+    }
+  })
+  return filteredLessons
 }

@@ -2,19 +2,25 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Slider from 'react-slick';
 
 import ClassTicket from '../../components/ClassTicket/ClassTicket';
+import { setLessons } from '../../state/actions/lessons';
+import { setLookups } from '../../state/actions/lookups';
 
 export const ClassList = () => {
-  const [lessons, setLessons] = useState<any>()
+  const lessons = useSelector((state: any) => state.lessons.lessons)
+  const dispatch = useDispatch()
   useEffect(() => {
     axios
       .get("http://localhost:5000/lesson/getAll")
-      .then((res: any) => setLessons(res.data))
+      .then((res: any) => dispatch(setLessons(res.data)))
   }, [])
-
+  useEffect(() => {
+    dispatch(setLookups(getTopics(lessons)))
+  }, [lessons])
   const settings = {
     dots: false,
     infinite: true,
@@ -27,7 +33,17 @@ export const ClassList = () => {
     draggable: true,
     initialSlide: 0,
   }
-  // TODO assign correct values to classticket
+  const getTopics = (lessons: any[]) => {
+    let topics = []
+    lessons &&
+      lessons.forEach(lesson => {
+        if (!topics.includes(lesson.topic)) {
+          topics.push(lesson.topic)
+        }
+      })
+    return topics
+  }
+
   return (
     <div className={"flex justify-center"}>
       <div className={"w-2/3 max-height-10-proc"}>
@@ -39,11 +55,6 @@ export const ClassList = () => {
                 text={value.lesson_name}
                 id={value.id}
                 description={value.lesson_description}
-                authorDesc={{
-                  photo: "/images/logo192.png",
-                  description:
-                    "Suspendisse volutpat cursus nisi eget egestas. Suspendisse nunc dui, ultricies at felis sit amet, blandit pulvinar risus. Fusce laoreet velit neque, ac imperdiet magna facilisis in. Ut sed bibendum leo. Cras consequat eleifend augue, et laoreet libero cursus in. Praesent euismod purus libero, non vehicula nibh fringilla dapibus. Nunc sed nulla sit amet nibh dignissim ornare.",
-                }}
                 imageUri={
                   value.image_url ? value.image_url : "/images/logo192.png"
                 }
@@ -55,4 +66,5 @@ export const ClassList = () => {
     </div>
   )
 }
+
 export default ClassList
