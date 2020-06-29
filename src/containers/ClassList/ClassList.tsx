@@ -36,7 +36,7 @@ export const ClassList = () => {
   const getTopics = (lessons: any[]) => {
     let topics = []
     lessons &&
-      lessons.forEach(lesson => {
+      lessons?.forEach(lesson => {
         if (!topics.includes(lesson.topic)) {
           topics.push(lesson.topic)
         }

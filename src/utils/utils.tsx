@@ -27,7 +27,7 @@ export const getClassesByTopic = (
   topic: string
 ): Array<any> => {
   let filteredLessons = []
-  lessons.forEach(lesson => {
+  lessons?.forEach(lesson => {
     if (lesson.topic === topic) {
       filteredLessons.push(lesson)
     }
