@@ -75,11 +75,9 @@ const TopicDescription = (props: MyProps) => {
   useEffect(() => {
     let author = new FormData()
     author.append("id", props.topicInfo.authorId.toString())
-    axios
-      .post("http://localhost:5000/lesson/getAuthorInfo", author)
-      .then(res => {
-        setAuthorInfo(res.data)
-      })
+    axios.post(process.env.GET_AUTHOR_INFO_URL, author).then(res => {
+      setAuthorInfo(res.data)
+    })
   }, [])
   const handleClick = e => {
     e.preventDefault()

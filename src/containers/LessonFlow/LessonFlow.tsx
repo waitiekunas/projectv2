@@ -48,11 +48,9 @@ const LessonFlow = (props: MyProps) => {
   useEffect(() => {
     let topicInfo = new FormData()
     topicInfo.append("id", topicId.toString())
-    axios
-      .post("http://localhost:5000/lesson/getLesson", topicInfo)
-      .then(res => {
-        setMaterialInfo(res.data)
-      })
+    axios.post(process.env.GET_LESSON_URL, topicInfo).then(res => {
+      setMaterialInfo(res.data)
+    })
   }, [])
   useEffect(() => {
     setDisabledForwardButton(currentStep + 1 === materialInfo.length)

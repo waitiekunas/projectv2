@@ -109,7 +109,7 @@ const UploadContainer = (props: MyProps) => {
       files.append("lessonName", lessonName)
       files.append("lessonDescription", lessonDescription)
       files.append("userId", props.userId.toString())
-      axios.post("http://localhost:5000/admin/upload", files, {}).then(res => {
+      axios.post(process.env.UPLOAD_URL, files, {}).then(res => {
         console.log(res.statusText)
       })
     }

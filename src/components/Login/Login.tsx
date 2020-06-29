@@ -14,13 +14,11 @@ const Login = (props: MyProps) => {
   const [login, setLogin] = useState(false)
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
-  // http://localhost:5000/user/login
-  // https://training-app-finance.herokuapp.com/user/login
   useEffect(() => {
     if (userName && password) {
       axios({
         method: "post",
-        url: "https://training-app-finance.herokuapp.com/user/login",
+        url: process.env.LOGIN_URL,
         data: {
           username: userName,
           password: password,

@@ -15,7 +15,7 @@ export const ClassList = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     axios
-      .get("http://localhost:5000/lesson/getAll")
+      .get(process.env.GET_ALL_LESSONS_URL)
       .then((res: any) => dispatch(setLessons(res.data)))
   }, [])
   useEffect(() => {

@@ -21,7 +21,7 @@ const Register = (props: MyProps) => {
     if (!disabled) {
       axios({
         method: "post",
-        url: "http://localhost:5000/user/register",
+        url: process.env.REGISTER_URL,
         data: {
           userData: formulateUser(),
         },
