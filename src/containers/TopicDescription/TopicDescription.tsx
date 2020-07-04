@@ -145,27 +145,27 @@ const TopicDescription = (props: MyProps) => {
                 classButton={DEFAULT_BUTTON_CLASSES}
               />
             </Box>
-            {/* {props.isLoggedIn && ( */}
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              align={{ self: "center" }}
-              margin={{ top: "0.5rem" }}
-            >
-              <Link to={`/upload-screen/`}>
-                <Button
-                  handleClick={() => null}
-                  buttonTexts={translation}
-                  label={"upload"}
-                  language={props.language}
-                  classButton={DEFAULT_BUTTON_CLASSES}
-                />
-              </Link>
-            </Box>
-            {/* // )} */}
+            {props.isLoggedIn && (
+              <Box
+                size={{
+                  maxWidth: "200px",
+                  width: "25%",
+                  height: "42px",
+                }}
+                align={{ self: "center" }}
+                margin={{ top: "0.5rem" }}
+              >
+                <Link to={`/upload-screen/`}>
+                  <Button
+                    handleClick={() => null}
+                    buttonTexts={translation}
+                    label={"upload"}
+                    language={props.language}
+                    classButton={DEFAULT_BUTTON_CLASSES}
+                  />
+                </Link>
+              </Box>
+            )}
           </Box>
         </ContentArea>
         {clicked ? (
