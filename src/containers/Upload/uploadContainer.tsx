@@ -11,6 +11,7 @@ import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { translations } from '../../resources/translations/translations';
 import { getTranslations } from '../../utils/utils';
+import { StyledSpan } from './style';
 
 type MyProps = {
   language: Languages
@@ -29,6 +30,10 @@ const UploadContainer = (props: MyProps) => {
   const [authorImage, setAuthorImage] = useState<any[]>([])
   const [imageAuthorErrorMessage, setImageAuthorErrorMessage] = useState("")
   const [authorDescription, setAuthorDescription] = useState("")
+  const [filesList, setFilesList] = useState<any>()
+  useEffect(() => {
+    setFilesList(joinFileName(uploadedFiles))
+  }, [uploadedFiles])
   const handleFileUpload = useCallback(
     (file: File[]) => {
       let message = ""
@@ -55,15 +60,12 @@ const UploadContainer = (props: MyProps) => {
     },
     [authorImage]
   )
-  const handleFileDelete = useCallback(
-    (key: number) => {
-      let array = uploadedFiles
-      array.splice(key, 1)
-      setUploadedFiles(array)
-      debugger
-    },
-    [uploadedFiles]
-  )
+  const handleFileDelete = (key: number) => {
+    let array = uploadedFiles
+    array.splice(key, 1)
+    setUploadedFiles(array)
+    setFilesList(joinFileName(array))
+  }
   const handleImageUpload = useCallback(
     (file: File[]) => {
       let message = ""
@@ -125,6 +127,16 @@ const UploadContainer = (props: MyProps) => {
   const handleUpload = () => {
     setUpload(!upload)
   }
+  const joinFileName = (array: any[]) => (
+    <ul>
+      {array.map((f, index) => (
+        <li key={index}>
+          {f.name}{" "}
+          <StyledSpan onClick={() => handleFileDelete(index)}>X</StyledSpan>
+        </li>
+      ))}
+    </ul>
+  )
   console.log(props.userId)
   return (
     <Box
@@ -274,7 +286,7 @@ const UploadContainer = (props: MyProps) => {
           >
             <FileInput
               onChange={handleImageUpload}
-              label={"uploadImage"}
+              label={getTranslations(props.language, "uploadImage")}
               value={uploadedImage}
               onDelete={handleImageDelete}
               errorMessage={imageErrorMessage}
@@ -314,11 +326,64 @@ const UploadContainer = (props: MyProps) => {
           >
             <FileInput
               onChange={handleFileUpload}
-              label={"uploadFile"}
+              label={`${getTranslations(
+                props.language,
+                "uploadLesson"
+              )} ${uploadedFiles.length + 1} ${getTranslations(
+                props.language,
+                "step"
+              )}`}
               value={uploadedFiles}
               onDelete={handleFileDelete}
               errorMessage={fileErrorMessage}
             />
+          </Box>
+        </Box>
+
+        <Box
+          size={{
+            width: "100%",
+          }}
+          flex={{
+            justify: "center",
+            direction: ["column", "column", "row"],
+          }}
+          padding={{
+            all: "0.5rem",
+          }}
+        >
+          <Box
+            size={{
+              width: ["100%", "100%", "30%"],
+            }}
+            flex={{
+              justify: ["center", "center", "start"],
+            }}
+          ></Box>
+          <Box
+            size={{
+              width: ["100%", "100%", "70%"],
+            }}
+            flex={{
+              justify: ["center", "center", "start"],
+            }}
+          >
+            {Boolean(uploadedFiles.length) && (
+              <Box
+                flex={{
+                  direction: "column",
+                }}
+              >
+                Selected files:
+                <Box
+                  flex={{
+                    direction: "row",
+                  }}
+                >
+                  {filesList}
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
         <Box
@@ -353,7 +418,7 @@ const UploadContainer = (props: MyProps) => {
           >
             <FileInput
               onChange={handleAuthorImageUpload}
-              label={"uploadImage"}
+              label={getTranslations(props.language, "uploadImage")}
               value={authorImage}
               onDelete={handleAuthorImageDelete}
               errorMessage={imageAuthorErrorMessage}
