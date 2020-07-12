@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
-import { getTranslations } from '../../utils/utils';
 import { Box } from '../Box/Box';
-import { StyledLabel, StyledSpan } from './style';
+import { StyledLabel } from './style';
 
 type MyProps = {
   onChange: (e: any) => void
@@ -23,16 +22,10 @@ const FileInput = ({ value, onChange, errorMessage, ...rest }: MyProps) => {
     setVal(value)
     setErrorMessage(errorMessage)
   }, [value, errorMessage])
-  const joinFileName = () => (
-    <ul>
-      {val.map((f, index) => (
-        <li key={index}>
-          {f.name}{" "}
-          <StyledSpan onClick={() => rest.onDelete(index)}>X</StyledSpan>
-        </li>
-      ))}
-    </ul>
-  )
+  useEffect(() => {
+    setVal(value)
+  }, [])
+
   return (
     <Box
       size={{
@@ -62,7 +55,7 @@ const FileInput = ({ value, onChange, errorMessage, ...rest }: MyProps) => {
           }}
         >
           <StyledLabel className={DEFAULT_BUTTON_CLASSES}>
-            {getTranslations(rest.language, rest.label)}
+            {rest.label}
             <input
               {...rest}
               style={{ display: "none" }}
@@ -77,22 +70,6 @@ const FileInput = ({ value, onChange, errorMessage, ...rest }: MyProps) => {
         </Box>
       </Box>
       <span>{errorMsg}</span>
-      {Boolean(val.length) && (
-        <Box
-          flex={{
-            direction: "column",
-          }}
-        >
-          Selected files:
-          <Box
-            flex={{
-              direction: "row",
-            }}
-          >
-            {joinFileName()}
-          </Box>
-        </Box>
-      )}
     </Box>
   )
 }

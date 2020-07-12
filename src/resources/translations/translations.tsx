@@ -126,12 +126,6 @@ export const translations = [
     },
   },
   {
-    label: "uploadLesson",
-    description: {
-      LTU: "Įkelkite pamoką",
-    },
-  },
-  {
     label: "authorPicture",
     description: {
       LTU: "Įkelkite arba pakeiskite savo nuotrauką",
@@ -141,6 +135,18 @@ export const translations = [
     label: "authorDescription",
     description: {
       LTU: "Įkelkite arba pakeiskite savo aprašymą",
+    },
+  },
+  {
+    label: "uploadLesson",
+    description: {
+      LTU: "Įkelkite",
+    },
+  },
+  {
+    label: "step",
+    description: {
+      LTU: "žingsnį",
     },
   },
 ]
