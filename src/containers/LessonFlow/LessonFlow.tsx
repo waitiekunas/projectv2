@@ -67,11 +67,12 @@ const LessonFlow = (props: MyProps) => {
             }}
             canvasCss="canvas"
             nacbarWrapper="customHeight"
+            queue={lesson.queue}
           />
         )
       } else if (lesson?.type.includes("video")) {
         array.push(
-          <Player>
+          <Player queue={lesson.queue}>
             <source src={lesson.resource_id} />
           </Player>
         )
@@ -79,7 +80,7 @@ const LessonFlow = (props: MyProps) => {
         array.push(null)
       }
     })
-
+    array.sort((a, b) => a.props.queue - b.props.queue)
     setFlow(array)
   }, [materialInfo])
   const handleClick = e => {
@@ -104,29 +105,9 @@ const LessonFlow = (props: MyProps) => {
     setCurrentStep(step)
     //handle end of lesson
   }
-  const addId = () => {
-    do {
-      document.getElementsByClassName("has-background-black")[0] &&
-        document
-          .getElementsByClassName("has-background-black")[0]
-          .setAttribute("id", "customHeight")
-    } while (
-      document.getElementsByClassName("has-background-black").length === 0
-    )
+  const sortLessons = (lessons: any[]) => {
+    let sortedArray = []
   }
-
-  const renderPDFViewer = (link: string) => (
-    <PDFViewer
-      document={{
-        url: link,
-      }}
-      canvasCss="canvas"
-      nacbarWrapper="customHeight"
-    />
-  )
-  let material = materialInfo && materialInfo[currentStep]
-  let linkMaterial = material?.resource_id
-  let type = material?.type
   return (
     <>
       <Background></Background>
