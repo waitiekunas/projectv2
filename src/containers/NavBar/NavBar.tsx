@@ -8,16 +8,16 @@ import Logo from '../../components/Logo/Logo';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { translations } from '../../resources/translations/translations';
-import { tryLogin } from '../../state/actions/loginRegister';
+import { setUserStatus } from '../../state/actions/loginRegister';
 import LoginRegister from '../LoginRegister/LoginRegister';
 
 type MyProps = {
   language: Languages
   dispatch: any
+  isLoggedIn: boolean
 }
 type MyState = {
   loginRegisterShow: boolean
-  isLoggedIn: boolean
 }
 
 class NavBar extends React.Component<MyProps, MyState> {
@@ -26,7 +26,6 @@ class NavBar extends React.Component<MyProps, MyState> {
     super(props)
     this.state = {
       loginRegisterShow: false,
-      isLoggedIn: false,
     }
   }
   handleClick = e => {
@@ -44,11 +43,11 @@ class NavBar extends React.Component<MyProps, MyState> {
   }
   handleLogout = () => {
     this.handleChange("isLoggedIn", false)
-    this.props.dispatch(tryLogin(false))
+    this.props.dispatch(setUserStatus({ isLoggedIn: false, canUpload: false }))
   }
   render() {
-    const { language, dispatch } = this.props
-    const { loginRegisterShow, isLoggedIn } = this.state
+    const { language, dispatch, isLoggedIn } = this.props
+    const { loginRegisterShow } = this.state
     return (
       <div className="flex justify-center max-height-10-proc">
         <div className="nav_bar flex justify-around w-full py-5">
@@ -92,5 +91,6 @@ class NavBar extends React.Component<MyProps, MyState> {
 
 const mapStateToProps = state => ({
   language: state.language.language,
+  isLoggedIn: state.isLoggedIn.isLoggedIn,
 })
 export default connect(mapStateToProps)(NavBar)

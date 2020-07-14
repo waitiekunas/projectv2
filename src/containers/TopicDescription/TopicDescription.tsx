@@ -66,6 +66,7 @@ type MyProps = {
   }
   language: Languages
   isLoggedIn: boolean
+  canUpload: boolean
 }
 
 const TopicDescription = (props: MyProps) => {
@@ -182,5 +183,6 @@ const TopicDescription = (props: MyProps) => {
 const mapStateToProps = state => ({
   isLoggedIn: state.isLoggedIn.isLoggedIn,
   language: state.language.language,
+  canUpload: state.isLoggedIn.canUpload,
 })
 export default connect(mapStateToProps)(TopicDescription)

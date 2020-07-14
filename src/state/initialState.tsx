@@ -1,11 +1,12 @@
 import { Languages } from '../enums/languages/languages';
-import { ILanguage, ILoggedIn, ILookups, IUserId } from '../interfaces/state/IState';
+import { ILanguage, ILookups, IUserId, IUserState } from '../interfaces/state/IState';
 
 export const Language: ILanguage = {
   language: Languages.ENGLISH,
 }
-export const isLoggedIn: ILoggedIn = {
+export const isLoggedIn: IUserState = {
   isLoggedIn: false,
+  canUpload: false,
 }
 export const userId: IUserId = {
   userId: 1,
