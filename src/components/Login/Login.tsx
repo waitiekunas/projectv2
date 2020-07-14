@@ -2,10 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 import { Languages } from '../../enums/languages/languages';
+import { IUserState } from '../../interfaces/state/IState';
 import Button from '../Button/Button';
 
 type MyProps = {
-  login: (login: boolean, id: number) => void
+  login: (login: IUserState, id: number) => void
   translation: any
   language: Languages
   handleViewChange: (e) => void
@@ -24,7 +25,10 @@ const Login = (props: MyProps) => {
           password: password,
         },
       }).then(res => {
-        props.login(res.data.login, res.data.id)
+        props.login(
+          { isLoggedIn: res.data.login, canUpload: res.data.canUpload },
+          res.data.id
+        )
       })
     }
   }, [login])

@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import Login from '../../components/Login/Login';
 import Register from '../../components/Register/Register';
 import { Languages } from '../../enums/languages/languages';
+import { IUserState } from '../../interfaces/state/IState';
 import { translations } from '../../resources/translations/translations';
-import { tryLogin } from '../../state/actions/loginRegister';
+import { setUserStatus } from '../../state/actions/loginRegister';
 import { setUserId } from '../../state/actions/user';
 
 type MyProps = {
@@ -53,9 +54,9 @@ class LoginRegister extends React.Component<MyProps, MyState> {
       [state]: value,
     } as MyState)
   }
-  handleLogin = (login: boolean, id: number) => {
+  handleLogin = (login: IUserState, id: number) => {
     this.props.dispatch(setUserId(id))
-    this.props.dispatch(tryLogin(login))
+    this.props.dispatch(setUserStatus(login))
     this.props.handleClick("isLoggedIn", login)
     login && this.props.handleClick("loginRegisterShow", !login)
   }
