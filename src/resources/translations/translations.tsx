@@ -149,4 +149,16 @@ export const translations = [
       LTU: "žingsnį",
     },
   },
+  {
+    label: "uploadSuccess",
+    description: {
+      LTU: "Įkėlimas atliktas",
+    },
+  },
+  {
+    label: "uploadFailed",
+    description: {
+      LTU: "Įkėlimas nepavyko, atsiprašome",
+    },
+  },
 ]

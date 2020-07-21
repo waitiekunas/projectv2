@@ -11,6 +11,7 @@ import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { translations } from '../../resources/translations/translations';
 import { getTranslations } from '../../utils/utils';
+import { ResponseStatus } from '../ResponseStatus/ResponseStatus';
 import { StyledSpan } from './style';
 
 type MyProps = {
@@ -31,6 +32,34 @@ const UploadContainer = (props: MyProps) => {
   const [imageAuthorErrorMessage, setImageAuthorErrorMessage] = useState("")
   const [authorDescription, setAuthorDescription] = useState("")
   const [filesList, setFilesList] = useState<any>()
+  const [showUploadStatus, setShowUploadStatus] = useState(false)
+  const [uploadSuccess, setUploadSuccess] = useState(false)
+  useEffect(() => {
+    let lessonNameLocal = lessonName
+    let lessonDescriptionLocal = lessonDescription
+    let uploadedImageLocal = uploadedImage
+    let uploadedFilesLocal = uploadedFiles
+    let authorImageLocal = authorImage
+    let authorDescriptionLocal = authorDescription
+    let fileListLocal = filesList
+    if (uploadSuccess) {
+      lessonNameLocal = ""
+      lessonDescriptionLocal = ""
+      uploadedImageLocal = []
+      uploadedFilesLocal = []
+      authorImageLocal = []
+      authorDescriptionLocal = ""
+      fileListLocal = []
+    }
+    setUploadSuccess(false)
+    setLessonName(lessonNameLocal)
+    setLessonDescription(lessonDescriptionLocal)
+    setUploadedImage(uploadedImageLocal)
+    setFilesList(fileListLocal)
+    setUploadedFiles(uploadedFilesLocal)
+    setAuthorImage(authorImageLocal)
+    setAuthorDescription(authorDescriptionLocal)
+  })
   useEffect(() => {
     setFilesList(joinFileName(uploadedFiles))
   }, [uploadedFiles])
@@ -94,6 +123,10 @@ const UploadContainer = (props: MyProps) => {
     },
     [uploadedImage]
   )
+  const hideResponseStatus = useCallback(() => {
+    setShowUploadStatus(false)
+  }, [showUploadStatus])
+
   useEffect(() => {
     allFieldsHaveValue()
   })
@@ -112,7 +145,12 @@ const UploadContainer = (props: MyProps) => {
       files.append("lessonDescription", lessonDescription)
       files.append("userId", props.userId.toString())
       axios.post(process.env.UPLOAD_URL, files, {}).then(res => {
-        console.log(res.statusText)
+        let success = false
+        if (res.status === 200) {
+          success = true
+        }
+        setUploadSuccess(success)
+        setShowUploadStatus(true)
       })
     }
     setUpload(false)
@@ -122,7 +160,7 @@ const UploadContainer = (props: MyProps) => {
     if (lessonName && lessonDescription && uploadedFiles.length > 0) {
       tempDisabled = false
     }
-    setDisabled(false)
+    setDisabled(tempDisabled)
   }
   const handleUpload = () => {
     setUpload(!upload)
@@ -490,6 +528,17 @@ const UploadContainer = (props: MyProps) => {
           </Box>
         </Box>
       </Box>
+      {showUploadStatus && (
+        <ResponseStatus
+          text={
+            uploadSuccess
+              ? getTranslations(props.language, "uploadSuccess")
+              : getTranslations(props.language, "uploadFailed")
+          }
+          handleClick={hideResponseStatus}
+          language={props.language}
+        />
+      )}
     </Box>
   )
 }

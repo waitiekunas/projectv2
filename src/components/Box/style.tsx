@@ -138,10 +138,34 @@ const alignStyle = ({ align }: BoxProps) =>
           align-self: ${align.self};
         `}
   `
+const setPosition = ({ position }: BoxProps) =>
+  position &&
+  css`
+    ${css`
+      position: ${position};
+    `}
+  `
+const setBackgroundColor = ({ backgroundColor }: BoxProps) =>
+  backgroundColor &&
+  css`
+    ${css`
+      background-color: ${backgroundColor};
+    `}
+  `
+const setTop = ({ top }: BoxProps) =>
+  top &&
+  css`
+    ${css`
+      top: ${top};
+    `}
+  `
 export const StyledBox = styled.div`
     ${(props: BoxProps) =>
       (props.margin || props.padding) && spacingStyle(props)}
     ${(props: BoxProps) => props.flex && flexStyle(props)}    
     ${(props: BoxProps) => props.size && sizeStyle(props)}
     ${(props: BoxProps) => props.align && alignStyle(props)}
+    ${(props: BoxProps) => props.position && setPosition(props)}
+    ${(props: BoxProps) => props.backgroundColor && setBackgroundColor(props)}
+    ${(props: BoxProps) => props.top && setTop(props)}
     `
