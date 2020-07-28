@@ -22,6 +22,7 @@ export const ResponseStatus = (props: MyProps) => {
         height: "100%",
       }}
       top={"0%"}
+      left={"0%"}
       flex={{
         direction: "column",
         justify: "center",

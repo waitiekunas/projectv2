@@ -161,4 +161,16 @@ export const translations = [
       LTU: "Įkėlimas nepavyko, atsiprašome",
     },
   },
+  {
+    label: "registerSuccess",
+    description: {
+      LTU: "Registracija sėkminga",
+    },
+  },
+  {
+    label: "registerFailed",
+    description: {
+      LTU: "Vartotojas su tokiu prisijungimo vardu jau egzistuoja",
+    },
+  },
 ]

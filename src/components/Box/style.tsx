@@ -159,6 +159,13 @@ const setTop = ({ top }: BoxProps) =>
       top: ${top};
     `}
   `
+const setLeft = ({ left }: BoxProps) =>
+  top &&
+  css`
+    ${css`
+      left: ${left};
+    `}
+  `
 export const StyledBox = styled.div`
     ${(props: BoxProps) =>
       (props.margin || props.padding) && spacingStyle(props)}
@@ -167,5 +174,6 @@ export const StyledBox = styled.div`
     ${(props: BoxProps) => props.align && alignStyle(props)}
     ${(props: BoxProps) => props.position && setPosition(props)}
     ${(props: BoxProps) => props.backgroundColor && setBackgroundColor(props)}
+    ${(props: BoxProps) => props.left && setLeft(props)}
     ${(props: BoxProps) => props.top && setTop(props)}
     `
