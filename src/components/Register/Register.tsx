@@ -1,7 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import { ResponseStatus } from '../../containers/ResponseStatus/ResponseStatus';
 import { Languages } from '../../enums/languages/languages';
+import { getTranslations } from '../../utils/utils';
 import Button from '../Button/Button';
 
 type MyProps = {
@@ -17,6 +19,8 @@ const Register = (props: MyProps) => {
   const [surname, setSurname] = useState("")
   const [startRegister, setStartRegister] = useState(false)
   const [disabled, setDisabled] = useState(true)
+  const [showResponseStatus, setShowResponseStatus] = useState(false)
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
   useEffect(() => {
     if (!disabled) {
       axios({
@@ -25,12 +29,40 @@ const Register = (props: MyProps) => {
         data: {
           userData: formulateUser(),
         },
-      }).then(res => props.register(res.data))
+      }).then(res => handleRegisterResponse(res.data))
     }
   }, [startRegister])
   useEffect(() => {
     isDisabled()
   })
+  const isDisabled = () => {
+    setDisabled(!name || !surname || !password || !loginName)
+  }
+
+  const handleRegisterResponse = (resData: boolean) => {
+    let login = loginName
+    let pass = password
+    let firstName = name
+    let lastName = surname
+    let registered = isRegisterSuccess
+    if (resData) {
+      login = ""
+      pass = ""
+      firstName = ""
+      lastName = ""
+      registered = true
+    }
+    setLoginName(login)
+    setPassword(pass)
+    setName(firstName)
+    setSurname(lastName)
+    setShowResponseStatus(true)
+    setIsRegisterSuccess(registered)
+  }
+  const hideResponseStatus = useCallback(() => {
+    setShowResponseStatus(false)
+    props.register(isRegisterSuccess)
+  }, [showResponseStatus])
 
   const formulateUser = () => ({
     id: "",
@@ -41,9 +73,6 @@ const Register = (props: MyProps) => {
     registerDate: "",
     lastLoginDate: "",
   })
-  const isDisabled = () => {
-    setDisabled(!name || !surname || !password || !loginName)
-  }
   const buttonClassName =
     "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
   return (
@@ -128,6 +157,16 @@ const Register = (props: MyProps) => {
           />
         </div>
       </div>
+      {showResponseStatus && (
+        <ResponseStatus
+          language={props.language}
+          handleClick={hideResponseStatus}
+          text={getTranslations(
+            props.language,
+            isRegisterSuccess ? "registerSuccess" : "registerFailed"
+          )}
+        />
+      )}
     </>
   )
 }
