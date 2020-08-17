@@ -1,36 +1,29 @@
 @import "../screens.scss";
 
-.navbar-btn-cont{
-    width:20%;
-    margin-left: 1%;
-    margin-right: 1%;
+.navbar-btn-cont {
+  width: 20%;
+  margin-left: 1%;
+  margin-right: 1%;
 }
 
-.button-navbar-padding{
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+.button-navbar-padding {
+  padding: 0.5rem;
 }
 @media #{$maxIpad} {
-    .button-navbar-padding{
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-    }
+  .button-navbar-padding {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
 }
 
 @media #{$maxIpadPro} {
-
-    .button-navbar-padding{
-        padding-top: 0rem;
-        padding-bottom: 0rem;
-    }
-  
+  .button-navbar-padding {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+  }
 }
 @media #{$mobile} {
-    button{
-        font-size: xx-small;
-    }
-   
+  button {
+    font-size: xx-small;
+  }
 }
-
-
-

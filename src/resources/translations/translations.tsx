@@ -173,4 +173,22 @@ export const translations = [
       LTU: "Vartotojas su tokiu prisijungimo vardu jau egzistuoja",
     },
   },
+  {
+    label: "agree",
+    description: {
+      LTU: "Sutinku",
+    },
+  },
+  {
+    label: "disagree",
+    description: {
+      LTU: "Nesutinku",
+    },
+  },
+  {
+    label: "privacyPolicy",
+    description: {
+      LTU: "Privatumo politika",
+    },
+  },
 ]

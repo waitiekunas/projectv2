@@ -160,10 +160,24 @@ const setTop = ({ top }: BoxProps) =>
     `}
   `
 const setLeft = ({ left }: BoxProps) =>
-  top &&
+  left &&
   css`
     ${css`
       left: ${left};
+    `}
+  `
+const setColor = ({ color }: BoxProps) =>
+  color &&
+  css`
+    ${css`
+      color: ${color};
+    `}
+  `
+  const setOverflow = ({ overflow }: BoxProps) =>
+  overflow &&
+  css`
+    ${css`
+    overflow: ${overflow};
     `}
   `
 export const StyledBox = styled.div`
@@ -176,4 +190,6 @@ export const StyledBox = styled.div`
     ${(props: BoxProps) => props.backgroundColor && setBackgroundColor(props)}
     ${(props: BoxProps) => props.left && setLeft(props)}
     ${(props: BoxProps) => props.top && setTop(props)}
+    ${(props: BoxProps) => props.color && setColor(props)}
+    ${(props: BoxProps) => props.overflow && setOverflow(props)}
     `
