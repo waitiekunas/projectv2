@@ -33,6 +33,8 @@ export type Props = {
   backgroundColor?: string
   top?: string
   left?: string
+  color?: string
+  overflow?: string
 }
 
 export const Box: React.FC<Props> = ({ children, className, ...rest }) => {
