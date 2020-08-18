@@ -112,6 +112,30 @@ const PrivacyPolicy = ({ location }) => (
                 <strong>Savininkas </strong>
               </StyledTd>
             </tr>
+            <tr>
+              <td>_ga</td>
+              <td>Statistinė informacija</td>
+              <td>Apsilankius projekte</td>
+              <td>24 mėn.</td>
+              <td>IP adresas ir unikalus ID numeris.</td>
+              <td>.cloudinary.com</td>
+            </tr>
+            <tr>
+              <td>io</td>
+              <td></td>
+              <td>Apsilankius projekte</td>
+              <td>Apsilankymo metu</td>
+              <td></td>
+              <td>Mūsų projektas</td>
+            </tr>
+            <tr>
+              <td>financeCookiesAgree</td>
+              <td>Slapukų sutikimas</td>
+              <td>Apsilankius projekte</td>
+              <td>24 mėn.</td>
+              <td>Sutikimas dėl slapukų</td>
+              <td>Mūsų projekta</td>
+            </tr>
           </tbody>
         </table>
       </Box>
