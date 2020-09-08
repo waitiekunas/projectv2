@@ -152,7 +152,7 @@ export const retryInvoiceWithNewPaymentMethod = ({
   priceId,
 }) => {
   return (
-    fetch("/retry-invoice", {
+    fetch(process.env.CREATE_RETRY_INVOICE_URL, {
       method: "post",
       headers: {
         "Content-type": "application/json",
@@ -198,4 +198,22 @@ export const retryInvoiceWithNewPaymentMethod = ({
         displayError(error)
       })
   )
+}
+
+export const retrieveCustomerPaymentMethod = paymentMethodId => {
+  return fetch(process.env.CHANGE_CARD_URL, {
+    method: "post",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      paymentMethodId: paymentMethodId,
+    }),
+  })
+    .then(response => {
+      return response.json()
+    })
+    .then(response => {
+      return response
+    })
 }
