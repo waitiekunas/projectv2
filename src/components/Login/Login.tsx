@@ -25,10 +25,7 @@ const Login = (props: MyProps) => {
           password: password,
         },
       }).then(res => {
-        props.login(
-          { isLoggedIn: res.data.login, canUpload: res.data.canUpload },
-          res.data.id
-        )
+        props.login(res.data.loginData, res.data.id)
       })
     }
   }, [login])

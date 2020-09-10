@@ -12,6 +12,7 @@ type MyProps = {
   language: Languages
   handleViewChange: (e) => void
 }
+
 const Register = (props: MyProps) => {
   const [loginName, setLoginName] = useState("")
   const [password, setPassword] = useState("")
@@ -21,6 +22,7 @@ const Register = (props: MyProps) => {
   const [disabled, setDisabled] = useState(true)
   const [showResponseStatus, setShowResponseStatus] = useState(false)
   const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
+  const [email, setEmail] = useState("")
   useEffect(() => {
     if (!disabled) {
       axios({
@@ -36,7 +38,7 @@ const Register = (props: MyProps) => {
     isDisabled()
   })
   const isDisabled = () => {
-    setDisabled(!name || !surname || !password || !loginName)
+    setDisabled(!name || !surname || !password || !loginName || !email)
   }
 
   const handleRegisterResponse = (resData: boolean) => {
@@ -45,12 +47,14 @@ const Register = (props: MyProps) => {
     let firstName = name
     let lastName = surname
     let registered = isRegisterSuccess
+    let emailAddress = email
     if (resData) {
       login = ""
       pass = ""
       firstName = ""
       lastName = ""
       registered = true
+      emailAddress = ""
     }
     setLoginName(login)
     setPassword(pass)
@@ -58,6 +62,7 @@ const Register = (props: MyProps) => {
     setSurname(lastName)
     setShowResponseStatus(true)
     setIsRegisterSuccess(registered)
+    setEmail(emailAddress)
   }
   const hideResponseStatus = useCallback(() => {
     setShowResponseStatus(false)
@@ -72,6 +77,7 @@ const Register = (props: MyProps) => {
     surname: surname,
     registerDate: "",
     lastLoginDate: "",
+    email: email,
   })
   const buttonClassName =
     "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
@@ -133,6 +139,19 @@ const Register = (props: MyProps) => {
             type="password"
             placeholder="******************"
             onChange={e => setPassword(e.target.value)}
+          ></input>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Email address
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            value={email}
+            id="email"
+            type="email"
+            placeholder="Email address"
+            onChange={e => setEmail(e.target.value)}
           ></input>
         </div>
       </div>

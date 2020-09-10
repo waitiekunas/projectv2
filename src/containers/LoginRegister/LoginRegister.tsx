@@ -116,7 +116,7 @@ class LoginRegister extends React.Component<MyProps, MyState> {
 
 const mapStateToProps = state => ({
   language: state.language.language,
-  isLoggedIn: state.isLoggedIn.isLoggedIn,
+  isLoggedIn: state.loginData.isLoggedIn,
 })
 
 export default connect(mapStateToProps)(LoginRegister)

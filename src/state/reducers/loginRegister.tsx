@@ -6,8 +6,7 @@ export default (state = isLoggedIn, action: any) => {
     case LOGIN:
       return {
         ...state,
-        isLoggedIn: action.payload.isLoggedIn,
-        canUpload: action.payload.canUpload,
+        loginData: action.payload,
       }
     default:
       return state

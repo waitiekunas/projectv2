@@ -43,7 +43,14 @@ class NavBar extends React.Component<MyProps, MyState> {
   }
   handleLogout = () => {
     this.handleChange("isLoggedIn", false)
-    this.props.dispatch(setUserStatus({ isLoggedIn: false, canUpload: false }))
+    this.props.dispatch(
+      setUserStatus({
+        isLoggedIn: false,
+        canUpload: false,
+        subscribed: false,
+        email: "",
+      })
+    )
   }
   render() {
     const { language, dispatch, isLoggedIn } = this.props
@@ -91,6 +98,6 @@ class NavBar extends React.Component<MyProps, MyState> {
 
 const mapStateToProps = state => ({
   language: state.language.language,
-  isLoggedIn: state.isLoggedIn.isLoggedIn,
+  isLoggedIn: state.loginData.isLoggedIn,
 })
 export default connect(mapStateToProps)(NavBar)

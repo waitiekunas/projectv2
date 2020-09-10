@@ -181,8 +181,8 @@ const TopicDescription = (props: MyProps) => {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.isLoggedIn.isLoggedIn,
+  isLoggedIn: state.loginData.isLoggedIn,
   language: state.language.language,
-  canUpload: state.isLoggedIn.canUpload,
+  canUpload: state.loginData.canUpload,
 })
 export default connect(mapStateToProps)(TopicDescription)

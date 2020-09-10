@@ -6,6 +6,8 @@ export interface ILanguage {
 export interface IUserState {
   isLoggedIn: boolean
   canUpload: boolean
+  email: string
+  subscribed: boolean
 }
 export interface IUserId {
   userId: number

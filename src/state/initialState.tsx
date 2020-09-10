@@ -7,6 +7,8 @@ export const Language: ILanguage = {
 export const isLoggedIn: IUserState = {
   isLoggedIn: false,
   canUpload: false,
+  email: "",
+  subscribed: false,
 }
 export const userId: IUserId = {
   userId: 1,
