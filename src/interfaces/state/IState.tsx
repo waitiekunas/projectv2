@@ -8,6 +8,7 @@ export interface IUserState {
   canUpload: boolean
   email: string
   subscribed: boolean
+  stripeCustomerId: string
 }
 export interface IUserId {
   userId: number
