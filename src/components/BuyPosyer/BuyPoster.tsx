@@ -17,10 +17,6 @@ const TextBox = styled.div`
 const BuyPoster = (props: any) => {
   const btnClasses =
     "button-navbar-padding navbar-btn bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"
-  const handleClick = e => {
-    e.preventDefault()
-    alert("Buy! should appear register or login info or buy window")
-  }
   const ELEMENTS_OPTIONS = {
     fonts: [
       {
@@ -39,7 +35,7 @@ const BuyPoster = (props: any) => {
             <p>{props.imgText}</p>
           </TextBox>
           <Button
-            handleClick={handleClick}
+            handleClick={props.handleClick}
             classButtonDiv={"flex-col"}
             buttonTexts={translations}
             label={"starLesson"}

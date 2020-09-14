@@ -6,7 +6,11 @@ export default (state = isLoggedIn, action: any) => {
     case LOGIN:
       return {
         ...state,
-        loginData: action.payload,
+        isLoggedIn: action.payload.isLoggedIn,
+        canUpload: action.payload.canUpload,
+        subscribed: action.payload.subscribed,
+        email: action.payload.email,
+        stripeCustomerId: action.payload.stripeCustomerId,
       }
     default:
       return state

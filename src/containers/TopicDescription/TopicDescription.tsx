@@ -6,11 +6,11 @@ import styled from 'styled-components';
 
 import { Box } from '../../components/Box/Box';
 import Button from '../../components/Button/Button';
-import BuyPoster from '../../components/BuyPosyer/BuyPoster';
 import Image from '../../components/Image/Image';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { translations } from '../../resources/translations/translations';
+import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
 import LessonFlow from '../LessonFlow/LessonFlow';
 
 const Wrapper = styled.div`
@@ -67,6 +67,7 @@ type MyProps = {
   language: Languages
   isLoggedIn: boolean
   canUpload: boolean
+  isSubscribed: boolean
 }
 
 const TopicDescription = (props: MyProps) => {
@@ -95,15 +96,7 @@ const TopicDescription = (props: MyProps) => {
     <div>
       <Wrapper>
         <ContentArea>
-          {!props.isLoggedIn && (
-            <BuyPoster
-              additionalClass={""}
-              imageUri={"/images/wide-index-photo.jpg"}
-              showText={true}
-              imgHeader={"dont have?"}
-              imgText={"Buy!"}
-            />
-          )}
+          {!props.isSubscribed && <CreateCustomerForm />}
 
           {authorInfo && (
             <AuthorInfoArea>
@@ -181,8 +174,9 @@ const TopicDescription = (props: MyProps) => {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.loginData.isLoggedIn,
+  isLoggedIn: state.isLoggedIn.isLoggedIn,
   language: state.language.language,
-  canUpload: state.loginData.canUpload,
+  canUpload: state.isLoggedIn.canUpload,
+  isSubscribed: state.isLoggedIn.subscribed,
 })
 export default connect(mapStateToProps)(TopicDescription)

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
+import BuyPoster from '../../components/BuyPosyer/BuyPoster';
 import { setUserStatus } from '../../state/actions/loginRegister';
 
 function CreateCustomerForm(props) {
@@ -27,29 +28,24 @@ function CreateCustomerForm(props) {
         setCustomer(result.customer)
         let updatedLoginData = props.loginData
         updatedLoginData.stripeCustomerId = result.customer.id
+        debugger
         props.dispatch(setUserStatus(updatedLoginData))
       })
   }
   return (
-    <form id="signup-form" onSubmit={handleSubmit}>
-      <div>
-        <input
-          id="email"
-          type="text"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Email address"
-          required
-        />
-      </div>
-      ​
-      <button id="email-submit" type="submit">
-        <span id="button-text">Sign up</span>
-      </button>
-    </form>
+    <>
+      <BuyPoster
+        additionalClass={""}
+        imageUri={"/images/wide-index-photo.jpg"}
+        showText={true}
+        imgHeader={"dont have?"}
+        imgText={"Buy!"}
+        handleClick={handleSubmit}
+      />
+    </>
   )
 }
 const mapStateToProps = state => ({
-  loginData: state.loginData.isLoggedIn,
+  loginData: state.isLoggedIn,
 })
 export default connect(mapStateToProps)(CreateCustomerForm)

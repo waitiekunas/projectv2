@@ -49,6 +49,7 @@ class NavBar extends React.Component<MyProps, MyState> {
         canUpload: false,
         subscribed: false,
         email: "",
+        stripeCustomerId: "",
       })
     )
   }
@@ -98,6 +99,6 @@ class NavBar extends React.Component<MyProps, MyState> {
 
 const mapStateToProps = state => ({
   language: state.language.language,
-  isLoggedIn: state.loginData.isLoggedIn,
+  isLoggedIn: state.isLoggedIn.isLoggedIn,
 })
 export default connect(mapStateToProps)(NavBar)

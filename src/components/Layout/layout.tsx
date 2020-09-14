@@ -57,6 +57,6 @@ Layout.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.loginData.isLoggedIn,
+  isLoggedIn: state.isLoggedIn.isLoggedIn,
 })
 export default connect(mapStateToProps)(Layout)
