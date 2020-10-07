@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import BuyPoster from '../../components/BuyPosyer/BuyPoster';
+import CheckoutForm from '../../components/CheckOutForm/CheckOutForm';
 import { setUserStatus } from '../../state/actions/loginRegister';
 
 function CreateCustomerForm(props) {
   const [email, setEmail] = useState("")
   const [customer, setCustomer] = useState(null)
+  const [showCard, setShowCard] = useState<boolean>(false)
   useEffect(() => {
     setEmail(props.loginData.email)
   }, [])
@@ -30,18 +32,23 @@ function CreateCustomerForm(props) {
         updatedLoginData.stripeCustomerId = result.customer.id
         debugger
         props.dispatch(setUserStatus(updatedLoginData))
+        setShowCard(true)
       })
   }
   return (
     <>
-      <BuyPoster
-        additionalClass={""}
-        imageUri={"/images/wide-index-photo.jpg"}
-        showText={true}
-        imgHeader={"dont have?"}
-        imgText={"Buy!"}
-        handleClick={handleSubmit}
-      />
+      {showCard ? (
+        <CheckoutForm />
+      ) : (
+        <BuyPoster
+          additionalClass={""}
+          imageUri={"/images/wide-index-photo.jpg"}
+          showText={true}
+          imgHeader={"dont have?"}
+          imgText={"Buy!"}
+          handleClick={handleSubmit}
+        />
+      )}
     </>
   )
 }

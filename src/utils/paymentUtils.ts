@@ -50,7 +50,7 @@ export const createSubscription = ({
       .catch(error => {
         // An error has happened. Display the failure to the user here.
         // We utilize the HTML element we created.
-        showCardError(error)
+        console.error(error)
       })
   )
 }
@@ -111,7 +111,7 @@ const handlePaymentThatRequiresCustomerAction = ({
         }
       })
       .catch(error => {
-        displayError(error)
+        console.error(error)
       })
   } else {
     // No customer action needed.
@@ -195,7 +195,7 @@ export const retryInvoiceWithNewPaymentMethod = ({
       .catch(error => {
         // An error has happened. Display the failure to the user here.
         // We utilize the HTML element we created.
-        displayError(error)
+        console.error(error)
       })
   )
 }

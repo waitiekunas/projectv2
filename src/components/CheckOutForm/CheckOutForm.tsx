@@ -1,10 +1,14 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
-import { createSubscription } from '../../utils/paymentUtils';
+import { createSubscription, retryInvoiceWithNewPaymentMethod } from '../../utils/paymentUtils';
 import CardSection from '../CardSection/CardSection';
+import { Modal } from '../Modal/Modal';
 
-export default function CheckoutForm() {
+const CheckoutForm = ({ customerId }) => {
+  const [showCard, setShowCard] = useState<boolean>(true)
+  const priceId = "price_1HLREkJtXEcPW0ZhZRnicWYk"
   const stripe = useStripe()
   const elements = useElements()
   const handleSubmit = async event => {
@@ -36,12 +40,12 @@ export default function CheckoutForm() {
       if (latestInvoicePaymentIntentStatus === "requires_payment_method") {
         // Update the payment method and retry invoice payment
         const invoiceId = localStorage.getItem("latestInvoiceId")
-        // retryInvoiceWithNewPaymentMethod({
-        //   customerId,
-        //   paymentMethodId,
-        //   invoiceId,
-        //   priceId,
-        // });
+        retryInvoiceWithNewPaymentMethod({
+          customerId,
+          paymentMethodId,
+          invoiceId,
+          priceId,
+        })
       } else {
         // Create the subscription
         createSubscription({ customerId, paymentMethodId, priceId })
@@ -49,9 +53,19 @@ export default function CheckoutForm() {
     }
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <CardSection />
-      <button disabled={!stripe}>Confirm order</button>
-    </form>
+    <>
+      {showCard ? (
+        <Modal onCloseClick={() => setShowCard(false)}>
+          <form onSubmit={handleSubmit}>
+            <CardSection />
+            <button disabled={!stripe}>Confirm order</button>
+          </form>
+        </Modal>
+      ) : null}
+    </>
   )
 }
+const mapStateToProps = state => ({
+  customerId: state.isLoggedIn.stripeCustomerId,
+})
+export default connect(mapStateToProps)(CheckoutForm)
