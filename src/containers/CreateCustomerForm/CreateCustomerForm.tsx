@@ -9,6 +9,7 @@ function CreateCustomerForm(props) {
   const [email, setEmail] = useState("")
   const [customer, setCustomer] = useState(null)
   const [showCard, setShowCard] = useState<boolean>(false)
+  const [showLogin, setShowLogin] = useState<boolean>(false)
   useEffect(() => {
     setEmail(props.loginData.email)
   }, [])
@@ -30,7 +31,6 @@ function CreateCustomerForm(props) {
         setCustomer(result.customer)
         let updatedLoginData = props.loginData
         updatedLoginData.stripeCustomerId = result.customer.id
-        debugger
         props.dispatch(setUserStatus(updatedLoginData))
         setShowCard(true)
       })
@@ -46,7 +46,9 @@ function CreateCustomerForm(props) {
           showText={true}
           imgHeader={"dont have?"}
           imgText={"Buy!"}
-          handleClick={handleSubmit}
+          handleClick={
+            props.loginData.isLoggedIn ? handleSubmit : () => alert("Register")
+          }
         />
       )}
     </>

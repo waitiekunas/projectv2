@@ -122,24 +122,26 @@ const TopicDescription = (props: MyProps) => {
               justify: "center",
             }}
           >
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              align={{ self: "center" }}
-              margin={{ top: "0.5rem" }}
-            >
-              <Button
-                handleClick={handleClick}
-                buttonTexts={translation}
-                label={"starLesson"}
-                language={props.language}
-                classButton={DEFAULT_BUTTON_CLASSES}
-              />
-            </Box>
-            {props.isLoggedIn && (
+            {props.isLoggedIn && props.isSubscribed && (
+              <Box
+                size={{
+                  maxWidth: "200px",
+                  width: "25%",
+                  height: "42px",
+                }}
+                align={{ self: "center" }}
+                margin={{ top: "0.5rem" }}
+              >
+                <Button
+                  handleClick={handleClick}
+                  buttonTexts={translation}
+                  label={"starLesson"}
+                  language={props.language}
+                  classButton={DEFAULT_BUTTON_CLASSES}
+                />
+              </Box>
+            )}
+            {props.isLoggedIn && props.canUpload && (
               <Box
                 size={{
                   maxWidth: "200px",
