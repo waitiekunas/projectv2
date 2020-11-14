@@ -10,6 +10,7 @@ import Image from '../../components/Image/Image';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { translations } from '../../resources/translations/translations';
+import CancelSubscription from '../CancelSubscription/CancelSubscription';
 import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
 import LessonFlow from '../LessonFlow/LessonFlow';
 
@@ -97,7 +98,7 @@ const TopicDescription = (props: MyProps) => {
       <Wrapper>
         <ContentArea>
           {!props.isSubscribed && <CreateCustomerForm />}
-
+          {props.isSubscribed && <CancelSubscription />}
           {authorInfo && (
             <AuthorInfoArea>
               <AuthorPhotoArea>

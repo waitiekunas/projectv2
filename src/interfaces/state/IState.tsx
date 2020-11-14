@@ -9,6 +9,7 @@ export interface IUserState {
   email: string
   subscribed: boolean
   stripeCustomerId: string
+  subscriptionId: string
 }
 export interface IUserId {
   userId: number

@@ -10,6 +10,7 @@ export const isLoggedIn: IUserState = {
   email: "",
   subscribed: false,
   stripeCustomerId: "",
+  subscriptionId: "",
 }
 export const userId: IUserId = {
   userId: 1,

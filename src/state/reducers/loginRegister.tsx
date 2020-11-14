@@ -11,6 +11,7 @@ export default (state = isLoggedIn, action: any) => {
         subscribed: action.payload.subscribed,
         email: action.payload.email,
         stripeCustomerId: action.payload.stripeCustomerId,
+        subscriptionId: action.payload.subscriptionId,
       }
     default:
       return state
