@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import Login from '../../components/Login/Login';
@@ -11,65 +11,46 @@ import { setUserId } from '../../state/actions/user';
 
 type MyProps = {
   language?: Languages
-  show?: boolean
-  handleClick?: Function
-  dispatch?: any
-  isLoggedIn?: any
+  show: boolean
+  handleLogin: (...args: any[]) => void
+  dispatch: (...args: any[]) => void
+  isLoggedIn?: boolean
+  handleLoginRegisterShow: (...args: any[]) => void
 }
-type MyState = {
-  showLogin: boolean
-  showRegister: boolean
-  isLoggedIn: boolean
-}
-class LoginRegister extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props)
-    this.state = {
-      showLogin: true,
-      showRegister: false,
-      isLoggedIn: this.props.isLoggedIn,
-    }
-  }
 
-  handleParentClick = e => {
+const LoginRegister: React.FC<MyProps> = ({
+  show,
+  language,
+  handleLogin,
+  dispatch,
+  isLoggedIn,
+  handleLoginRegisterShow,
+}) => {
+  const [showLogin, setShowLogin] = useState<boolean>(true)
+  const [showRegister, setShowRegister] = useState<boolean>(false)
+  const handleParentClick = e => {
     e.preventDefault()
-    this.props.handleClick("loginRegisterShow", false)
-    this.setState({
-      showLogin: true,
-      showRegister: false,
-    })
+    handleLoginRegisterShow(false)
   }
-  handleChildClick = e => {
+  const handleChildClick = e => {
     e.stopPropagation()
   }
-  handleViewChange = e => {
+  const handleViewChange = e => {
     e.preventDefault()
-    this.setState({
-      showLogin: !this.state.showLogin,
-      showRegister: this.state.showRegister,
-    })
-  }
-  handleChange = (state, value) => {
-    this.setState({
-      [state]: value,
-    } as MyState)
-  }
-  handleLogin = (login: IUserState, id: number) => {
-    this.props.dispatch(setUserId(id))
-    this.props.dispatch(setUserStatus(login))
-    this.props.handleClick("isLoggedIn", login)
-    login && this.props.handleClick("loginRegisterShow", !login)
+    setShowLogin(!showLogin)
+    setShowRegister(!showRegister)
   }
 
-  handleRegister = (register: boolean) => {
-    this.props.handleClick("loginRegisterShow", !register)
-    console.log("THE USER WAS REGISTERED: " + register)
+  const handleLoggingIn = (login: IUserState, id: number) => {
+    dispatch(setUserId(id))
+    dispatch(setUserStatus(login))
+    handleLogin(login.isLoggedIn)
+    handleLoginRegisterShow(!login.isLoggedIn)
   }
 
-  render() {
-    const translation = translations
-    const { language, show } = this.props
-    const { showLogin } = this.state
+  const handleRegister = (register: boolean) => {
+    handleLoginRegisterShow(!register)
+
     const styleClasses = "flex justify-center fixed z-10"
     return (
       <div
@@ -90,21 +71,21 @@ class LoginRegister extends React.Component<MyProps, MyState> {
           <div
             className="login-register-component bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 fixed w-1/2 max-w-lg"
             style={{ top: "25%" }}
-            onClick={this.handleChildClick}
+            onClick={handleChildClick}
           >
             {showLogin ? (
               <Login
-                login={this.handleLogin}
-                translation={translation}
+                login={handleLogin}
+                translation={translations}
                 language={language}
-                handleViewChange={this.handleViewChange}
+                handleViewChange={handleViewChange}
               />
             ) : (
               <Register
-                register={this.handleRegister}
-                translation={translation}
+                register={handleRegister}
+                translation={translations}
                 language={language}
-                handleViewChange={this.handleViewChange}
+                handleViewChange={handleViewChange}
               />
             )}
           </div>

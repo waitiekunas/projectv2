@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
+import { Button } from '../../components/Button/Button';
 import FileInput from '../../components/FileInput/FileInput';
 import { Input } from '../../components/Input/Input';
 import { TextArea } from '../../components/TextArea/TextArea';

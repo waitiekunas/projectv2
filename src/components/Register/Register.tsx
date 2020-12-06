@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ResponseStatus } from '../../containers/ResponseStatus/ResponseStatus';
 import { Languages } from '../../enums/languages/languages';
 import { getTranslations } from '../../utils/utils';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 
 type MyProps = {
   register: (register: any) => void
@@ -79,8 +79,6 @@ const Register = (props: MyProps) => {
     lastLoginDate: "",
     email: email,
   })
-  const buttonClassName =
-    "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
   return (
     <>
       <div>
@@ -158,21 +156,19 @@ const Register = (props: MyProps) => {
       <div className="flex items-center justify-center">
         <div className=" flex justify-around w-full py-5">
           <Button
-            handleClick={e => setStartRegister(!startRegister)}
-            classButtonDiv="login-register-button flex-col"
-            classButton={buttonClassName}
-            buttonTexts={props.translation}
+            handleClick={() => setStartRegister(!startRegister)}
             label={"register"}
             language={props.language}
             disabled={disabled}
+            variant="contained"
+            color="primary"
           />
           <Button
             handleClick={props.handleViewChange}
-            classButtonDiv="login-register-button flex-col"
-            classButton={buttonClassName}
-            buttonTexts={props.translation}
             label={"toLogin"}
             language={props.language}
+            variant="contained"
+            color="primary"
           />
         </div>
       </div>

@@ -1,10 +1,8 @@
 import React from 'react';
 
 import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
-import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
+import { Button } from '../../components/Button/Button';
 import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
 
 interface MyProps {
   text: string
@@ -12,7 +10,11 @@ interface MyProps {
   language: Languages
 }
 
-export const ResponseStatus = (props: MyProps) => {
+export const ResponseStatus: React.FC<MyProps> = ({
+  text,
+  handleClick,
+  language,
+}) => {
   return (
     <Box
       position={"fixed"}
@@ -50,7 +52,7 @@ export const ResponseStatus = (props: MyProps) => {
             direction: "row",
           }}
         >
-          <p>{props.text}</p>
+          <p>{text}</p>
         </Box>
 
         <Box
@@ -71,11 +73,11 @@ export const ResponseStatus = (props: MyProps) => {
             }}
           >
             <Button
-              handleClick={() => props.handleClick()}
-              buttonTexts={translations}
+              handleClick={() => handleClick()}
               label={"close"}
-              language={props.language}
-              classButton={DEFAULT_BUTTON_CLASSES}
+              language={language}
+              variant="contained"
+              color="primary"
             />
           </Box>
         </Box>

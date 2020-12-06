@@ -3,11 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import ClassTicket from '../../components/ClassTicket/ClassTicket';
-import { getClassesByTopic } from '../../utils/utils';
 
-type MyProps = {
-  topic: string
-}
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -22,13 +18,12 @@ const TopicWrapper = styled.div`
   width: 25%;
   margin: 0px;
 `
-const TopicsContainer = (props: MyProps) => {
+const TopicsContainer = () => {
   const lessons = useSelector((state: any) => state.lessons.lessons)
-  const classes = getClassesByTopic(lessons, props.topic)
   return (
     <Wrapper>
       <TopicsWrapper className={"TopicsWrapper"}>
-        {classes.map((value, index) => (
+        {lessons.map((value, index) => (
           <TopicWrapper key={index} className={"TopicWrapper"}>
             <ClassTicket
               key={index}

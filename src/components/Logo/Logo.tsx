@@ -1,15 +1,24 @@
+import { Link } from 'gatsby';
 import React from 'react';
-import { Link } from "gatsby";
-import logo from '/images/logo192.png';
+import styled from 'styled-components';
 
-const Logo = (props: any) => {
-    return (
-        <div className={props.class}>
-            <Link to='/'>
-                <img src={'/images/logo192.png'} className="logo" alt="logo" />
-            </Link>
-        </div>
-    )
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 20%;
+  margin-left: 1%;
+  margin-right: 1%;
+`
+type Props = {
+  src: string
+  link: string
 }
-
-export default Logo;
+export const Logo: React.FC<Props> = ({ src, link }) => {
+  return (
+    <Wrapper>
+      <Link to={link}>
+        <img src={src} className="logo" alt="logo" />
+      </Link>
+    </Wrapper>
+  )
+}

@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { translations } from '../../resources/translations/translations';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 
 const TextBox = styled.div`
   display: flex;

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
+import { Button } from '../../components/Button/Button';
 import Image from '../../components/Image/Image';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';

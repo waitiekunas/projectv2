@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Player } from 'video-react';
 
 import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
+import { Button } from '../../components/Button/Button';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';

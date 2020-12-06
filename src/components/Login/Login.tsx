@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Languages } from '../../enums/languages/languages';
 import { IUserState } from '../../interfaces/state/IState';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 
 type MyProps = {
   login: (login: IUserState, id: number) => void
@@ -30,8 +30,6 @@ const Login = (props: MyProps) => {
     }
   }, [login])
 
-  const buttonClassName =
-    "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
   return (
     <>
       <div>
@@ -70,20 +68,18 @@ const Login = (props: MyProps) => {
       <div className="flex items-center justify-center">
         <div className=" flex justify-around w-full py-5">
           <Button
-            handleClick={e => setLogin(!login)}
-            classButtonDiv="login-register-button flex-col"
-            classButton={buttonClassName}
-            buttonTexts={props.translation}
+            handleClick={() => setLogin(!login)}
             label={"login"}
             language={props.language}
+            variant="contained"
+            color="primary"
           />
           <Button
             handleClick={props.handleViewChange}
-            classButtonDiv="login-register-button flex-col"
-            classButton={buttonClassName}
-            buttonTexts={props.translation}
             label={"toRegister"}
             language={props.language}
+            variant="contained"
+            color="primary"
           />
         </div>
       </div>
