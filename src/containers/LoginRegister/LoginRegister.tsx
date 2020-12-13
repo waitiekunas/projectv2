@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import Login from '../../components/Login/Login';
 import Register from '../../components/Register/Register';
@@ -8,6 +9,21 @@ import { IUserState } from '../../interfaces/state/IState';
 import { translations } from '../../resources/translations/translations';
 import { setUserStatus } from '../../state/actions/loginRegister';
 import { setUserId } from '../../state/actions/user';
+
+type WrapperProps = {
+  show:boolean
+}
+
+const Wrapper = styled.div`
+  display:${(props:WrapperProps)=>props.show?`flex`:`hidden`};
+  justify-content:center;
+  position: fixed;
+  z-index:10;
+  width:100vw;
+  height:120%;
+  background-color:rgba(0,0,0,0.5);
+  top:0%;
+`
 
 type MyProps = {
   language?: Languages
@@ -48,24 +64,13 @@ const LoginRegister: React.FC<MyProps> = ({
     handleLoginRegisterShow(!login.isLoggedIn)
   }
 
-  const handleRegister = (register: boolean) => {
+  const handleRegister = (register: boolean) => 
     handleLoginRegisterShow(!register)
 
-    const styleClasses = "flex justify-center fixed z-10"
     return (
-      <div
-        className={show ? styleClasses : "hidden"}
-        style={
-          show
-            ? {
-                width: "100vw",
-                height: "120%",
-                backgroundColor: "rgba(0,0,0,0.5)",
-                top: "0%",
-              }
-            : {}
-        }
-        onClick={this.handleParentClick}
+      <Wrapper
+        show={show}
+        onClick={handleParentClick}
       >
         <div className="w-full max-w-lg flex justify-center">
           <div
@@ -75,7 +80,7 @@ const LoginRegister: React.FC<MyProps> = ({
           >
             {showLogin ? (
               <Login
-                login={handleLogin}
+                login={handleLoggingIn}
                 translation={translations}
                 language={language}
                 handleViewChange={handleViewChange}
@@ -90,10 +95,10 @@ const LoginRegister: React.FC<MyProps> = ({
             )}
           </div>
         </div>
-      </div>
+      </Wrapper>
     )
   }
-}
+
 
 const mapStateToProps = state => ({
   language: state.language.language,
