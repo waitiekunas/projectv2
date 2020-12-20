@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Player } from 'video-react';
 
-import { Box } from '../../components/Box/Box';
 import { Button } from '../../components/Button/Button';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
@@ -32,6 +31,21 @@ const Wrapper = styled.div`
   position: absolute;
   top: 5%;
 `
+const Content = styled.div`
+  display:flex;
+  justify-content:space-around;
+  margin-top: 32px;
+`
+const ButtonBox = styled.div`
+  max-width: 200px;
+  width:25%;
+  height:42px;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  align-self:center;
+`
+
 type MyProps = {
   handleClick: Function
   topicId: number
@@ -114,22 +128,8 @@ const LessonFlow = (props: MyProps) => {
       <Wrapper>
         <MainScreen>
           {flow[currentStep]}
-          <Box
-            flex={{ justify: "around" }}
-            margin={{ top: ["32px", "32px", "12px"] }}
-          >
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              flex={{
-                direction: "column",
-                justify: "center",
-              }}
-              align={{ self: "center" }}
-            >
+          <Content>
+            <ButtonBox>
               <Button
                 language={props.language}
                 label="back"
@@ -138,20 +138,9 @@ const LessonFlow = (props: MyProps) => {
                 classButton={DEFAULT_BUTTON_CLASSES}
                 disabled={disableBackButton}
               />
-            </Box>
+            </ButtonBox>
 
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              flex={{
-                direction: "column",
-                justify: "center",
-              }}
-              align={{ self: "center" }}
-            >
+            <ButtonBox>
               <Button
                 language={props.language}
                 label="forward"
@@ -161,20 +150,9 @@ const LessonFlow = (props: MyProps) => {
                 style={{ background: "#4299e1" }}
                 disabled={disableForwardButton}
               />
-            </Box>
+            </ButtonBox>
 
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              flex={{
-                direction: "column",
-                justify: "center",
-              }}
-              align={{ self: "center" }}
-            >
+            <ButtonBox>
               <Button
                 language={props.language}
                 label="close"
@@ -183,8 +161,8 @@ const LessonFlow = (props: MyProps) => {
                 classButton={DEFAULT_BUTTON_CLASSES}
                 style={{ background: "#4299e1" }}
               />
-            </Box>
-          </Box>
+            </ButtonBox>
+          </Content>
         </MainScreen>
       </Wrapper>
     </>

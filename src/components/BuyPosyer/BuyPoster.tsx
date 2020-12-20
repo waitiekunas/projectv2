@@ -2,7 +2,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import React from 'react';
 import styled from 'styled-components';
 
-import { translations } from '../../resources/translations/translations';
 import { Button } from '../Button/Button';
 
 const TextBox = styled.div`
@@ -15,8 +14,6 @@ const TextBox = styled.div`
 `
 
 const BuyPoster = (props: any) => {
-  const btnClasses =
-    "button-navbar-padding navbar-btn bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"
   const ELEMENTS_OPTIONS = {
     fonts: [
       {
@@ -36,11 +33,8 @@ const BuyPoster = (props: any) => {
           </TextBox>
           <Button
             handleClick={props.handleClick}
-            classButtonDiv={"flex-col"}
-            buttonTexts={translations}
             label={"starLesson"}
             language={props.language}
-            classButton={btnClasses}
           />
         </div>
       )}

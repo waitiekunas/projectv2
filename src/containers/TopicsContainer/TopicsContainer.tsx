@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import ClassTicket from '../../components/ClassTicket/ClassTicket';
+import { ClassTicket } from '../../components/ClassTicket/ClassTicket';
 
 const Wrapper = styled.div`
   display: flex;

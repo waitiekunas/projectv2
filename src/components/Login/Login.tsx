@@ -1,9 +1,24 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 import { Languages } from '../../enums/languages/languages';
 import { IUserState } from '../../interfaces/state/IState';
 import { Button } from '../Button/Button';
+
+const ButtonWrapper = styled.div`
+  display:flex;
+  justify-content:center;
+  align-self:center;
+`
+
+const ButtonBox = styled.div`
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  display:flex;
+  justify-content: space-around;
+  width:100%;
+`
 
 type MyProps = {
   login: (login: IUserState, id: number) => void
@@ -65,8 +80,8 @@ const Login = (props: MyProps) => {
           ></input>
         </div>
       </div>
-      <div className="flex items-center justify-center">
-        <div className=" flex justify-around w-full py-5">
+      <ButtonWrapper>
+        <ButtonBox>
           <Button
             handleClick={() => setLogin(!login)}
             label={"login"}
@@ -81,8 +96,8 @@ const Login = (props: MyProps) => {
             variant="contained"
             color="primary"
           />
-        </div>
-      </div>
+        </ButtonBox>
+      </ButtonWrapper>
     </>
   )
 }

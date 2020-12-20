@@ -1,11 +1,41 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 import { ResponseStatus } from '../../containers/ResponseStatus/ResponseStatus';
 import { Languages } from '../../enums/languages/languages';
 import { getTranslations } from '../../utils/utils';
 import { Button } from '../Button/Button';
 
+const StyledP = styled.p`
+  font-style: italic;
+  font-size: 0.75rem;
+  color: #f56565;
+`
+const MarginB1 = styled.div`
+  margin-bottom: 1rem;
+`
+
+const StyledLabel = styled.label`
+  display:block;
+  color: #4a5568;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+`
+const ButtonWrapper = styled.div`
+  display:flex;
+  justify-content:center;
+  align-self:center;
+`
+
+const ButtonBox = styled.div`
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  display:flex;
+  justify-content: space-around;
+  width:100%;
+`
 type MyProps = {
   register: (register: any) => void
   translation: any
@@ -83,14 +113,14 @@ const Register = (props: MyProps) => {
     <>
       <div>
         {disabled ? (
-          <p className="text-red-500 text-xs italic">
+          <StyledP>
             All fields must have value
-          </p>
+          </StyledP>
         ) : null}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+        <MarginB1>
+          <StyledLabel>
             Name
-          </label>
+          </StyledLabel>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={name}
@@ -99,11 +129,11 @@ const Register = (props: MyProps) => {
             placeholder="Name"
             onChange={e => setName(e.target.value)}
           ></input>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+        </MarginB1>
+        <MarginB1>
+          <StyledLabel>
             Surname
-          </label>
+          </StyledLabel>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={surname}
@@ -112,11 +142,11 @@ const Register = (props: MyProps) => {
             placeholder="Surname"
             onChange={e => setSurname(e.target.value)}
           ></input>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+        </MarginB1>
+        <MarginB1>
+          <StyledLabel>
             Username
-          </label>
+          </StyledLabel>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={loginName}
@@ -125,11 +155,11 @@ const Register = (props: MyProps) => {
             placeholder="Username"
             onChange={e => setLoginName(e.target.value)}
           ></input>
-        </div>
-        <div className="mb-6">
-          <div className="block text-gray-700 text-sm font-bold mb-2">
+        </MarginB1>
+        <MarginB1>
+          <StyledLabel>
             Password
-          </div>
+          </StyledLabel>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             value={password}
@@ -138,11 +168,11 @@ const Register = (props: MyProps) => {
             placeholder="******************"
             onChange={e => setPassword(e.target.value)}
           ></input>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+        </MarginB1>
+        <MarginB1>
+          <StyledLabel>
             Email address
-          </label>
+          </StyledLabel>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={email}
@@ -151,10 +181,10 @@ const Register = (props: MyProps) => {
             placeholder="Email address"
             onChange={e => setEmail(e.target.value)}
           ></input>
-        </div>
+        </MarginB1>
       </div>
-      <div className="flex items-center justify-center">
-        <div className=" flex justify-around w-full py-5">
+      <ButtonWrapper>
+        <ButtonBox>
           <Button
             handleClick={() => setStartRegister(!startRegister)}
             label={"register"}
@@ -170,8 +200,8 @@ const Register = (props: MyProps) => {
             variant="contained"
             color="primary"
           />
-        </div>
-      </div>
+        </ButtonBox>
+      </ButtonWrapper>
       {showResponseStatus && (
         <ResponseStatus
           language={props.language}

@@ -1,17 +1,46 @@
 import React from 'react';
+import styled from 'styled-components';
 
+const Wrapper = styled.div`
+    position:relative;
+    margin:0.25rem;
+    display:flex;
+    justify-content:center;
+`
+const Content = styled.div`
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    background-color: black;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    opacity:0.5;
+`
+const StyledHeader=styled.h4`
+    padding-top:1rem;
+`
 
-const Image = (props: any) => {
+type Props = {
+    imageUri?:string;
+    imgHeader?:string;
+    imgText?:string;
+    showText:boolean;
+}
+
+export const Image:React.FC<Props> = ({imageUri, imgHeader, imgText, showText}) => {
     return (
-        <div className={`${props.additionalClass} relative`}>
-            <img src={props.imageUri} alt={'description'} />
-            {props.showText &&
-                <div className="image-text-block flex justify-center flex-col opacity-50">
-                    <h4 className={'pt-4'}>{props.imgHeader}</h4>
-                    <p>{props.imgText}</p>
-                </div>}
-        </div>
+        <Wrapper>
+            <img src={imageUri} alt={'description'} />
+            {showText &&
+                <Content>
+                    <StyledHeader>{imgHeader}</StyledHeader>
+                    <p>{imgText}</p>
+                </Content>}
+        </Wrapper>
     )
 
 }
-export default Image;

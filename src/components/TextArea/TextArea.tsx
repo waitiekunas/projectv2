@@ -1,21 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import { Box } from '../Box/Box';
 import { StyledArea } from './style';
+
+const Wrapper = styled.div`
+  width:100%;
+  height:100%;
+`
 
 type MyProps = {
   value: any
   handleChange: (e?: any) => void
 }
-export const TextArea = (props: MyProps) => {
+export const TextArea:React.FC<MyProps> = ({value, handleChange}) => {
   return (
-    <Box
-      size={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <StyledArea value={props.value} onChange={props.handleChange} />
-    </Box>
+    <Wrapper>
+      <StyledArea value={value} onChange={handleChange} />
+    </Wrapper>
   )
 }

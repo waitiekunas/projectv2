@@ -4,9 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { Box } from '../../components/Box/Box';
 import { Button } from '../../components/Button/Button';
-import Image from '../../components/Image/Image';
+import { Image } from '../../components/Image/Image';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { translations } from '../../resources/translations/translations';
@@ -50,10 +49,19 @@ const AuthorDescriptionArea = styled.div`
     padding: 1rem;
   }
 `
-const ButtonWrapper = styled.div`
-  height: auto;
+const ButtonsWrapper = styled.div`
+  width:100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+`
+
+const ButtonWrapper = styled.div`
+  max-width: 200px;
+  width:25%;
+  height: 42px;
+  align-self: center;
+  margin-top: 0.5rem;
 `
 type MyProps = {
   topicInfo: {
@@ -103,7 +111,6 @@ const TopicDescription = (props: MyProps) => {
             <AuthorInfoArea>
               <AuthorPhotoArea>
                 <Image
-                  additionalClass={""}
                   imageUri={authorInfo[0].photo_url}
                   showText={false}
                 />
@@ -114,25 +121,9 @@ const TopicDescription = (props: MyProps) => {
             </AuthorInfoArea>
           )}
           <TextArea>{topicDesc}</TextArea>
-          <Box
-            size={{
-              width: "100%",
-            }}
-            flex={{
-              direction: "column",
-              justify: "center",
-            }}
-          >
+          <ButtonsWrapper>
             {props.isLoggedIn && props.isSubscribed && (
-              <Box
-                size={{
-                  maxWidth: "200px",
-                  width: "25%",
-                  height: "42px",
-                }}
-                align={{ self: "center" }}
-                margin={{ top: "0.5rem" }}
-              >
+              <ButtonWrapper>
                 <Button
                   handleClick={handleClick}
                   buttonTexts={translation}
@@ -140,18 +131,10 @@ const TopicDescription = (props: MyProps) => {
                   language={props.language}
                   classButton={DEFAULT_BUTTON_CLASSES}
                 />
-              </Box>
+              </ButtonWrapper>
             )}
             {props.isLoggedIn && props.canUpload && (
-              <Box
-                size={{
-                  maxWidth: "200px",
-                  width: "25%",
-                  height: "42px",
-                }}
-                align={{ self: "center" }}
-                margin={{ top: "0.5rem" }}
-              >
+              <ButtonWrapper>
                 <Link to={`/upload-screen/`}>
                   <Button
                     handleClick={() => null}
@@ -161,9 +144,9 @@ const TopicDescription = (props: MyProps) => {
                     classButton={DEFAULT_BUTTON_CLASSES}
                   />
                 </Link>
-              </Box>
+              </ButtonWrapper>
             )}
-          </Box>
+          </ButtonsWrapper>
         </ContentArea>
         {clicked ? (
           <LessonFlow

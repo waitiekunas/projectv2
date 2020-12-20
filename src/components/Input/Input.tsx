@@ -1,20 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import { Box } from '../Box/Box';
 import { StyledInput } from './style';
 
+const Wrapper = styled.div`
+  width:100%;
+`
 type MyProps = {
   value: any
   handleChange: (e?: any) => void
 }
 export const Input = (props: MyProps) => {
   return (
-    <Box
-      size={{
-        width: "100%",
-      }}
-    >
+    <Wrapper>
       <StyledInput value={props.value} onChange={props.handleChange} />
-    </Box>
+    </Wrapper>
   )
 }

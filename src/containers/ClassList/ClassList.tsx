@@ -5,11 +5,21 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Slider from 'react-slick';
+import styled from 'styled-components';
 
-import ClassTicket from '../../components/ClassTicket/ClassTicket';
+import { ClassTicket } from '../../components/ClassTicket/ClassTicket';
 import { setLessons } from '../../state/actions/lessons';
 import { setLookups } from '../../state/actions/lookups';
 
+
+const Wrapper = styled.div`
+  display:flex;
+  justify-content:center;
+`
+const Content = styled.div`
+  width: 66%;
+  max-height: 10%;
+`
 export const ClassList = () => {
   const lessons = useSelector((state: any) => state.lessons.lessons)
   const dispatch = useDispatch()
@@ -45,8 +55,8 @@ export const ClassList = () => {
   }
 
   return (
-    <div className={"flex justify-center"}>
-      <div className={"w-2/3 max-height-10-proc"}>
+    <Wrapper>
+      <Content>
         <Slider {...settings}>
           {lessons &&
             lessons.map((value, index) => (
@@ -62,8 +72,8 @@ export const ClassList = () => {
               />
             ))}
         </Slider>
-      </div>
-    </div>
+      </Content>
+    </Wrapper>
   )
 }
 

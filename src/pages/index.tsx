@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import Image from '../components/Image/Image';
+import { Image } from '../components/Image/Image';
 import Layout from '../components/Layout/layout';
 import SEO from '../components/Seo/seo';
 import ClassListFullContent from '../containers/ClassListFullContent/ClassListFullContent';
@@ -40,7 +40,6 @@ export const IndexPage = (props: MyProps) => {
           "Size of the box and qtty of boxes as well as position can be adjusted"
         }
         showText={true}
-        additionalClass={"max-height-40-proc"}
       />
       <ClassListFullContent />
       {showCookies && (

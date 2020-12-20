@@ -2,19 +2,25 @@ import { Link } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 
-import Copyright from '../../components/Copyright/Copyright';
+import { Copyright } from '../../components/Copyright/Copyright';
 
 const FooterStyle = styled.div`
   margin-top: 5%;
+  display: flex;
+  justify-content:center;
+`
+const StyledDiv = styled.div`
+  display:flex;
+  flex-direction:column;
 `
 
-const Footer = (props: any) => {
+const Footer = () => {
   return (
-    <FooterStyle className={"flex justify-center"}>
-      <div className={"flex-col"}>
+    <FooterStyle >
+      <StyledDiv>
         <Link to="/privacy-policy">Privatumo politika</Link>
         <Copyright />
-      </div>
+      </StyledDiv>
     </FooterStyle>
   )
 }

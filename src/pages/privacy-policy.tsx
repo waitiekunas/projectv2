@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Box } from '../components/Box/Box';
 import Layout from '../components/Layout/layout';
 import SEO from '../components/Seo/seo';
 
@@ -28,31 +27,26 @@ const StyledLi = styled.li`
 const StyledTd = styled.td`
   border: 1px solid black;
 `
+const Wrapper = styled.div`
+  display:flex;
+  justify-content:center;
+`
+
+const Content = styled.div`
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  width:60%;
+`
 
 const PrivacyPolicy = ({ location }) => (
   <Layout>
     <SEO title="Topic-view" />
-    <Box
-      flex={{
-        justify: "center",
-      }}
-    >
-      <Box
-        flex={{
-          justify: "center",
-          direction: "column",
-        }}
-        size={{
-          width: "60%",
-        }}
-      >
-        <Box
-          flex={{
-            justify: "center",
-          }}
-        >
+    <Wrapper>
+      <Content>
+        <Wrapper>
           <h1>PRIVACY</h1>
-        </Box>
+        </Wrapper>
         <StyledParagraph>
           Šis dokumentas (toliau – Politika) apibūdina pagrindinius principus,
           remiantis kuriais letaspelnas.lt (toliau – Projektas) saugo ir naudoja
@@ -138,8 +132,8 @@ const PrivacyPolicy = ({ location }) => (
             </tr>
           </tbody>
         </table>
-      </Box>
-    </Box>
+      </Content>
+    </Wrapper>
   </Layout>
 )
 
