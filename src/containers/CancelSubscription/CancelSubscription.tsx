@@ -1,7 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { selectStripeSubscriptionId } from '../../state/selectors/userData.selector';
 
 const CancelSubscription = (props: any) => {
+  const stripeSubscriptionId = useSelector(selectStripeSubscriptionId)
   const handleClick = evt => {
     evt.preventDefault()
     return fetch(process.env.CANCEL_SUBSCRIPTION_URL, {
@@ -10,7 +13,7 @@ const CancelSubscription = (props: any) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        subscriptionId: props.stripeId,
+        subscriptionId: stripeSubscriptionId,
       }),
     })
       .then(response => {
@@ -29,7 +32,4 @@ const CancelSubscription = (props: any) => {
   )
 }
 
-const mapStateToProps = state => ({
-  stripeId: state.isLoggedIn.subscriptionId,
-})
-export default connect(mapStateToProps)(CancelSubscription)
+export default CancelSubscription

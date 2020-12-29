@@ -1,5 +1,12 @@
-export const GET_LANGUAGE = "GET_LANGUAGE"
-export const LOGIN = "LOGIN"
-export const SET_USER_ID = "SET_USER_ID"
-export const SET_LOOKUPS = "SET_LOOKUPS"
-export const SET_LESSONS = "SET_LESSONS"
+import { createAction } from '@reduxjs/toolkit';
+
+import { Languages } from '../../enums/languages/languages';
+import { IUserState } from '../../interfaces/state/IState';
+
+export const setLanguageAction = createAction<Languages>("GET_LANGUAGE")
+export const loginAction = createAction<IUserState>("LOGIN")
+export const setUserIdAction = createAction<number>("SET_USER_ID")
+export const setLookupsAction = createAction<any[]>("SET_LOOKUPS")
+export const setLessonsAction = createAction<any[]>("SET_LESSONS")
+export const setStripeCustomerIdAction = createAction<string>("SET_STRIPE_CUSTOMER_ID")
+export const changeLoginStatusAction = createAction<boolean>("CHANGING_LOGIN_STATUS")

@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import FileInput from '../../components/FileInput/FileInput';
 import { Input } from '../../components/Input/Input';
 import { TextArea } from '../../components/TextArea/TextArea';
-import { Languages } from '../../enums/languages/languages';
+import { selectLanguage, selectUserId } from '../../state/selectors/userData.selector';
 import { getTranslations } from '../../utils/utils';
 import { ResponseStatus } from '../ResponseStatus/ResponseStatus';
 import { StyledSpan } from './style';
@@ -83,12 +83,9 @@ const ButtonWrapper = styled.div`
 const StyledButtonBox = styled.div`
   width:25%;
 `
-type MyProps = {
-  language: Languages
-  userId: number
-}
-
-const UploadContainer = (props: MyProps) => {
+const UploadContainer = () => {
+  const language = useSelector(selectLanguage)
+  const userId = useSelector(selectUserId)
   const [lessonName, setLessonName] = useState("")
   const [lessonDescription, setLessonDescription] = useState("")
   const [uploadedImage, setUploadedImage] = useState<any>([])
@@ -212,7 +209,7 @@ const UploadContainer = (props: MyProps) => {
       uploadedFiles.forEach(file => files.append("file", file))
       files.append("lessonName", lessonName)
       files.append("lessonDescription", lessonDescription)
-      files.append("userId", props.userId.toString())
+      files.append("userId", userId.toString())
       axios.post(process.env.UPLOAD_URL, files, {}).then(res => {
         let success = false
         if (res.status === 200) {
@@ -244,7 +241,6 @@ const UploadContainer = (props: MyProps) => {
       ))}
     </ul>
   )
-  console.log(props.userId)
   return (
     <Wrapper>
       <Content>
@@ -258,7 +254,7 @@ const UploadContainer = (props: MyProps) => {
 
         <SectionWrapper>
           <StyledDiv>
-            {getTranslations(props.language, "lessonName")}
+            {getTranslations(language, "lessonName")}
           </StyledDiv>
           <InputWrapper>
             <Input
@@ -269,7 +265,7 @@ const UploadContainer = (props: MyProps) => {
         </SectionWrapper>
         <CustomSectionWrapper>
           <StyledDiv>
-            {getTranslations(props.language, "lessonDescription")}
+            {getTranslations(language, "lessonDescription")}
           </StyledDiv>
           <InputWrapper>
             <TextArea
@@ -280,12 +276,12 @@ const UploadContainer = (props: MyProps) => {
         </CustomSectionWrapper>
         <SectionWrapper>
           <StyledDiv>
-            {getTranslations(props.language, "lessonCover")}
+            {getTranslations(language, "lessonCover")}
           </StyledDiv>
           <InputWrapper>
             <FileInput
               onChange={handleImageUpload}
-              label={getTranslations(props.language, "uploadImage")}
+              label={getTranslations(language, "uploadImage")}
               value={uploadedImage}
               onDelete={handleImageDelete}
               errorMessage={imageErrorMessage}
@@ -295,16 +291,16 @@ const UploadContainer = (props: MyProps) => {
 
         <SectionWrapper>
           <StyledDiv>
-            {getTranslations(props.language, "lessonMaterial")}
+            {getTranslations(language, "lessonMaterial")}
           </StyledDiv>
           <InputWrapper>
             <FileInput
               onChange={handleFileUpload}
               label={`${getTranslations(
-                props.language,
+                language,
                 "uploadLesson"
               )} ${uploadedFiles.length + 1} ${getTranslations(
-                props.language,
+                language,
                 "step"
               )}`}
               value={uploadedFiles}
@@ -329,12 +325,12 @@ const UploadContainer = (props: MyProps) => {
         </SectionWrapper>
         <SectionWrapper>
           <StyledDiv>
-            {getTranslations(props.language, "authorPicture")}
+            {getTranslations(language, "authorPicture")}
           </StyledDiv>
           <InputWrapper>
             <FileInput
               onChange={handleAuthorImageUpload}
-              label={getTranslations(props.language, "uploadImage")}
+              label={getTranslations(language, "uploadImage")}
               value={authorImage}
               onDelete={handleAuthorImageDelete}
               errorMessage={imageAuthorErrorMessage}
@@ -343,7 +339,7 @@ const UploadContainer = (props: MyProps) => {
         </SectionWrapper>
         <SectionWrapper>
           <StyledDiv>
-            {getTranslations(props.language, "authorDescription")}
+            {getTranslations(language, "authorDescription")}
           </StyledDiv>
           <InputWrapper>
             <TextArea
@@ -357,7 +353,7 @@ const UploadContainer = (props: MyProps) => {
             <Button
               handleClick={() => handleUpload()}
               label={"uploadLesson"}
-              language={props.language}
+              language={language}
               disabled={disabled}
               variant='contained'
               color='primary'
@@ -369,18 +365,15 @@ const UploadContainer = (props: MyProps) => {
         <ResponseStatus
           text={
             uploadSuccess
-              ? getTranslations(props.language, "uploadSuccess")
-              : getTranslations(props.language, "uploadFailed")
+              ? getTranslations(language, "uploadSuccess")
+              : getTranslations(language, "uploadFailed")
           }
           handleClick={hideResponseStatus}
-          language={props.language}
+          language={language}
         />
       )}
     </Wrapper>
   )
 }
-const mapStateToProps = state => ({
-  language: state.language.language,
-  userId: state.userId.userId,
-})
-export default connect(mapStateToProps)(UploadContainer)
+
+export default UploadContainer

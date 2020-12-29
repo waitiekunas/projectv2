@@ -1,14 +1,12 @@
 import axios from 'axios';
 import { Link } from 'gatsby';
 import React, { useCallback, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import { Image } from '../../components/Image/Image';
-import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
-import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
+import { selectLanguage, selectUserInfo } from '../../state/selectors/userData.selector';
 import CancelSubscription from '../CancelSubscription/CancelSubscription';
 import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
 import LessonFlow from '../LessonFlow/LessonFlow';
@@ -73,13 +71,11 @@ type MyProps = {
     description: string
     authorId: number
   }
-  language: Languages
-  isLoggedIn: boolean
-  canUpload: boolean
-  isSubscribed: boolean
 }
 
 const TopicDescription = (props: MyProps) => {
+  const language = useSelector(selectLanguage)
+  const userInfo = useSelector(selectUserInfo)
   const [clicked, setClicked] = useState(false)
   const [selectedClassId, setSelectedClassId] = useState(0)
   const [authorInfo, setAuthorInfo] = useState<any>()
@@ -100,13 +96,11 @@ const TopicDescription = (props: MyProps) => {
 
   const topicDesc = props.topicInfo?.description
 
-  const translation = translations
   return (
     <div>
       <Wrapper>
         <ContentArea>
-          {!props.isSubscribed && <CreateCustomerForm />}
-          {props.isSubscribed && <CancelSubscription />}
+          {!userInfo.subscribed? <CancelSubscription />: <CreateCustomerForm />}
           {authorInfo && (
             <AuthorInfoArea>
               <AuthorPhotoArea>
@@ -122,26 +116,26 @@ const TopicDescription = (props: MyProps) => {
           )}
           <TextArea>{topicDesc}</TextArea>
           <ButtonsWrapper>
-            {props.isLoggedIn && props.isSubscribed && (
+            {userInfo.isLoggedIn && userInfo.subscribed && (
               <ButtonWrapper>
                 <Button
                   handleClick={handleClick}
-                  buttonTexts={translation}
                   label={"starLesson"}
-                  language={props.language}
-                  classButton={DEFAULT_BUTTON_CLASSES}
+                  language={language}
+                  variant="contained"
+                    color="primary"
                 />
               </ButtonWrapper>
             )}
-            {props.isLoggedIn && props.canUpload && (
+            {userInfo.isLoggedIn && userInfo.canUpload && (
               <ButtonWrapper>
                 <Link to={`/upload-screen/`}>
                   <Button
                     handleClick={() => null}
-                    buttonTexts={translation}
                     label={"upload"}
-                    language={props.language}
-                    classButton={DEFAULT_BUTTON_CLASSES}
+                    language={language}
+                    variant="contained"
+                    color="primary"
                   />
                 </Link>
               </ButtonWrapper>
@@ -152,6 +146,7 @@ const TopicDescription = (props: MyProps) => {
           <LessonFlow
             handleClick={closeChildScreen}
             topicId={selectedClassId}
+            language={language}
           />
         ) : null}
       </Wrapper>
@@ -159,10 +154,4 @@ const TopicDescription = (props: MyProps) => {
   )
 }
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.isLoggedIn.isLoggedIn,
-  language: state.language.language,
-  canUpload: state.isLoggedIn.canUpload,
-  isSubscribed: state.isLoggedIn.subscribed,
-})
-export default connect(mapStateToProps)(TopicDescription)
+export default TopicDescription

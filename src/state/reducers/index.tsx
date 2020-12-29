@@ -1,15 +1,14 @@
 import { combineReducers } from 'redux';
 
-import languageRed from './languageRed';
-import lessonRed from './lessonsRed';
-import loginRegister from './loginRegister';
-import lookupsRed from './lookupsRed';
-import userRed from './userRed';
+import { ApiDataState, apiReducer } from './api.reducer';
+import { userReducer, UserState } from './user.reducer';
+
+export interface RootState{
+  userInformation:UserState,
+  apiData:ApiDataState,
+}
 
 export const allReducers = combineReducers({
-  language: languageRed,
-  isLoggedIn: loginRegister,
-  userId: userRed,
-  lookups: lookupsRed,
-  lessons: lessonRed,
+  userInformation: userReducer,
+  apiData: apiReducer,
 })

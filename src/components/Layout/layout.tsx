@@ -12,7 +12,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Footer from '../../containers/Footer/Footer';
@@ -54,7 +53,4 @@ Layout.propTypes = {
   isLoggedIn: PropTypes.bool,
 }
 
-const mapStateToProps = state => ({
-  customerId: state.isLoggedIn.isLoggedIn,
-})
-export default connect(mapStateToProps)(Layout)
+export default Layout

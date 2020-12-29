@@ -1,7 +1,7 @@
 import axios from 'axios';
 import PDFViewer from 'pdf-viewer-reactjs';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Player } from 'video-react';
 
@@ -10,6 +10,7 @@ import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
 import { translations } from '../../resources/translations/translations';
+import { selectLanguage } from '../../state/selectors/userData.selector';
 
 const Background = styled.div`
   width: 150%;
@@ -53,6 +54,7 @@ type MyProps = {
 }
 
 const LessonFlow = (props: MyProps) => {
+  const language = useSelector(selectLanguage)
   const [topicId, setTopicId] = useState(props.topicId)
   const [currentStep, setCurrentStep] = useState(0)
   const [materialInfo, setMaterialInfo] = useState<LessonMaterial[]>([])
@@ -131,7 +133,7 @@ const LessonFlow = (props: MyProps) => {
           <Content>
             <ButtonBox>
               <Button
-                language={props.language}
+                language={language}
                 label="back"
                 buttonTexts={translations}
                 handleClick={handleBack}
@@ -142,7 +144,7 @@ const LessonFlow = (props: MyProps) => {
 
             <ButtonBox>
               <Button
-                language={props.language}
+                language={language}
                 label="forward"
                 buttonTexts={translations}
                 handleClick={handleForward}
@@ -154,7 +156,7 @@ const LessonFlow = (props: MyProps) => {
 
             <ButtonBox>
               <Button
-                language={props.language}
+                language={language}
                 label="close"
                 buttonTexts={translations}
                 handleClick={handleClick}
@@ -168,7 +170,5 @@ const LessonFlow = (props: MyProps) => {
     </>
   )
 }
-const mapStateToProps = state => ({
-  language: state.language.language,
-})
-export default connect(mapStateToProps)(LessonFlow)
+
+export default LessonFlow

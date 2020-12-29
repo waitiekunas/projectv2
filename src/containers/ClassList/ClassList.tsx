@@ -8,9 +8,8 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 
 import { ClassTicket } from '../../components/ClassTicket/ClassTicket';
-import { setLessons } from '../../state/actions/lessons';
-import { setLookups } from '../../state/actions/lookups';
-
+import { setLessonsAction, setLookupsAction } from '../../state/actions/actions';
+import { selectLessons } from '../../state/selectors/apiData.selector.ts';
 
 const Wrapper = styled.div`
   display:flex;
@@ -21,15 +20,15 @@ const Content = styled.div`
   max-height: 10%;
 `
 export const ClassList = () => {
-  const lessons = useSelector((state: any) => state.lessons.lessons)
+  const lessons = useSelector(selectLessons)
   const dispatch = useDispatch()
   useEffect(() => {
     axios
       .get(process.env.GET_ALL_LESSONS_URL)
-      .then((res: any) => dispatch(setLessons(res.data)))
+      .then((res: any) => dispatch(setLessonsAction(res.data)))
   }, [])
   useEffect(() => {
-    dispatch(setLookups(getTopics(lessons)))
+    dispatch(setLookupsAction(getTopics(lessons)))
   }, [lessons])
   const settings = {
     dots: false,

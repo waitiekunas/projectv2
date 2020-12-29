@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import Login from '../../components/Login/Login';
@@ -7,8 +7,8 @@ import Register from '../../components/Register/Register';
 import { Languages } from '../../enums/languages/languages';
 import { IUserState } from '../../interfaces/state/IState';
 import { translations } from '../../resources/translations/translations';
-import { setUserStatus } from '../../state/actions/loginRegister';
-import { setUserId } from '../../state/actions/user';
+import { loginAction, setUserIdAction } from '../../state/actions/actions';
+import { selectLanguage } from '../../state/selectors/userData.selector';
 
 type WrapperProps = {
   show:boolean
@@ -50,18 +50,17 @@ type MyProps = {
   language?: Languages
   show: boolean
   handleLogin: (...args: any[]) => void
-  dispatch: (...args: any[]) => void
   isLoggedIn?: boolean
   handleLoginRegisterShow: (...args: any[]) => void
 }
 
 const LoginRegister: React.FC<MyProps> = ({
   show,
-  language,
   handleLogin,
-  dispatch,
   handleLoginRegisterShow,
 }) => {
+  const dispatch = useDispatch()
+  const language = useSelector(selectLanguage)
   const [showLogin, setShowLogin] = useState<boolean>(true)
   const [showRegister, setShowRegister] = useState<boolean>(false)
   const handleParentClick = e => {
@@ -78,8 +77,8 @@ const LoginRegister: React.FC<MyProps> = ({
   }
 
   const handleLoggingIn = (login: IUserState, id: number) => {
-    dispatch(setUserId(id))
-    dispatch(setUserStatus(login))
+    dispatch(setUserIdAction(id))
+    dispatch(loginAction(login))
     handleLogin(login.isLoggedIn)
     handleLoginRegisterShow(!login.isLoggedIn)
   }
@@ -116,10 +115,4 @@ const LoginRegister: React.FC<MyProps> = ({
     )
   }
 
-
-const mapStateToProps = state => ({
-  language: state.language.language,
-  isLoggedIn: state.isLoggedIn.isLoggedIn,
-})
-
-export default connect(mapStateToProps)(LoginRegister)
+export default LoginRegister

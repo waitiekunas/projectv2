@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
-import { Languages } from '../../enums/languages/languages';
 import { StyledLabel } from './style';
 
 const Wrapper = styled.div`
@@ -27,7 +25,6 @@ const StyledDiv=styled.div`
 
 type MyProps = {
   onChange: (e: any) => void
-  language?: Languages
   label: string
   value: any[]
   onDelete: (index: number) => void
@@ -68,7 +65,5 @@ const FileInput = ({ value, onChange, errorMessage, ...rest }: MyProps) => {
     </Wrapper>
   )
 }
-const mapStateToProps = state => ({
-  language: state.language.language,
-})
-export default connect(mapStateToProps)(FileInput)
+
+export default FileInput

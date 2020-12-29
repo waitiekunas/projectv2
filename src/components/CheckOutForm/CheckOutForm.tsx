@@ -1,12 +1,14 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+import { selectStripeCustomerId } from '../../state/selectors/userData.selector';
 import { createSubscription, retryInvoiceWithNewPaymentMethod } from '../../utils/paymentUtils';
 import CardSection from '../CardSection/CardSection';
 import { Modal } from '../Modal/Modal';
 
-const CheckoutForm = ({ customerId }) => {
+const CheckoutForm = () => {
+  const customerId = useSelector(selectStripeCustomerId)
   const [showCard, setShowCard] = useState<boolean>(true)
   const priceId = "price_1HLREkJtXEcPW0ZhZRnicWYk"
   const stripe = useStripe()
@@ -65,7 +67,5 @@ const CheckoutForm = ({ customerId }) => {
     </>
   )
 }
-const mapStateToProps = state => ({
-  customerId: state.isLoggedIn.stripeCustomerId,
-})
-export default connect(mapStateToProps)(CheckoutForm)
+
+export default CheckoutForm

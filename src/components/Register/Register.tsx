@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Formik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -36,6 +37,19 @@ const ButtonBox = styled.div`
   justify-content: space-around;
   width:100%;
 `
+export enum RegisterFormFields {
+  username='username',
+  password = 'password',
+  email='email',
+}
+
+export interface RegisterFormFieldValues{
+  [RegisterFormFields.username]?: string;
+  [RegisterFormFields.password]?:string;
+  [RegisterFormFields.email]?:string;
+
+}
+
 type MyProps = {
   register: (register: any) => void
   translation: any
@@ -46,8 +60,6 @@ type MyProps = {
 const Register = (props: MyProps) => {
   const [loginName, setLoginName] = useState("")
   const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
-  const [surname, setSurname] = useState("")
   const [startRegister, setStartRegister] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [showResponseStatus, setShowResponseStatus] = useState(false)
@@ -68,28 +80,22 @@ const Register = (props: MyProps) => {
     isDisabled()
   })
   const isDisabled = () => {
-    setDisabled(!name || !surname || !password || !loginName || !email)
+    setDisabled(!password || !loginName || !email)
   }
 
   const handleRegisterResponse = (resData: boolean) => {
     let login = loginName
     let pass = password
-    let firstName = name
-    let lastName = surname
     let registered = isRegisterSuccess
     let emailAddress = email
     if (resData) {
       login = ""
       pass = ""
-      firstName = ""
-      lastName = ""
       registered = true
       emailAddress = ""
     }
     setLoginName(login)
     setPassword(pass)
-    setName(firstName)
-    setSurname(lastName)
     setShowResponseStatus(true)
     setIsRegisterSuccess(registered)
     setEmail(emailAddress)
@@ -103,46 +109,16 @@ const Register = (props: MyProps) => {
     id: "",
     loginName: loginName,
     password: password,
-    name: name,
-    surname: surname,
     registerDate: "",
     lastLoginDate: "",
     email: email,
   })
   return (
+    <Formik<RegisterFormFieldValues>
+      enable
+      >
     <>
       <div>
-        {disabled ? (
-          <StyledP>
-            All fields must have value
-          </StyledP>
-        ) : null}
-        <MarginB1>
-          <StyledLabel>
-            Name
-          </StyledLabel>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={name}
-            id="name"
-            type="text"
-            placeholder="Name"
-            onChange={e => setName(e.target.value)}
-          ></input>
-        </MarginB1>
-        <MarginB1>
-          <StyledLabel>
-            Surname
-          </StyledLabel>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={surname}
-            id="surname"
-            type="text"
-            placeholder="Surname"
-            onChange={e => setSurname(e.target.value)}
-          ></input>
-        </MarginB1>
         <MarginB1>
           <StyledLabel>
             Username
@@ -213,7 +189,7 @@ const Register = (props: MyProps) => {
         />
       )}
     </>
-  )
+    </Formik>)
 }
 
 export default Register

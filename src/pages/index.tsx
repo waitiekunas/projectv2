@@ -1,24 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Image } from '../components/Image/Image';
 import Layout from '../components/Layout/layout';
 import SEO from '../components/Seo/seo';
 import ClassListFullContent from '../containers/ClassListFullContent/ClassListFullContent';
 import { CookiesCont } from '../containers/CookiesCont/CookiesCont';
-import { Languages } from '../enums/languages/languages';
-import { getLanguage } from '../state/actions/lang';
+import { selectLanguage } from '../state/selectors/userData.selector';
 
-type MyProps = {
-  language: Languages
-  dispatch: any
-}
 
-export const IndexPage = (props: MyProps) => {
-  const [language, setLanguage] = useState<Languages>()
+export const IndexPage = () => {
+  const language = useSelector(selectLanguage)
   const [showCookies, setShowCookies] = useState<boolean>(true)
   useEffect(() => {
-    setLanguage(props.language)
     setShowCookies(findCookie())
   }, [])
   const handleCookieClick = useCallback(() => {
@@ -49,10 +43,5 @@ export const IndexPage = (props: MyProps) => {
   )
 }
 
-const mapDispatchToProps = dispatch => {
-  return dispatch(getLanguage(Languages.LITHUANIA))
-}
-const mapStateToProps = state => ({
-  language: state.language.language,
-})
-export default connect(mapStateToProps, mapDispatchToProps)(IndexPage)
+
+export default IndexPage
