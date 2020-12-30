@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { ClassTicket } from '../../components/ClassTicket/ClassTicket';
+import { selectLessons, selectState } from '../../state/selectors/apiData.selector';
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,7 +20,10 @@ const TopicWrapper = styled.div`
   margin: 0px;
 `
 const TopicsContainer = () => {
-  const lessons = useSelector((state: any) => state.lessons.lessons)
+  // const lessons = useSelector(selectLessons)
+  const lessons = []
+  console.log(useSelector(selectLessons))
+  console.log(useSelector(selectState))
   return (
     <Wrapper>
       <TopicsWrapper className={"TopicsWrapper"}>

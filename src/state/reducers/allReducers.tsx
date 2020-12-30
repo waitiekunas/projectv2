@@ -8,7 +8,8 @@ export interface RootState{
   apiData:ApiDataState,
 }
 
-export const allReducers = combineReducers({
+const allReducers = combineReducers({
   userInformation: userReducer,
   apiData: apiReducer,
 })
+export default allReducers

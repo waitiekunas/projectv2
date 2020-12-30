@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Image } from '../components/Image/Image';
 import Layout from '../components/Layout/layout';
@@ -14,7 +14,10 @@ export const IndexPage = () => {
   const [showCookies, setShowCookies] = useState<boolean>(true)
   useEffect(() => {
     setShowCookies(findCookie())
+
   }, [])
+  const dispatch = useDispatch()
+  
   const handleCookieClick = useCallback(() => {
     setShowCookies(false)
   }, [showCookies])
@@ -24,6 +27,7 @@ export const IndexPage = () => {
     }
     return true
   }
+  console.log(language)
   return (
     <Layout>
       <SEO title="Home" />

@@ -1,15 +1,14 @@
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 
 import { ClassTicket } from '../../components/ClassTicket/ClassTicket';
-import { setLessonsAction, setLookupsAction } from '../../state/actions/actions';
-import { selectLessons } from '../../state/selectors/apiData.selector.ts';
+import { loadLessonsAction, setLookupsAction } from '../../state/actions/actions';
+import { selectLessons } from '../../state/selectors/apiData.selector';
 
 const Wrapper = styled.div`
   display:flex;
@@ -20,16 +19,18 @@ const Content = styled.div`
   max-height: 10%;
 `
 export const ClassList = () => {
-  const lessons = useSelector(selectLessons)
+  let lessons:any[] = useSelector(selectLessons)
   const dispatch = useDispatch()
   useEffect(() => {
-    axios
-      .get(process.env.GET_ALL_LESSONS_URL)
-      .then((res: any) => dispatch(setLessonsAction(res.data)))
+    if(lessons.length===0){
+      dispatch(loadLessonsAction())
+    }
   }, [])
+  
   useEffect(() => {
     dispatch(setLookupsAction(getTopics(lessons)))
   }, [lessons])
+  
   const settings = {
     dots: false,
     infinite: true,
@@ -57,7 +58,7 @@ export const ClassList = () => {
     <Wrapper>
       <Content>
         <Slider {...settings}>
-          {lessons &&
+          {lessons.length>0 &&
             lessons.map((value, index) => (
               <ClassTicket
                 key={index}
