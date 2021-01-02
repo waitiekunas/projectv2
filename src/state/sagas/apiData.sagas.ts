@@ -1,8 +1,18 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
-import { loadLessonsAction, setLessonsAction } from '../actions/actions';
+import { LoginData, RegisterBody } from '../../types/userData';
+import { loginAction, loginUserAction, setLessonsAction, setUserIdAction } from '../actions/actions';
+import { loadLessonsAction, registerUserAction } from '../actions/apiData.actions';
+import {
+    getAuthorInfoAction,
+    loadLessonsMaterialAction,
+    setAuthorInfoAction,
+    setLessonsMaterialAction,
+} from './../actions/apiData.actions';
+import { setRegisterStatus } from './../actions/userData.actions';
 
 export function* loadAllLessonsSaga():SagaIterator{
     try{
@@ -13,6 +23,65 @@ export function* loadAllLessonsSaga():SagaIterator{
     }
 }
 
+export function* loginUserSaga({payload}:PayloadAction<LoginData>){
+    try{
+        const {data}= yield call(()=>
+        axios.post(process.env.LOGIN_URL, payload))
+        yield put (loginAction(data.loginData))
+        yield put(setUserIdAction(data.id))
+    } catch(e){
+        console.log(e)
+    }
+}
+
+export function* registerUserSaga({payload}:PayloadAction<RegisterBody>){
+    try{
+        const {data}=yield call(()=>
+        axios.post(process.env.REGISTER_URL, payload)
+        )
+        yield put(setRegisterStatus(data))
+    } catch(e){
+        console.log(e)
+    }
+}
+
+export function* loadLessonMaterialSaga({payload}:PayloadAction<FormData>){
+    try{
+        const {data}=yield call(()=>
+            axios.post(process.env.GET_LESSON_URL, payload)
+        )
+        yield put(setLessonsMaterialAction(data))
+    } catch(e){
+        console.log(e)
+    }
+}
+
+export function* uploadLessonSaga({payload}:PayloadAction<FormData>){
+    try{
+        const {data} = yield call(()=>
+            axios.post(process.env.UPLOAD_URL, payload)
+        )
+    } catch (e){
+        console.log(e)
+    }
+}
+
+export function* getAuthorInfoSaga({payload}:PayloadAction<FormData>){
+    try{
+        const {data} = yield call(()=>
+            axios.post(process.env.GET_AUTHOR_INFO_URL, payload)
+        )
+        yield put(setAuthorInfoAction(data))
+    } catch(e){
+        console.log(e)
+    }
+}
+
+
 export function* apiDataSagas(){
     yield all([takeLatest(loadLessonsAction,loadAllLessonsSaga)])
+    yield all([takeLatest(loginUserAction, loginUserSaga)])
+    yield all([takeLatest(registerUserAction, registerUserSaga)])
+    yield all([takeLatest(loadLessonsMaterialAction,loadLessonMaterialSaga)])
+    yield all([takeLatest(getAuthorInfoAction, getAuthorInfoSaga)])
 }

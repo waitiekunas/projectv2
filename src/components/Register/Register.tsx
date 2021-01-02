@@ -1,10 +1,13 @@
-import axios from 'axios';
 import { Formik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { ResponseStatus } from '../../containers/ResponseStatus/ResponseStatus';
 import { Languages } from '../../enums/languages/languages';
+import { registerUserAction } from '../../state/actions/apiData.actions';
+import { setRegisterStatus } from '../../state/actions/userData.actions';
+import { selectRegisterStatus } from '../../state/selectors/userData.selector';
 import { getTranslations } from '../../utils/utils';
 import { Button } from '../Button/Button';
 
@@ -58,61 +61,37 @@ type MyProps = {
 }
 
 const Register = (props: MyProps) => {
+  const dispatch = useDispatch()
   const [loginName, setLoginName] = useState("")
   const [password, setPassword] = useState("")
   const [startRegister, setStartRegister] = useState(false)
   const [disabled, setDisabled] = useState(true)
-  const [showResponseStatus, setShowResponseStatus] = useState(false)
-  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
+  const showResponseStatus = useSelector(selectRegisterStatus)
   const [email, setEmail] = useState("")
   useEffect(() => {
     if (!disabled) {
-      axios({
-        method: "post",
-        url: process.env.REGISTER_URL,
-        data: {
-          userData: formulateUser(),
-        },
-      }).then(res => handleRegisterResponse(res.data))
+      dispatch(registerUserAction({
+        userData: {
+          id: "",
+          loginName: loginName,
+          password: password,
+          registerDate: "",
+          lastLoginDate: "",
+          email: email,
+        }
+      }))
     }
   }, [startRegister])
   useEffect(() => {
+    dispatch(setRegisterStatus(false))
     isDisabled()
-  })
+  },[])
   const isDisabled = () => {
     setDisabled(!password || !loginName || !email)
   }
 
-  const handleRegisterResponse = (resData: boolean) => {
-    let login = loginName
-    let pass = password
-    let registered = isRegisterSuccess
-    let emailAddress = email
-    if (resData) {
-      login = ""
-      pass = ""
-      registered = true
-      emailAddress = ""
-    }
-    setLoginName(login)
-    setPassword(pass)
-    setShowResponseStatus(true)
-    setIsRegisterSuccess(registered)
-    setEmail(emailAddress)
-  }
-  const hideResponseStatus = useCallback(() => {
-    setShowResponseStatus(false)
-    props.register(isRegisterSuccess)
-  }, [showResponseStatus])
+ 
 
-  const formulateUser = () => ({
-    id: "",
-    loginName: loginName,
-    password: password,
-    registerDate: "",
-    lastLoginDate: "",
-    email: email,
-  })
   return (
     <Formik<RegisterFormFieldValues>
       enable
@@ -181,10 +160,10 @@ const Register = (props: MyProps) => {
       {showResponseStatus && (
         <ResponseStatus
           language={props.language}
-          handleClick={hideResponseStatus}
+          handleClick={()=>props.register(showResponseStatus)}
           text={getTranslations(
             props.language,
-            isRegisterSuccess ? "registerSuccess" : "registerFailed"
+            showResponseStatus ? "registerSuccess" : "registerFailed"
           )}
         />
       )}

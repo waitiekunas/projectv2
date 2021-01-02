@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import Login from '../../components/Login/Login';
 import Register from '../../components/Register/Register';
 import { Languages } from '../../enums/languages/languages';
-import { IUserState } from '../../interfaces/state/IState';
 import { translations } from '../../resources/translations/translations';
-import { loginAction, setUserIdAction } from '../../state/actions/actions';
 import { selectLanguage } from '../../state/selectors/userData.selector';
 
 type WrapperProps = {
@@ -49,17 +47,14 @@ const StyledDiv = styled.div`
 type MyProps = {
   language?: Languages
   show: boolean
-  handleLogin: (...args: any[]) => void
   isLoggedIn?: boolean
   handleLoginRegisterShow: (...args: any[]) => void
 }
 
 const LoginRegister: React.FC<MyProps> = ({
   show,
-  handleLogin,
   handleLoginRegisterShow,
 }) => {
-  const dispatch = useDispatch()
   const language = useSelector(selectLanguage)
   const [showLogin, setShowLogin] = useState<boolean>(true)
   const [showRegister, setShowRegister] = useState<boolean>(false)
@@ -76,12 +71,7 @@ const LoginRegister: React.FC<MyProps> = ({
     setShowRegister(!showRegister)
   }
 
-  const handleLoggingIn = (login: IUserState, id: number) => {
-    dispatch(setUserIdAction(id))
-    dispatch(loginAction(login))
-    handleLogin(login.isLoggedIn)
-    handleLoginRegisterShow(!login.isLoggedIn)
-  }
+  
 
   const handleRegister = (register: boolean) => 
     handleLoginRegisterShow(!register)
@@ -96,7 +86,6 @@ const LoginRegister: React.FC<MyProps> = ({
           >
             {showLogin ? (
               <Login
-                login={handleLoggingIn}
                 translation={translations}
                 language={language}
                 handleViewChange={handleViewChange}

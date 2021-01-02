@@ -10,6 +10,7 @@ import {
   setUserIdAction,
 } from '../actions/actions';
 import { Languages } from './../../enums/languages/languages';
+import { setRegisterStatus } from './../actions/userData.actions';
 import { lookups } from './../initialState';
 
 export interface UserState {
@@ -17,6 +18,7 @@ export interface UserState {
   userId:number,
   language:Languages
   lookups:any[]
+  registerSuccess:boolean
 }
 
 export const initialUserState:UserState = {
@@ -30,7 +32,8 @@ export const initialUserState:UserState = {
     },
     userId:0,
     language: Languages.LITHUANIA,
-    lookups:[]
+    lookups:[],
+    registerSuccess:false
   }
 
   export const userReducer = createReducer<UserState>(
@@ -66,6 +69,10 @@ export const initialUserState:UserState = {
         .addCase(setLookupsAction, (state, {payload})=>({
           ...state,
           lookups:payload
+        }))
+        .addCase(setRegisterStatus,(state,{payload})=>({
+          ...state,
+          registerSuccess:payload
         }))
     }
   )

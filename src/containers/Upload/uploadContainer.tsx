@@ -1,12 +1,12 @@
-import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import FileInput from '../../components/FileInput/FileInput';
 import { Input } from '../../components/Input/Input';
 import { TextArea } from '../../components/TextArea/TextArea';
+import { uploadLessonAction } from '../../state/actions/apiData.actions';
 import { selectLanguage, selectUserId } from '../../state/selectors/userData.selector';
 import { getTranslations } from '../../utils/utils';
 import { ResponseStatus } from '../ResponseStatus/ResponseStatus';
@@ -84,6 +84,7 @@ const StyledButtonBox = styled.div`
   width:25%;
 `
 const UploadContainer = () => {
+  const dispatch = useDispatch()
   const language = useSelector(selectLanguage)
   const userId = useSelector(selectUserId)
   const [lessonName, setLessonName] = useState("")
@@ -210,14 +211,7 @@ const UploadContainer = () => {
       files.append("lessonName", lessonName)
       files.append("lessonDescription", lessonDescription)
       files.append("userId", userId.toString())
-      axios.post(process.env.UPLOAD_URL, files, {}).then(res => {
-        let success = false
-        if (res.status === 200) {
-          success = true
-        }
-        setUploadSuccess(success)
-        setShowUploadStatus(true)
-      })
+      dispatch(uploadLessonAction(files))
     }
     setUpload(false)
   }, [upload])

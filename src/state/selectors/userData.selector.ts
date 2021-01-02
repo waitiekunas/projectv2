@@ -7,3 +7,4 @@ export const selectLoginStatus = (state:RootState)=>state.userInformation.userIn
 export const selectStripeSubscriptionId = (state:RootState)=>state.userInformation.userInfo.subscriptionId
 export const selectCustomerEmail = (state:RootState)=>state.userInformation.userInfo.email
 export const selectUserInfo = (state:RootState)=>state.userInformation.userInfo
+export const selectRegisterStatus = (state:RootState)=>state.userInformation.registerSuccess

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { Link } from 'gatsby';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import { Image } from '../../components/Image/Image';
+import { getAuthorInfoAction } from '../../state/actions/apiData.actions';
+import { selectAuthorInfo } from '../../state/selectors/apiData.selector';
 import { selectLanguage, selectUserInfo } from '../../state/selectors/userData.selector';
 import CancelSubscription from '../CancelSubscription/CancelSubscription';
 import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
@@ -74,16 +76,17 @@ type MyProps = {
 }
 
 const TopicDescription = (props: MyProps) => {
+  const dispatch = useDispatch()
   const language = useSelector(selectLanguage)
   const userInfo = useSelector(selectUserInfo)
   const [clicked, setClicked] = useState(false)
   const [selectedClassId, setSelectedClassId] = useState(0)
-  const [authorInfo, setAuthorInfo] = useState<any>()
+  const authorInfo = useSelector(selectAuthorInfo)
   useEffect(() => {
     let author = new FormData()
     author.append("id", props.topicInfo.authorId.toString())
+    dispatch(getAuthorInfoAction(author))
     axios.post(process.env.GET_AUTHOR_INFO_URL, author).then(res => {
-      setAuthorInfo(res.data)
     })
   }, [])
   const handleClick = e => {

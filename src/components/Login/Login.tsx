@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { Languages } from '../../enums/languages/languages';
-import { IUserState } from '../../interfaces/state/IState';
+import { loginUserAction } from '../../state/actions/actions';
 import { Button } from '../Button/Button';
 
 const ButtonWrapper = styled.div`
@@ -21,27 +21,22 @@ const ButtonBox = styled.div`
 `
 
 type MyProps = {
-  login: (login: IUserState, id: number) => void
   translation: any
   language: Languages
   handleViewChange: (e) => void
 }
 const Login = (props: MyProps) => {
+  const dispatch = useDispatch();
   const [login, setLogin] = useState(false)
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
   useEffect(() => {
     if (userName && password) {
-      axios({
-        method: "post",
-        url: process.env.LOGIN_URL,
-        data: {
-          username: userName,
-          password: password,
-        },
-      }).then(res => {
-        props.login(res.data.loginData, res.data.id)
-      })
+      dispatch(loginUserAction({
+        username: userName,
+        password: password,
+      }))
+      
     }
   }, [login])
 

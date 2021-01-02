@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import { Logo } from '../../components/Logo/Logo';
-import { changeLoginStatusAction, loginAction } from '../../state/actions/actions';
+import { loginAction } from '../../state/actions/actions';
 import { selectLanguage, selectLoginStatus } from '../../state/selectors/userData.selector';
 import LoginRegister from '../LoginRegister/LoginRegister';
 
@@ -31,12 +31,13 @@ const Box = styled.div`
   align-self: center;
 `
 export const NavBar: React.FC = () => {
+  const loggedIn = useSelector(selectLoginStatus)
+
   const language = useSelector(selectLanguage)
   const dispatch = useDispatch()
   const [showLoginRegisterForm, setShowLoginRegisterForm] = useState<boolean>(
-    false
+    loggedIn
   )
-  const loggedIn = useSelector(selectLoginStatus)
   const handleLoginRegisterView = e => {
     e.preventDefault()
     setShowLoginRegisterForm(!showLoginRegisterForm)
@@ -77,11 +78,11 @@ export const NavBar: React.FC = () => {
             color="primary"
           />
         </Box>
-        {showLoginRegisterForm && (
+        {showLoginRegisterForm && !loggedIn && (
           <LoginRegister
             show={showLoginRegisterForm}
             handleLoginRegisterShow={value => setShowLoginRegisterForm(value)}
-            handleLogin={value => dispatch(changeLoginStatusAction(value))}
+            
           />
         )}
       </Wrapper2>

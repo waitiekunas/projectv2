@@ -1,15 +1,15 @@
-import axios from 'axios';
 import PDFViewer from 'pdf-viewer-reactjs';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Player } from 'video-react';
 
 import { Button } from '../../components/Button/Button';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
-import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
 import { translations } from '../../resources/translations/translations';
+import { loadLessonsMaterialAction } from '../../state/actions/apiData.actions';
+import { selectLessonsMaterial } from '../../state/selectors/apiData.selector';
 import { selectLanguage } from '../../state/selectors/userData.selector';
 
 const Background = styled.div`
@@ -54,19 +54,18 @@ type MyProps = {
 }
 
 const LessonFlow = (props: MyProps) => {
+  const dispatch = useDispatch()
+  const materialInfo = useSelector(selectLessonsMaterial)
   const language = useSelector(selectLanguage)
   const [topicId, setTopicId] = useState(props.topicId)
   const [currentStep, setCurrentStep] = useState(0)
-  const [materialInfo, setMaterialInfo] = useState<LessonMaterial[]>([])
   const [disableForwardButton, setDisabledForwardButton] = useState(false)
   const [disableBackButton, setDisableBackButton] = useState(true)
   const [flow, setFlow] = useState<any[]>([null])
   useEffect(() => {
     let topicInfo = new FormData()
     topicInfo.append("id", topicId.toString())
-    axios.post(process.env.GET_LESSON_URL, topicInfo).then(res => {
-      setMaterialInfo(res.data)
-    })
+    dispatch(loadLessonsMaterialAction(topicInfo))
   }, [])
   useEffect(() => {
     setDisabledForwardButton(currentStep + 1 === materialInfo.length)

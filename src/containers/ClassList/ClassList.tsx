@@ -7,7 +7,8 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 
 import { ClassTicket } from '../../components/ClassTicket/ClassTicket';
-import { loadLessonsAction, setLookupsAction } from '../../state/actions/actions';
+import { setLookupsAction } from '../../state/actions/actions';
+import { loadLessonsAction } from '../../state/actions/apiData.actions';
 import { selectLessons } from '../../state/selectors/apiData.selector';
 
 const Wrapper = styled.div`
