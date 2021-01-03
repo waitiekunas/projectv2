@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Link } from 'gatsby';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -86,8 +85,7 @@ const TopicDescription = (props: MyProps) => {
     let author = new FormData()
     author.append("id", props.topicInfo.authorId.toString())
     dispatch(getAuthorInfoAction(author))
-    axios.post(process.env.GET_AUTHOR_INFO_URL, author).then(res => {
-    })
+    
   }, [])
   const handleClick = e => {
     e.preventDefault()
