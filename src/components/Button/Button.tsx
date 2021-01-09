@@ -1,9 +1,11 @@
 import { Button as MaterialButton } from '@material-ui/core';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Languages } from '../../enums/languages/languages';
 import { useStyles } from '../../Functions/Hooks/useStyles';
+import { selectLanguage } from '../../state/selectors/userData.selector';
 import { getTranslations } from '../../utils/utils';
 
 const Box = styled.div`
@@ -13,8 +15,8 @@ const Box = styled.div`
 `
 
 type MyProps = {
-  language: Languages
-  label: string
+  language?: Languages
+  label?: string
   handleClick: (...args: any[]) => void
   disabled?: boolean
   variant: "text" | "outlined" | "contained"
@@ -22,7 +24,6 @@ type MyProps = {
 }
 
 export const Button: React.FC<MyProps> = ({
-  language,
   label,
   handleClick,
   disabled,
@@ -30,6 +31,7 @@ export const Button: React.FC<MyProps> = ({
   color,
 }) => {
   const classes = useStyles()
+  const language = useSelector(selectLanguage)
   return (
     <Box className={classes.root}>
       <MaterialButton

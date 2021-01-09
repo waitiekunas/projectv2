@@ -49,7 +49,7 @@ const AuthorDescriptionArea = styled.div`
   }
 `
 const ButtonsWrapper = styled.div`
-  width:100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -57,7 +57,7 @@ const ButtonsWrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   max-width: 200px;
-  width:25%;
+  width: 25%;
   height: 42px;
   align-self: center;
   margin-top: 0.5rem;
@@ -85,7 +85,6 @@ const TopicDescription = (props: MyProps) => {
     let author = new FormData()
     author.append("id", props.topicInfo.authorId.toString())
     dispatch(getAuthorInfoAction(author))
-    
   }, [])
   const handleClick = e => {
     e.preventDefault()
@@ -101,17 +100,18 @@ const TopicDescription = (props: MyProps) => {
     <div>
       <Wrapper>
         <ContentArea>
-          {!userInfo.subscribed? <CancelSubscription />: <CreateCustomerForm />}
+          {!userInfo.subscribed ? (
+            <CancelSubscription />
+          ) : (
+            <CreateCustomerForm />
+          )}
           {authorInfo && (
             <AuthorInfoArea>
               <AuthorPhotoArea>
-                <Image
-                  imageUri={authorInfo[0].photo_url}
-                  showText={false}
-                />
+                <Image imageUri={authorInfo[0]?.photo_url} showText={false} />
               </AuthorPhotoArea>
               <AuthorDescriptionArea>
-                {authorInfo[0].description}
+                {authorInfo[0]?.description}
               </AuthorDescriptionArea>
             </AuthorInfoArea>
           )}
@@ -124,7 +124,7 @@ const TopicDescription = (props: MyProps) => {
                   label={"starLesson"}
                   language={language}
                   variant="contained"
-                    color="primary"
+                  color="primary"
                 />
               </ButtonWrapper>
             )}
