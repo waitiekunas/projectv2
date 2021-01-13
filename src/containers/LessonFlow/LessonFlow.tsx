@@ -1,16 +1,16 @@
-import axios from 'axios';
 import PDFViewer from 'pdf-viewer-reactjs';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Player } from 'video-react';
 
-import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
+import { Button } from '../../components/Button/Button';
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
-import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
 import { translations } from '../../resources/translations/translations';
+import { loadLessonsMaterialAction } from '../../state/actions/apiData.actions';
+import { selectLessonsMaterial } from '../../state/selectors/apiData.selector';
+import { selectLanguage } from '../../state/selectors/userData.selector';
 
 const Background = styled.div`
   width: 150%;
@@ -32,6 +32,21 @@ const Wrapper = styled.div`
   position: absolute;
   top: 5%;
 `
+const Content = styled.div`
+  display:flex;
+  justify-content:space-around;
+  margin-top: 32px;
+`
+const ButtonBox = styled.div`
+  max-width: 200px;
+  width:25%;
+  height:42px;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  align-self:center;
+`
+
 type MyProps = {
   handleClick: Function
   topicId: number
@@ -39,18 +54,18 @@ type MyProps = {
 }
 
 const LessonFlow = (props: MyProps) => {
+  const dispatch = useDispatch()
+  const materialInfo = useSelector(selectLessonsMaterial)
+  const language = useSelector(selectLanguage)
   const [topicId, setTopicId] = useState(props.topicId)
   const [currentStep, setCurrentStep] = useState(0)
-  const [materialInfo, setMaterialInfo] = useState<LessonMaterial[]>([])
   const [disableForwardButton, setDisabledForwardButton] = useState(false)
   const [disableBackButton, setDisableBackButton] = useState(true)
   const [flow, setFlow] = useState<any[]>([null])
   useEffect(() => {
     let topicInfo = new FormData()
     topicInfo.append("id", topicId.toString())
-    axios.post(process.env.GET_LESSON_URL, topicInfo).then(res => {
-      setMaterialInfo(res.data)
-    })
+    dispatch(loadLessonsMaterialAction(topicInfo))
   }, [])
   useEffect(() => {
     setDisabledForwardButton(currentStep + 1 === materialInfo.length)
@@ -114,46 +129,21 @@ const LessonFlow = (props: MyProps) => {
       <Wrapper>
         <MainScreen>
           {flow[currentStep]}
-          <Box
-            flex={{ justify: "around" }}
-            margin={{ top: ["32px", "32px", "12px"] }}
-          >
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              flex={{
-                direction: "column",
-                justify: "center",
-              }}
-              align={{ self: "center" }}
-            >
+          <Content>
+            <ButtonBox>
               <Button
-                language={props.language}
+                language={language}
                 label="back"
                 buttonTexts={translations}
                 handleClick={handleBack}
                 classButton={DEFAULT_BUTTON_CLASSES}
                 disabled={disableBackButton}
               />
-            </Box>
+            </ButtonBox>
 
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              flex={{
-                direction: "column",
-                justify: "center",
-              }}
-              align={{ self: "center" }}
-            >
+            <ButtonBox>
               <Button
-                language={props.language}
+                language={language}
                 label="forward"
                 buttonTexts={translations}
                 handleClick={handleForward}
@@ -161,36 +151,23 @@ const LessonFlow = (props: MyProps) => {
                 style={{ background: "#4299e1" }}
                 disabled={disableForwardButton}
               />
-            </Box>
+            </ButtonBox>
 
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              flex={{
-                direction: "column",
-                justify: "center",
-              }}
-              align={{ self: "center" }}
-            >
+            <ButtonBox>
               <Button
-                language={props.language}
+                language={language}
                 label="close"
                 buttonTexts={translations}
                 handleClick={handleClick}
                 classButton={DEFAULT_BUTTON_CLASSES}
                 style={{ background: "#4299e1" }}
               />
-            </Box>
-          </Box>
+            </ButtonBox>
+          </Content>
         </MainScreen>
       </Wrapper>
     </>
   )
 }
-const mapStateToProps = state => ({
-  language: state.language.language,
-})
-export default connect(mapStateToProps)(LessonFlow)
+
+export default LessonFlow

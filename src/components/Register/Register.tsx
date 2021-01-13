@@ -1,10 +1,57 @@
-import axios from 'axios';
+import { Formik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import * as Yup from 'yup';
 
 import { ResponseStatus } from '../../containers/ResponseStatus/ResponseStatus';
 import { Languages } from '../../enums/languages/languages';
+import { registerUserAction } from '../../state/actions/apiData.actions';
+import { setRegisterStatus } from '../../state/actions/userData.actions';
+import { selectRegisterStatus } from '../../state/selectors/userData.selector';
 import { getTranslations } from '../../utils/utils';
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
+
+const StyledP = styled.p`
+  font-style: italic;
+  font-size: 0.75rem;
+  color: #f56565;
+`
+const MarginB1 = styled.div`
+  margin-bottom: 1rem;
+`
+
+const StyledLabel = styled.label`
+  display: block;
+  color: #4a5568;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+`
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-self: center;
+`
+
+const ButtonBox = styled.div`
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+`
+export enum RegisterFormFields {
+  username = "username",
+  password = "password",
+  email = "email",
+}
+
+export interface RegisterFormFieldValues {
+  [RegisterFormFields.username]?: string
+  [RegisterFormFields.password]?: string
+  [RegisterFormFields.email]?: string
+}
 
 type MyProps = {
   register: (register: any) => void
@@ -12,162 +59,124 @@ type MyProps = {
   language: Languages
   handleViewChange: (e) => void
 }
+
 const Register = (props: MyProps) => {
-  const [loginName, setLoginName] = useState("")
-  const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
-  const [surname, setSurname] = useState("")
-  const [startRegister, setStartRegister] = useState(false)
-  const [disabled, setDisabled] = useState(true)
-  const [showResponseStatus, setShowResponseStatus] = useState(false)
-  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
+  const dispatch = useDispatch()
+  const showResponseStatus = useSelector(selectRegisterStatus)
+
   useEffect(() => {
-    if (!disabled) {
-      axios({
-        method: "post",
-        url: process.env.REGISTER_URL,
-        data: {
-          userData: formulateUser(),
+    dispatch(setRegisterStatus(false))
+  }, [])
+
+  const onSubmit = (values: RegisterFormFieldValues) => {
+    dispatch(
+      registerUserAction({
+        userData: {
+          id: "",
+          loginName: values.username,
+          password: values.password,
+          registerDate: "",
+          lastLoginDate: "",
+          email: values.email,
         },
-      }).then(res => handleRegisterResponse(res.data))
-    }
-  }, [startRegister])
-  useEffect(() => {
-    isDisabled()
-  })
-  const isDisabled = () => {
-    setDisabled(!name || !surname || !password || !loginName)
+      })
+    )
   }
 
-  const handleRegisterResponse = (resData: boolean) => {
-    let login = loginName
-    let pass = password
-    let firstName = name
-    let lastName = surname
-    let registered = isRegisterSuccess
-    if (resData) {
-      login = ""
-      pass = ""
-      firstName = ""
-      lastName = ""
-      registered = true
-    }
-    setLoginName(login)
-    setPassword(pass)
-    setName(firstName)
-    setSurname(lastName)
-    setShowResponseStatus(true)
-    setIsRegisterSuccess(registered)
-  }
-  const hideResponseStatus = useCallback(() => {
-    setShowResponseStatus(false)
-    props.register(isRegisterSuccess)
-  }, [showResponseStatus])
+  const RegisterScheme = () =>
+    Yup.object().shape({
+      [RegisterFormFields.username]: Yup.string().required(
+        "Please enter valid name"
+      ),
+      [RegisterFormFields.password]: Yup.string().required(
+        "Please enter password"
+      ),
+      [RegisterFormFields.email]: Yup.string()
+        .email("Please enter a valid email")
+        .required("Please enter email"),
+    })
 
-  const formulateUser = () => ({
-    id: "",
-    loginName: loginName,
-    password: password,
-    name: name,
-    surname: surname,
-    registerDate: "",
-    lastLoginDate: "",
-  })
-  const buttonClassName =
-    "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
   return (
-    <>
-      <div>
-        {disabled ? (
-          <p className="text-red-500 text-xs italic">
-            All fields must have value
-          </p>
-        ) : null}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={name}
-            id="name"
-            type="text"
-            placeholder="Name"
-            onChange={e => setName(e.target.value)}
-          ></input>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Surname
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={surname}
-            id="surname"
-            type="text"
-            placeholder="Surname"
-            onChange={e => setSurname(e.target.value)}
-          ></input>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Username
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={loginName}
-            id="username"
-            type="text"
-            placeholder="Username"
-            onChange={e => setLoginName(e.target.value)}
-          ></input>
-        </div>
-        <div className="mb-6">
-          <div className="block text-gray-700 text-sm font-bold mb-2">
-            Password
+    <Formik<RegisterFormFieldValues>
+      enableReinitialize
+      initialValues={{
+        username: "",
+        password: "",
+        email: "",
+      }}
+      onSubmit={onSubmit}
+      validationSchema={RegisterScheme}
+      validateOnMount
+    >
+      {({ handleChange, values, isValid, handleSubmit, isSubmitting }) => (
+        <>
+          <div>
+            <MarginB1>
+              <StyledLabel>Username</StyledLabel>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                value={values.username}
+                name={RegisterFormFields.username}
+                type="text"
+                placeholder="Username"
+                onChange={handleChange}
+              ></input>
+            </MarginB1>
+            <MarginB1>
+              <StyledLabel>Password</StyledLabel>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                value={values.password}
+                name={RegisterFormFields.password}
+                type="password"
+                placeholder="******************"
+                onChange={handleChange}
+              ></input>
+            </MarginB1>
+            <MarginB1>
+              <StyledLabel>Email address</StyledLabel>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                value={values.email}
+                name={RegisterFormFields.email}
+                type="email"
+                placeholder="Email address"
+                onChange={handleChange}
+              ></input>
+            </MarginB1>
           </div>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            value={password}
-            id="password"
-            type="password"
-            placeholder="******************"
-            onChange={e => setPassword(e.target.value)}
-          ></input>
-        </div>
-      </div>
-      <div className="flex items-center justify-center">
-        <div className=" flex justify-around w-full py-5">
-          <Button
-            handleClick={e => setStartRegister(!startRegister)}
-            classButtonDiv="login-register-button flex-col"
-            classButton={buttonClassName}
-            buttonTexts={props.translation}
-            label={"register"}
-            language={props.language}
-            disabled={disabled}
-          />
-          <Button
-            handleClick={props.handleViewChange}
-            classButtonDiv="login-register-button flex-col"
-            classButton={buttonClassName}
-            buttonTexts={props.translation}
-            label={"toLogin"}
-            language={props.language}
-          />
-        </div>
-      </div>
-      {showResponseStatus && (
-        <ResponseStatus
-          language={props.language}
-          handleClick={hideResponseStatus}
-          text={getTranslations(
-            props.language,
-            isRegisterSuccess ? "registerSuccess" : "registerFailed"
+          <ButtonWrapper>
+            <ButtonBox>
+              <Button
+                handleClick={handleSubmit}
+                label={"register"}
+                language={props.language}
+                disabled={!isValid || isSubmitting}
+                variant="contained"
+                color="primary"
+              />
+              <Button
+                handleClick={props.handleViewChange}
+                label={"toLogin"}
+                language={props.language}
+                variant="contained"
+                color="primary"
+              />
+            </ButtonBox>
+          </ButtonWrapper>
+          {showResponseStatus && (
+            <ResponseStatus
+              language={props.language}
+              handleClick={() => props.register(showResponseStatus)}
+              text={getTranslations(
+                props.language,
+                showResponseStatus ? "registerSuccess" : "registerFailed"
+              )}
+            />
           )}
-        />
+        </>
       )}
-    </>
+    </Formik>
   )
 }
 

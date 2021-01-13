@@ -4,7 +4,7 @@ import { translations } from '../resources/translations/translations';
 
 export const getTranslations = (language: Languages, label: string) => {
   let translation = translations.find(item => item.label === label)
-  return translation ? translation.description[language] : "Place holder"
+  return translation ? translation.description[language] : label
 }
 
 export const getLanguage = () => Languages.LITHUANIA

@@ -1,16 +1,15 @@
-import axios from 'axios';
 import { Link } from 'gatsby';
 import React, { useCallback, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
-import BuyPoster from '../../components/BuyPosyer/BuyPoster';
-import Image from '../../components/Image/Image';
-import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
-import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
+import { Button } from '../../components/Button/Button';
+import { Image } from '../../components/Image/Image';
+import { getAuthorInfoAction } from '../../state/actions/apiData.actions';
+import { selectAuthorInfo } from '../../state/selectors/apiData.selector';
+import { selectLanguage, selectUserInfo } from '../../state/selectors/userData.selector';
+import CancelSubscription from '../CancelSubscription/CancelSubscription';
+import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
 import LessonFlow from '../LessonFlow/LessonFlow';
 
 const Wrapper = styled.div`
@@ -49,10 +48,19 @@ const AuthorDescriptionArea = styled.div`
     padding: 1rem;
   }
 `
-const ButtonWrapper = styled.div`
-  height: auto;
+const ButtonsWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+`
+
+const ButtonWrapper = styled.div`
+  max-width: 200px;
+  width: 25%;
+  height: 42px;
+  align-self: center;
+  margin-top: 0.5rem;
 `
 type MyProps = {
   topicInfo: {
@@ -64,21 +72,19 @@ type MyProps = {
     description: string
     authorId: number
   }
-  language: Languages
-  isLoggedIn: boolean
-  canUpload: boolean
 }
 
 const TopicDescription = (props: MyProps) => {
+  const dispatch = useDispatch()
+  const language = useSelector(selectLanguage)
+  const userInfo = useSelector(selectUserInfo)
   const [clicked, setClicked] = useState(false)
   const [selectedClassId, setSelectedClassId] = useState(0)
-  const [authorInfo, setAuthorInfo] = useState<any>()
+  const authorInfo = useSelector(selectAuthorInfo)
   useEffect(() => {
     let author = new FormData()
     author.append("id", props.topicInfo.authorId.toString())
-    axios.post(process.env.GET_AUTHOR_INFO_URL, author).then(res => {
-      setAuthorInfo(res.data)
-    })
+    dispatch(getAuthorInfoAction(author))
   }, [])
   const handleClick = e => {
     e.preventDefault()
@@ -90,89 +96,58 @@ const TopicDescription = (props: MyProps) => {
 
   const topicDesc = props.topicInfo?.description
 
-  const translation = translations
   return (
     <div>
       <Wrapper>
         <ContentArea>
-          {!props.isLoggedIn && (
-            <BuyPoster
-              additionalClass={""}
-              imageUri={"/images/wide-index-photo.jpg"}
-              showText={true}
-              imgHeader={"dont have?"}
-              imgText={"Buy!"}
-            />
+          {!userInfo.subscribed ? (
+            <CancelSubscription />
+          ) : (
+            <CreateCustomerForm />
           )}
-
           {authorInfo && (
             <AuthorInfoArea>
               <AuthorPhotoArea>
-                <Image
-                  additionalClass={""}
-                  imageUri={authorInfo[0].photo_url}
-                  showText={false}
-                />
+                <Image imageUri={authorInfo[0]?.photo_url} showText={false} />
               </AuthorPhotoArea>
               <AuthorDescriptionArea>
-                {authorInfo[0].description}
+                {authorInfo[0]?.description}
               </AuthorDescriptionArea>
             </AuthorInfoArea>
           )}
           <TextArea>{topicDesc}</TextArea>
-          <Box
-            size={{
-              width: "100%",
-            }}
-            flex={{
-              direction: "column",
-              justify: "center",
-            }}
-          >
-            <Box
-              size={{
-                maxWidth: "200px",
-                width: "25%",
-                height: "42px",
-              }}
-              align={{ self: "center" }}
-              margin={{ top: "0.5rem" }}
-            >
-              <Button
-                handleClick={handleClick}
-                buttonTexts={translation}
-                label={"starLesson"}
-                language={props.language}
-                classButton={DEFAULT_BUTTON_CLASSES}
-              />
-            </Box>
-            {props.isLoggedIn && (
-              <Box
-                size={{
-                  maxWidth: "200px",
-                  width: "25%",
-                  height: "42px",
-                }}
-                align={{ self: "center" }}
-                margin={{ top: "0.5rem" }}
-              >
+          <ButtonsWrapper>
+            {userInfo.isLoggedIn && userInfo.subscribed && (
+              <ButtonWrapper>
+                <Button
+                  handleClick={handleClick}
+                  label={"starLesson"}
+                  language={language}
+                  variant="contained"
+                  color="primary"
+                />
+              </ButtonWrapper>
+            )}
+            {userInfo.isLoggedIn && userInfo.canUpload && (
+              <ButtonWrapper>
                 <Link to={`/upload-screen/`}>
                   <Button
                     handleClick={() => null}
-                    buttonTexts={translation}
                     label={"upload"}
-                    language={props.language}
-                    classButton={DEFAULT_BUTTON_CLASSES}
+                    language={language}
+                    variant="contained"
+                    color="primary"
                   />
                 </Link>
-              </Box>
+              </ButtonWrapper>
             )}
-          </Box>
+          </ButtonsWrapper>
         </ContentArea>
         {clicked ? (
           <LessonFlow
             handleClick={closeChildScreen}
             topicId={selectedClassId}
+            language={language}
           />
         ) : null}
       </Wrapper>
@@ -180,9 +155,4 @@ const TopicDescription = (props: MyProps) => {
   )
 }
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.isLoggedIn.isLoggedIn,
-  language: state.language.language,
-  canUpload: state.isLoggedIn.canUpload,
-})
-export default connect(mapStateToProps)(TopicDescription)
+export default TopicDescription

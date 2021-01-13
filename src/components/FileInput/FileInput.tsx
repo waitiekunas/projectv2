@@ -1,14 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
-import { Languages } from '../../enums/languages/languages';
-import { Box } from '../Box/Box';
 import { StyledLabel } from './style';
+
+const Wrapper = styled.div`
+  width:100%;
+  padding-bottom:8px;
+  display:flex;
+  flex-direction: column;
+`
+const Content=styled.div`
+  width:100%;
+  display:flex;
+  padding-bottom:8px;
+  justify-content:center;
+  @media(max-width:480px){
+    justify-content:start;
+  }
+`
+const StyledDiv=styled.div`
+  width:50%;
+`
 
 type MyProps = {
   onChange: (e: any) => void
-  language?: Languages
   label: string
   value: any[]
   onDelete: (index: number) => void
@@ -27,33 +43,9 @@ const FileInput = ({ value, onChange, errorMessage, ...rest }: MyProps) => {
   }, [])
 
   return (
-    <Box
-      size={{
-        width: "100%",
-      }}
-      padding={{
-        bottom: "8px",
-      }}
-      flex={{
-        direction: "column",
-      }}
-    >
-      <Box
-        size={{
-          width: "100%",
-        }}
-        flex={{
-          justify: ["center", "center", "start"],
-        }}
-        padding={{
-          bottom: "8px",
-        }}
-      >
-        <Box
-          size={{
-            width: "50%",
-          }}
-        >
+    <Wrapper>
+      <Content>
+        <StyledDiv>
           <StyledLabel className={DEFAULT_BUTTON_CLASSES}>
             {rest.label}
             <input
@@ -67,13 +59,11 @@ const FileInput = ({ value, onChange, errorMessage, ...rest }: MyProps) => {
               }}
             />
           </StyledLabel>
-        </Box>
-      </Box>
+        </StyledDiv>
+      </Content>
       <span>{errorMsg}</span>
-    </Box>
+    </Wrapper>
   )
 }
-const mapStateToProps = state => ({
-  language: state.language.language,
-})
-export default connect(mapStateToProps)(FileInput)
+
+export default FileInput

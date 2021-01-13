@@ -1,10 +1,48 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
-import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
+import { Button } from '../../components/Button/Button';
 import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
+
+const Wrapper = styled.div`
+  position:fixed;
+  background-color: rgba(0,0,0,0.5);
+  height: 100%;
+  width: 100%;
+  top:0%;
+  left:0%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+`
+
+const Content = styled.div`
+  position:relative;
+  background-color: aliceblue;
+  width: 50%;
+  height: 50%;
+  top: 0%;
+  display:flex;
+  justify-content: center;
+  flex-direction:column;
+  align-self: center;
+`
+const TextBox = styled.div`
+  display:flex;
+  justify-content:center;
+  flex-direction:row;
+`
+const ButtonWrapper = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+  flex-direction:row;
+  padding-top:1.5rem;
+`
+
+const ButtonBox = styled.div`
+  width:25%;
+`
 
 interface MyProps {
   text: string
@@ -12,74 +50,30 @@ interface MyProps {
   language: Languages
 }
 
-export const ResponseStatus = (props: MyProps) => {
+export const ResponseStatus: React.FC<MyProps> = ({
+  text,
+  handleClick,
+  language,
+}) => {
   return (
-    <Box
-      position={"fixed"}
-      backgroundColor={"rgba(0,0,0,0.5)"}
-      size={{
-        width: "100%",
-        height: "100%",
-      }}
-      top={"0%"}
-      left={"0%"}
-      flex={{
-        direction: "column",
-        justify: "center",
-      }}
-    >
-      <Box
-        position={"relative"}
-        backgroundColor={"aliceblue"}
-        size={{
-          width: "50%",
-          height: "50%",
-        }}
-        top={"0%"}
-        flex={{
-          direction: "column",
-          justify: "center",
-        }}
-        align={{
-          self: "center",
-        }}
-      >
-        <Box
-          flex={{
-            justify: "center",
-            direction: "row",
-          }}
-        >
-          <p>{props.text}</p>
-        </Box>
+    <Wrapper>
+      <Content>
+        <TextBox>
+          <p>{text}</p>
+        </TextBox>
 
-        <Box
-          size={{
-            width: "100%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["row"],
-          }}
-          padding={{
-            top: "1.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: "25%",
-            }}
-          >
+        <ButtonWrapper>
+          <ButtonBox>
             <Button
-              handleClick={() => props.handleClick()}
-              buttonTexts={translations}
+              handleClick={() => handleClick()}
               label={"close"}
-              language={props.language}
-              classButton={DEFAULT_BUTTON_CLASSES}
+              language={language}
+              variant="contained"
+              color="primary"
             />
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+          </ButtonBox>
+        </ButtonWrapper>
+      </Content>
+    </Wrapper>
   )
 }

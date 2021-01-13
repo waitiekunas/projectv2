@@ -1,25 +1,16 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
+import React from 'react';
+import styled from 'styled-components';
 
 import NavBar from '../../containers/NavBar/NavBar';
 
-const Header = ({ siteTitle }: any) => (
-  <header
-    style={{
-      marginBottom: `1.45rem`,
-    }}
-  >
+const StyledHeader = styled.header`
+  margin-bottom: 1.45rem;
+`
+
+const Header = () => (
+  <StyledHeader>
     <NavBar />
-  </header>
+  </StyledHeader>
 )
-
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
-
-Header.defaultProps = {
-  siteTitle: ``,
-}
 
 export default Header

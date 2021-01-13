@@ -1,19 +1,13 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react';
 
-import Layout from "../components/Layout/layout"
-import SEO from "../components/Seo/seo"
-import Image from "../components/Image/Image"
-import TopicsContainer from "../containers/TopicsContainer/TopicsContainer"
+import Layout from '../components/Layout/layout';
+import SEO from '../components/Seo/seo';
+import TopicsContainer from '../containers/TopicsContainer/TopicsContainer';
 
-const TopicsScreen = ({ location }) => (
+const TopicsScreen = () => (
   <Layout>
     <SEO title="Page two" />
-    <Image
-      imageUri={"/images/wide-index-photo.jpg"}
-      showText={false}
-      additionalClass={'max-height-40-proc'} />
-    <TopicsContainer topic={location.state && location.state.topic} />
+    <TopicsContainer />
   </Layout>
 )
 

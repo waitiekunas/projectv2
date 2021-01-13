@@ -1,18 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import { Box } from '../../components/Box/Box';
+const Wrapper = styled.div`
+  width:100%;
+  background-color:red;
+  display:flex;
+  justify-content:center;
+  color:white;
+`
 
 export const Header = ({ text }) => (
-  <Box
-    size={{
-      width: "100%",
-    }}
-    backgroundColor="red"
-    flex={{
-      justify: "center",
-    }}
-    color="white"
-  >
+  <Wrapper>
     <p>{text}</p>
-  </Box>
+  </Wrapper>
 )

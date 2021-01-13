@@ -1,22 +1,25 @@
 import React from 'react';
+import styled from 'styled-components';
 
-class Copyright extends React.Component {
-    creationYear = 2019;
+const StyledDiv = styled.div`
+    display: flex;
+    justify-content:center;
+`
 
-    resolveYear() {
+export const Copyright:React.FC = ()=> {
+    const creationYear = 2019;
+
+    const resolveYear=()=> {
         let date = new Date();
         let year = date.getFullYear();
-        return year !== this.creationYear ? " - " + year : '';
+        return year !== creationYear ? " - " + year : '';
     }
 
-    render() {
+   
         return (
-            <div className={'flex justify-center'}>
-                <h2>{`\u00A9 ${this.creationYear}${this.resolveYear()} Our company`}</h2>
-            </div>
+            <StyledDiv>
+                <h2>{`\u00A9 ${creationYear}${resolveYear()} Our company`}</h2>
+            </StyledDiv>
 
         )
-    }
 }
-
-export default Copyright;

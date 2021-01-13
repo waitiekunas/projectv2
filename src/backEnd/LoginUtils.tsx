@@ -1,6 +1,5 @@
-import { users } from "../mockData/users/users"
-import { IRegisterInput } from "../interfaces/loginRegister/IRegister.jsx"
-import axios from "axios"
+import { IRegisterInput } from '../interfaces/loginRegister/IRegister.jsx';
+import { users } from '../mockData/users/users';
 
 export const registerUser = (userData: IRegisterInput): boolean => {
   return backEndRegister(userData)
@@ -45,7 +44,7 @@ const addNewUser = (user: IRegisterInput) => {
 }
 
 export const checkIfUserNotEmpty = (user: IRegisterInput) => {
-  if (user.loginName && user.name && user.password && user.surname) {
+  if (user.loginName &&  user.password ) {
     return true
   } else {
     return false

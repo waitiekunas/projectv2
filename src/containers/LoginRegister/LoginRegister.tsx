@@ -1,122 +1,100 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import Login from '../../components/Login/Login';
 import Register from '../../components/Register/Register';
 import { Languages } from '../../enums/languages/languages';
-import { IUserState } from '../../interfaces/state/IState';
 import { translations } from '../../resources/translations/translations';
-import { setUserStatus } from '../../state/actions/loginRegister';
-import { setUserId } from '../../state/actions/user';
+import { selectLanguage } from '../../state/selectors/userData.selector';
+
+type WrapperProps = {
+  show: boolean
+}
+
+const Wrapper = styled.div`
+  display: ${(props: WrapperProps) => (props.show ? `flex` : `hidden`)};
+  justify-content: center;
+  position: fixed;
+  z-index: 10;
+  width: 100vw;
+  height: 120%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0%;
+`
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`
+const StyledDiv = styled.div`
+  width: 50%;
+  position: fixed;
+  margin-bottom: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 1.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: #fff;
+  @media (max-width: 760px) {
+    width: 90%;
+  }
+  top: 25%;
+`
 
 type MyProps = {
   language?: Languages
-  show?: boolean
-  handleClick?: Function
-  dispatch?: any
-  isLoggedIn?: any
+  show: boolean
+  isLoggedIn?: boolean
+  handleLoginRegisterShow: (...args: any[]) => void
 }
-type MyState = {
-  showLogin: boolean
-  showRegister: boolean
-  isLoggedIn: boolean
-}
-class LoginRegister extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props)
-    this.state = {
-      showLogin: true,
-      showRegister: false,
-      isLoggedIn: this.props.isLoggedIn,
-    }
-  }
 
-  handleParentClick = e => {
+const LoginRegister: React.FC<MyProps> = ({
+  show,
+  handleLoginRegisterShow,
+}) => {
+  const language = useSelector(selectLanguage)
+  const [showLogin, setShowLogin] = useState<boolean>(true)
+  const handleParentClick = e => {
     e.preventDefault()
-    this.props.handleClick("loginRegisterShow", false)
-    this.setState({
-      showLogin: true,
-      showRegister: false,
-    })
+    handleLoginRegisterShow(false)
   }
-  handleChildClick = e => {
+  const handleChildClick = e => {
     e.stopPropagation()
   }
-  handleViewChange = e => {
+  const handleViewChange = e => {
     e.preventDefault()
-    this.setState({
-      showLogin: !this.state.showLogin,
-      showRegister: this.state.showRegister,
-    })
-  }
-  handleChange = (state, value) => {
-    this.setState({
-      [state]: value,
-    } as MyState)
-  }
-  handleLogin = (login: IUserState, id: number) => {
-    this.props.dispatch(setUserId(id))
-    this.props.dispatch(setUserStatus(login))
-    this.props.handleClick("isLoggedIn", login)
-    login && this.props.handleClick("loginRegisterShow", !login)
+    setShowLogin(!showLogin)
   }
 
-  handleRegister = (register: boolean) => {
-    this.props.handleClick("loginRegisterShow", !register)
-    console.log("THE USER WAS REGISTERED: " + register)
-  }
+  const handleRegister = (register: boolean) =>
+    handleLoginRegisterShow(!register)
 
-  render() {
-    const translation = translations
-    const { language, show } = this.props
-    const { showLogin } = this.state
-    const styleClasses = "flex justify-center fixed z-10"
-    return (
-      <div
-        className={show ? styleClasses : "hidden"}
-        style={
-          show
-            ? {
-                width: "100vw",
-                height: "120%",
-                backgroundColor: "rgba(0,0,0,0.5)",
-                top: "0%",
-              }
-            : {}
-        }
-        onClick={this.handleParentClick}
-      >
-        <div className="w-full max-w-lg flex justify-center">
-          <div
-            className="login-register-component bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 fixed w-1/2 max-w-lg"
-            style={{ top: "25%" }}
-            onClick={this.handleChildClick}
-          >
-            {showLogin ? (
-              <Login
-                login={this.handleLogin}
-                translation={translation}
-                language={language}
-                handleViewChange={this.handleViewChange}
-              />
-            ) : (
-              <Register
-                register={this.handleRegister}
-                translation={translation}
-                language={language}
-                handleViewChange={this.handleViewChange}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-    )
-  }
+  return (
+    <Wrapper show={show} onClick={handleParentClick}>
+      <Container>
+        <StyledDiv onClick={handleChildClick}>
+          {showLogin ? (
+            <Login
+              translation={translations}
+              language={language}
+              handleViewChange={handleViewChange}
+            />
+          ) : (
+            <Register
+              register={handleRegister}
+              translation={translations}
+              language={language}
+              handleViewChange={handleViewChange}
+            />
+          )}
+        </StyledDiv>
+      </Container>
+    </Wrapper>
+  )
 }
 
-const mapStateToProps = state => ({
-  language: state.language.language,
-  isLoggedIn: state.isLoggedIn.isLoggedIn,
-})
-
-export default connect(mapStateToProps)(LoginRegister)
+export default LoginRegister

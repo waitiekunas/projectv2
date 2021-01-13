@@ -1,9 +1,24 @@
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
 
-import { allReducers } from '../state/reducers';
+import allReducers from '../state/reducers/allReducers';
+import rootSaga from './rootSaga';
 
-// preloadedState will be passed in by the plugin
-export default store => {
-  return createStore(allReducers, process.env.REDUX_DEBUGGER)
+const isDevelopment = process.env.NODE_ENV === 'development'
+
+
+const sagaMiddleware = createSagaMiddleware()
+const store = configureStore(
+   {
+    reducer: allReducers,
+    middleware: [sagaMiddleware],
+    devTools:isDevelopment
 }
-//, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
+
+sagaMiddleware.run(rootSaga)
+
+export default preloadedState =>{
+    return store
+}

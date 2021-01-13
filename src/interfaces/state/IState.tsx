@@ -6,6 +6,10 @@ export interface ILanguage {
 export interface IUserState {
   isLoggedIn: boolean
   canUpload: boolean
+  email: string
+  subscribed: boolean
+  stripeCustomerId: string
+  subscriptionId: string
 }
 export interface IUserId {
   userId: number

@@ -1,25 +1,92 @@
-import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
+import { Button } from '../../components/Button/Button';
 import FileInput from '../../components/FileInput/FileInput';
 import { Input } from '../../components/Input/Input';
 import { TextArea } from '../../components/TextArea/TextArea';
-import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
-import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
+import { uploadLessonAction } from '../../state/actions/apiData.actions';
+import { selectLanguage, selectUserId } from '../../state/selectors/userData.selector';
 import { getTranslations } from '../../utils/utils';
 import { ResponseStatus } from '../ResponseStatus/ResponseStatus';
 import { StyledSpan } from './style';
 
-type MyProps = {
-  language: Languages
-  userId: number
-}
+const Wrapper = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+`
 
-const UploadContainer = (props: MyProps) => {
+const Content = styled.div`
+  width:90%;
+  padding:5%;
+  @media(max-width: 480px){
+    width:60%;
+  }
+`
+const SectionWrapper = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  padding:0.5rem;
+  @media(max-width:480px){
+    flex-direction: row;
+  }
+`
+const StyledDiv = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+  @media(max-width:480px){
+    width:30%;
+    justify-content:start;
+  }
+`
+const InputWrapper = styled.div`
+  display:flex;
+  justify-content:center;
+  width:100%;
+  @media(max-width:480px){
+    width:70%;
+    justify-content:start;
+  }
+`
+const CustomSectionWrapper = styled.div`
+  width:100%;
+  height:50%;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  padding:0.5rem;
+  @media(max-width:480px){
+    flex-direction:row;
+  }
+`
+const UploadedItemsWrapper = styled.div`
+  display:flex;
+  flex-direction:column;
+`
+const UploadedItemsContent = styled.div`
+  display:flex;
+  flex-direction:row;
+`
+
+const ButtonWrapper = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:center;
+  flex-direction:row;
+  padding-top:1.5rem;
+`
+const StyledButtonBox = styled.div`
+  width:25%;
+`
+const UploadContainer = () => {
+  const dispatch = useDispatch()
+  const language = useSelector(selectLanguage)
+  const userId = useSelector(selectUserId)
   const [lessonName, setLessonName] = useState("")
   const [lessonDescription, setLessonDescription] = useState("")
   const [uploadedImage, setUploadedImage] = useState<any>([])
@@ -143,15 +210,8 @@ const UploadContainer = (props: MyProps) => {
       uploadedFiles.forEach(file => files.append("file", file))
       files.append("lessonName", lessonName)
       files.append("lessonDescription", lessonDescription)
-      files.append("userId", props.userId.toString())
-      axios.post(process.env.UPLOAD_URL, files, {}).then(res => {
-        let success = false
-        if (res.status === 200) {
-          success = true
-        }
-        setUploadSuccess(success)
-        setShowUploadStatus(true)
-      })
+      files.append("userId", userId.toString())
+      dispatch(uploadLessonAction(files))
     }
     setUpload(false)
   }, [upload])
@@ -175,375 +235,139 @@ const UploadContainer = (props: MyProps) => {
       ))}
     </ul>
   )
-  console.log(props.userId)
   return (
-    <Box
-      size={{
-        width: "100%",
-      }}
-      flex={{
-        justify: "center",
-      }}
-    >
-      <Box
-        size={{
-          width: ["90%", "90%", "60%"],
-        }}
-        padding={{
-          all: "5%",
-        }}
-      >
+    <Wrapper>
+      <Content>
         {disabled && (
-          <Box
-            size={{
-              width: "100%",
-            }}
-            flex={{
-              justify: "center",
-              direction: ["column", "column", "row"],
-            }}
-            padding={{
-              all: "0.5rem",
-            }}
-          >
-            <Box
-              size={{
-                width: ["100%", "100%", "30%"],
-              }}
-              flex={{
-                justify: ["center", "center", "start"],
-              }}
-            >
+          <SectionWrapper>
+            <StyledDiv>
               All field must have value
-            </Box>
-          </Box>
+            </StyledDiv>
+          </SectionWrapper>
         )}
 
-        <Box
-          size={{
-            width: "100%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["column", "column", "row"],
-          }}
-          padding={{
-            all: "0.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: ["100%", "100%", "30%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
-            {getTranslations(props.language, "lessonName")}
-          </Box>
-          <Box
-            size={{
-              width: ["100%", "100%", "70%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
+        <SectionWrapper>
+          <StyledDiv>
+            {getTranslations(language, "lessonName")}
+          </StyledDiv>
+          <InputWrapper>
             <Input
               value={lessonName}
               handleChange={e => setLessonName(e.target.value)}
             />
-          </Box>
-        </Box>
-        <Box
-          size={{
-            width: "100%",
-            height: "50%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["column", "column", "row"],
-          }}
-          padding={{
-            all: "0.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: ["100%", "100%", "30%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
-            {getTranslations(props.language, "lessonDescription")}
-          </Box>
-          <Box
-            size={{
-              width: ["100%", "100%", "70%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
+          </InputWrapper>
+        </SectionWrapper>
+        <CustomSectionWrapper>
+          <StyledDiv>
+            {getTranslations(language, "lessonDescription")}
+          </StyledDiv>
+          <InputWrapper>
             <TextArea
               value={lessonDescription}
               handleChange={e => setLessonDescription(e.target.value)}
             />
-          </Box>
-        </Box>
-        <Box
-          size={{
-            width: "100%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["column", "column", "row"],
-          }}
-          padding={{
-            all: "0.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: ["100%", "100%", "30%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
-            {getTranslations(props.language, "lessonCover")}
-          </Box>
-          <Box
-            size={{
-              width: ["100%", "100%", "70%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
+          </InputWrapper>
+        </CustomSectionWrapper>
+        <SectionWrapper>
+          <StyledDiv>
+            {getTranslations(language, "lessonCover")}
+          </StyledDiv>
+          <InputWrapper>
             <FileInput
               onChange={handleImageUpload}
-              label={getTranslations(props.language, "uploadImage")}
+              label={getTranslations(language, "uploadImage")}
               value={uploadedImage}
               onDelete={handleImageDelete}
               errorMessage={imageErrorMessage}
             />
-          </Box>
-        </Box>
+          </InputWrapper>
+        </SectionWrapper>
 
-        <Box
-          size={{
-            width: "100%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["column", "column", "row"],
-          }}
-          padding={{
-            all: "0.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: ["100%", "100%", "30%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
-            {getTranslations(props.language, "lessonMaterial")}
-          </Box>
-          <Box
-            size={{
-              width: ["100%", "100%", "70%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
+        <SectionWrapper>
+          <StyledDiv>
+            {getTranslations(language, "lessonMaterial")}
+          </StyledDiv>
+          <InputWrapper>
             <FileInput
               onChange={handleFileUpload}
               label={`${getTranslations(
-                props.language,
+                language,
                 "uploadLesson"
               )} ${uploadedFiles.length + 1} ${getTranslations(
-                props.language,
+                language,
                 "step"
               )}`}
               value={uploadedFiles}
               onDelete={handleFileDelete}
               errorMessage={fileErrorMessage}
             />
-          </Box>
-        </Box>
+          </InputWrapper>
+        </SectionWrapper>
 
-        <Box
-          size={{
-            width: "100%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["column", "column", "row"],
-          }}
-          padding={{
-            all: "0.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: ["100%", "100%", "30%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          ></Box>
-          <Box
-            size={{
-              width: ["100%", "100%", "70%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
+        <SectionWrapper>
+          
+          <InputWrapper>
             {Boolean(uploadedFiles.length) && (
-              <Box
-                flex={{
-                  direction: "column",
-                }}
-              >
+              <UploadedItemsWrapper>
                 Selected files:
-                <Box
-                  flex={{
-                    direction: "row",
-                  }}
-                >
+                <UploadedItemsContent>
                   {filesList}
-                </Box>
-              </Box>
+                </UploadedItemsContent>
+              </UploadedItemsWrapper>
             )}
-          </Box>
-        </Box>
-        <Box
-          size={{
-            width: "100%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["column", "column", "row"],
-          }}
-          padding={{
-            all: "0.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: ["100%", "100%", "30%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
-            {getTranslations(props.language, "authorPicture")}
-          </Box>
-          <Box
-            size={{
-              width: ["100%", "100%", "70%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
+          </InputWrapper>
+        </SectionWrapper>
+        <SectionWrapper>
+          <StyledDiv>
+            {getTranslations(language, "authorPicture")}
+          </StyledDiv>
+          <InputWrapper>
             <FileInput
               onChange={handleAuthorImageUpload}
-              label={getTranslations(props.language, "uploadImage")}
+              label={getTranslations(language, "uploadImage")}
               value={authorImage}
               onDelete={handleAuthorImageDelete}
               errorMessage={imageAuthorErrorMessage}
             />
-          </Box>
-        </Box>
-        <Box
-          size={{
-            width: "100%",
-            height: "50%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["column", "column", "row"],
-          }}
-          padding={{
-            all: "0.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: ["100%", "100%", "30%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
-            {getTranslations(props.language, "authorDescription")}
-          </Box>
-          <Box
-            size={{
-              width: ["100%", "100%", "70%"],
-            }}
-            flex={{
-              justify: ["center", "center", "start"],
-            }}
-          >
+          </InputWrapper>
+        </SectionWrapper>
+        <SectionWrapper>
+          <StyledDiv>
+            {getTranslations(language, "authorDescription")}
+          </StyledDiv>
+          <InputWrapper>
             <TextArea
               value={authorDescription}
               handleChange={e => setAuthorDescription(e.target.value)}
             />
-          </Box>
-        </Box>
-        <Box
-          size={{
-            width: "100%",
-          }}
-          flex={{
-            justify: "center",
-            direction: ["row"],
-          }}
-          padding={{
-            top: "1.5rem",
-          }}
-        >
-          <Box
-            size={{
-              width: "25%",
-            }}
-          >
+          </InputWrapper>
+        </SectionWrapper>
+        <ButtonWrapper>
+          <StyledButtonBox>
             <Button
               handleClick={() => handleUpload()}
-              buttonTexts={translations}
               label={"uploadLesson"}
-              language={props.language}
-              classButton={DEFAULT_BUTTON_CLASSES}
+              language={language}
               disabled={disabled}
+              variant='contained'
+              color='primary'
             />
-          </Box>
-        </Box>
-      </Box>
+          </StyledButtonBox>
+        </ButtonWrapper>
+      </Content>
       {showUploadStatus && (
         <ResponseStatus
           text={
             uploadSuccess
-              ? getTranslations(props.language, "uploadSuccess")
-              : getTranslations(props.language, "uploadFailed")
+              ? getTranslations(language, "uploadSuccess")
+              : getTranslations(language, "uploadFailed")
           }
           handleClick={hideResponseStatus}
-          language={props.language}
+          language={language}
         />
       )}
-    </Box>
+    </Wrapper>
   )
 }
-const mapStateToProps = state => ({
-  language: state.language.language,
-  userId: state.userId.userId,
-})
-export default connect(mapStateToProps)(UploadContainer)
+
+export default UploadContainer

@@ -1,96 +1,93 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import { Link } from 'gatsby';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import { Box } from '../../components/Box/Box';
-import Button from '../../components/Button/Button';
-import DropDown from '../../components/DropDown/DropDown';
-import Logo from '../../components/Logo/Logo';
-import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
-import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
-import { setUserStatus } from '../../state/actions/loginRegister';
+import { Button } from '../../components/Button/Button';
+import { Logo } from '../../components/Logo/Logo';
+import { loginAction, setShowLoginRegisterForm } from '../../state/actions/actions';
+import { selectLoginRegisterFormShow } from '../../state/selectors/appData.selector';
+import { selectLanguage, selectLoginStatus } from '../../state/selectors/userData.selector';
 import LoginRegister from '../LoginRegister/LoginRegister';
 
-type MyProps = {
-  language: Languages
-  dispatch: any
-  isLoggedIn: boolean
-}
-type MyState = {
-  loginRegisterShow: boolean
-}
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  max-height: 10%;
+`
+const Wrapper2 = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding-bottom: 1.25rem;
+  padding-top: 1.25rem;
+`
+const Box = styled.div`
+  max-width: 200px;
+  width: 25%;
+  height: 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+`
+export const NavBar: React.FC = () => {
+  const loggedIn = useSelector(selectLoginStatus)
 
-class NavBar extends React.Component<MyProps, MyState> {
-  // TODO: create interface for props
-  constructor(props: MyProps) {
-    super(props)
-    this.state = {
-      loginRegisterShow: false,
-    }
-  }
-  handleClick = e => {
+  const language = useSelector(selectLanguage)
+  const dispatch = useDispatch()
+  const showLoginRegisterForm = useSelector(selectLoginRegisterFormShow)
+  const handleLoginRegisterView = e => {
     e.preventDefault()
-    console.log("clicked")
+    dispatch(setShowLoginRegisterForm(!showLoginRegisterForm))
   }
-  handleLoginRegisterView = e => {
-    e.preventDefault()
-    this.handleChange("loginRegisterShow", !this.state.loginRegisterShow)
-  }
-  handleChange = (state, value) => {
-    this.setState({
-      [state]: value,
-    } as MyState)
-  }
-  handleLogout = () => {
-    this.handleChange("isLoggedIn", false)
-    this.props.dispatch(setUserStatus({ isLoggedIn: false, canUpload: false }))
-  }
-  render() {
-    const { language, dispatch, isLoggedIn } = this.props
-    const { loginRegisterShow } = this.state
-    return (
-      <div className="flex justify-center max-height-10-proc">
-        <div className="nav_bar flex justify-around w-full py-5">
-          <DropDown />
-
-          <Logo class={"navbar-btn-cont flex justify-center"} />
-          <Box
-            size={{
-              maxWidth: "200px",
-              width: "25%",
-              height: "42px",
-            }}
-            flex={{
-              direction: "column",
-              justify: "center",
-            }}
-            align={{ self: "center" }}
-          >
-            <Button
-              handleClick={
-                isLoggedIn ? this.handleLogout : this.handleLoginRegisterView
-              }
-              buttonTexts={translations}
-              label={isLoggedIn ? "logout" : "signUp-signIn"}
-              language={language}
-              classButton={DEFAULT_BUTTON_CLASSES}
-            />
-          </Box>
-          {this.state.loginRegisterShow && (
-            <LoginRegister
-              show={loginRegisterShow}
-              handleClick={this.handleChange}
-              dispatch={dispatch}
-            />
-          )}
-        </div>
-      </div>
+  const handleLogout = () => {
+    dispatch(
+      loginAction({
+        isLoggedIn: false,
+        canUpload: false,
+        subscribed: false,
+        email: "",
+        stripeCustomerId: "",
+        subscriptionId: "",
+      })
     )
   }
+  return (
+    <Wrapper>
+      <Wrapper2>
+        <Box>
+          <Link to={`/topics-screen/`}>
+            <Button
+              handleClick={() => null}
+              label={"dropDownButton"}
+              language={language}
+              variant="contained"
+              color="primary"
+            />
+          </Link>
+        </Box>
+        <Logo src={"/images/logo192.png"} link="/" />
+        <Box>
+          <Button
+            handleClick={loggedIn ? handleLogout : handleLoginRegisterView}
+            label={loggedIn ? "logout" : "signUp-signIn"}
+            language={language}
+            variant="contained"
+            color="primary"
+          />
+        </Box>
+        {showLoginRegisterForm && !loggedIn && (
+          <LoginRegister
+            show={showLoginRegisterForm}
+            handleLoginRegisterShow={value =>
+              dispatch(setShowLoginRegisterForm(value))
+            }
+          />
+        )}
+      </Wrapper2>
+    </Wrapper>
+  )
 }
 
-const mapStateToProps = state => ({
-  language: state.language.language,
-  isLoggedIn: state.isLoggedIn.isLoggedIn,
-})
-export default connect(mapStateToProps)(NavBar)
+export default NavBar
