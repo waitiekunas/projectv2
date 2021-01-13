@@ -6,7 +6,7 @@ import { Button } from '../Button/Button';
 
 const TextBox = styled.div`
   display: flex;
-  justify-center: center;
+  justify-content: center;
   flex-direction: column;
   padding-left: 1rem;
   max-height: 80%;
@@ -35,6 +35,8 @@ const BuyPoster = (props: any) => {
             handleClick={props.handleClick}
             label={"starLesson"}
             language={props.language}
+            color="primary"
+            variant="contained"
           />
         </div>
       )}

@@ -5,7 +5,8 @@ import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import { Logo } from '../../components/Logo/Logo';
-import { loginAction } from '../../state/actions/actions';
+import { loginAction, setShowLoginRegisterForm } from '../../state/actions/actions';
+import { selectLoginRegisterFormShow } from '../../state/selectors/appData.selector';
 import { selectLanguage, selectLoginStatus } from '../../state/selectors/userData.selector';
 import LoginRegister from '../LoginRegister/LoginRegister';
 
@@ -35,12 +36,10 @@ export const NavBar: React.FC = () => {
 
   const language = useSelector(selectLanguage)
   const dispatch = useDispatch()
-  const [showLoginRegisterForm, setShowLoginRegisterForm] = useState<boolean>(
-    loggedIn
-  )
+  const showLoginRegisterForm = useSelector(selectLoginRegisterFormShow)
   const handleLoginRegisterView = e => {
     e.preventDefault()
-    setShowLoginRegisterForm(!showLoginRegisterForm)
+    dispatch(setShowLoginRegisterForm(!showLoginRegisterForm))
   }
   const handleLogout = () => {
     dispatch(
@@ -81,8 +80,9 @@ export const NavBar: React.FC = () => {
         {showLoginRegisterForm && !loggedIn && (
           <LoginRegister
             show={showLoginRegisterForm}
-            handleLoginRegisterShow={value => setShowLoginRegisterForm(value)}
-            
+            handleLoginRegisterShow={value =>
+              dispatch(setShowLoginRegisterForm(value))
+            }
           />
         )}
       </Wrapper2>

@@ -106,6 +106,7 @@ const Register = (props: MyProps) => {
       }}
       onSubmit={onSubmit}
       validationSchema={RegisterScheme}
+      validateOnMount
     >
       {({ handleChange, values, isValid, handleSubmit, isSubmitting }) => (
         <>

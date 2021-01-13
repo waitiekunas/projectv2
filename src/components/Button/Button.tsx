@@ -29,6 +29,7 @@ export const Button: React.FC<MyProps> = ({
   disabled,
   variant,
   color,
+  children,
 }) => {
   const classes = useStyles()
   const language = useSelector(selectLanguage)
@@ -40,7 +41,7 @@ export const Button: React.FC<MyProps> = ({
         variant={variant}
         color={color}
       >
-        {getTranslations(language, label)}
+        {children || getTranslations(language, label)}
       </MaterialButton>
     </Box>
   )

@@ -66,6 +66,7 @@ const Login = (props: MyProps) => {
       }}
       onSubmit={onSubmit}
       validationSchema={LoginScheme}
+      validateOnMount
     >
       {({ handleChange, handleSubmit, isValid, values, isSubmitting }) => (
         <>

@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   width: 20%;
   margin-left: 1%;
   margin-right: 1%;
+  cursor: pointer;
 `
 type Props = {
   src: string
