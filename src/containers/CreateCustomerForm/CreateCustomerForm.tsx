@@ -7,11 +7,11 @@ import { setStripeCustomerIdAction } from '../../state/actions/actions';
 import { selectCustomerEmail, selectLoginStatus } from '../../state/selectors/userData.selector';
 
 function CreateCustomerForm() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const isLoggedIn = useSelector(selectLoginStatus)
   const email = useSelector(selectCustomerEmail)
   const [showCard, setShowCard] = useState<boolean>(false)
-  
+
   const handleSubmit = evt => {
     evt.preventDefault()
     return fetch(process.env.CREATE_CUSTOMER_STRIPE_URL, {
@@ -38,13 +38,11 @@ function CreateCustomerForm() {
       ) : (
         <BuyPoster
           additionalClass={""}
-          imageUri={"/images/wide-index-photo.jpg"}
+          imageUri={"/images/index-photo.png"}
           showText={true}
           imgHeader={"dont have?"}
           imgText={"Buy!"}
-          handleClick={
-            isLoggedIn ? handleSubmit : () => alert("Register")
-          }
+          handleClick={isLoggedIn ? handleSubmit : () => alert("Register")}
         />
       )}
     </>

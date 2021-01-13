@@ -29,7 +29,7 @@ export const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <MainBanner imageUri={"/images/index-photo.jpg"} />
+      <MainBanner imageUri={"/images/index-photo.png"} />
       <ClassListFullContent />
       {showCookies && (
         <CookiesCont language={language} handleClick={handleCookieClick} />
