@@ -1,13 +1,15 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { setShowLoginRegisterForm } from './../actions/actions';
+import { setShowLoginRegisterForm, setShowUserInfo } from './../actions/actions';
 
 export interface AppState{
     showLoginRegister:boolean;
+    showUserInfo:boolean;
 }
 
 export const initialAppState:AppState={
-    showLoginRegister:false
+    showLoginRegister:false,
+    showUserInfo:false,
 }
 
 export const appReducer = createReducer<AppState>(
@@ -17,6 +19,10 @@ export const appReducer = createReducer<AppState>(
         .addCase(setShowLoginRegisterForm,(state, {payload})=>({
             ...state,
             showLoginRegister:payload
+        }))
+        .addCase(setShowUserInfo,(state,{payload})=>({
+            ...state,
+            showUserInfo:payload
         }))
     }
 )

@@ -1,14 +1,22 @@
-import { Link } from 'gatsby';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import { Link } from "gatsby"
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import styled from "styled-components"
 
-import { Button } from '../../components/Button/Button';
-import { Logo } from '../../components/Logo/Logo';
-import { loginAction, setShowLoginRegisterForm } from '../../state/actions/actions';
-import { selectLoginRegisterFormShow } from '../../state/selectors/appData.selector';
-import { selectLanguage, selectLoginStatus } from '../../state/selectors/userData.selector';
-import LoginRegister from '../LoginRegister/LoginRegister';
+import { Button } from "../../components/Button/Button"
+import { Logo } from "../../components/Logo/Logo"
+import { MenuButton } from "../../components/MenuButton/MenuButton"
+import { setShowLoginRegisterForm } from "../../state/actions/actions"
+import {
+  selectLoginRegisterFormShow,
+  selectUserInfoShow,
+} from "../../state/selectors/appData.selector"
+import {
+  selectLanguage,
+  selectLoginStatus,
+} from "../../state/selectors/userData.selector"
+import LoginRegister from "../LoginRegister/LoginRegister"
+import { UserInfo } from "../UserInfo/UserInfo"
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,22 +45,7 @@ export const NavBar: React.FC = () => {
   const language = useSelector(selectLanguage)
   const dispatch = useDispatch()
   const showLoginRegisterForm = useSelector(selectLoginRegisterFormShow)
-  const handleLoginRegisterView = e => {
-    e.preventDefault()
-    dispatch(setShowLoginRegisterForm(!showLoginRegisterForm))
-  }
-  const handleLogout = () => {
-    dispatch(
-      loginAction({
-        isLoggedIn: false,
-        canUpload: false,
-        subscribed: false,
-        email: "",
-        stripeCustomerId: "",
-        subscriptionId: "",
-      })
-    )
-  }
+  const showUserInfo = useSelector(selectUserInfoShow)
   return (
     <Wrapper>
       <Wrapper2>
@@ -69,13 +62,7 @@ export const NavBar: React.FC = () => {
         </Box>
         <Logo src={"/images/logo192.png"} link="/" />
         <Box>
-          <Button
-            handleClick={loggedIn ? handleLogout : handleLoginRegisterView}
-            label={loggedIn ? "logout" : "signUp-signIn"}
-            language={language}
-            variant="contained"
-            color="primary"
-          />
+          <MenuButton />
         </Box>
         {showLoginRegisterForm && !loggedIn && (
           <LoginRegister
@@ -85,6 +72,7 @@ export const NavBar: React.FC = () => {
             }
           />
         )}
+        {showUserInfo && <UserInfo />}
       </Wrapper2>
     </Wrapper>
   )
