@@ -29,6 +29,7 @@ export const initialUserState:UserState = {
     subscribed: false,
     stripeCustomerId: "",
     subscriptionId: "",
+    loginName:"",
     },
     userId:0,
     language: Languages.LITHUANIA,

@@ -1,4 +1,4 @@
-import { Languages } from '../../enums/languages/languages';
+import { Languages } from "../../enums/languages/languages"
 
 export interface ILanguage {
   language: Languages
@@ -10,6 +10,7 @@ export interface IUserState {
   subscribed: boolean
   stripeCustomerId: string
   subscriptionId: string
+  loginName: string
 }
 export interface IUserId {
   userId: number

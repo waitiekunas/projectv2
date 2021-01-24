@@ -2,6 +2,7 @@ import { createAction } from "@reduxjs/toolkit"
 
 import { Languages } from "../../enums/languages/languages"
 import { IUserState } from "../../interfaces/state/IState"
+import { ResponseMessageInfo } from "../../types/appState"
 import { LoginData } from "../../types/userData"
 
 export const setLanguageAction = createAction<Languages>("GET_LANGUAGE")
@@ -20,3 +21,6 @@ export const setShowLoginRegisterForm = createAction<boolean>(
   "SET_LOGIN_REGISTER_SHOW"
 )
 export const setShowUserInfo = createAction<boolean>("SET_USER_INFO_SHOW")
+export const setResponseMessageAction = createAction<ResponseMessageInfo>(
+  "SET_RESPONSE_MESSAGE_INFO"
+)

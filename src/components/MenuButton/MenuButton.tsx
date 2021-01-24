@@ -7,7 +7,11 @@ import styled from "styled-components"
 
 import { Languages } from "../../enums/languages/languages"
 import { useStyles } from "../../Functions/Hooks/useStyles"
-import { loginAction, setShowUserInfo } from "../../state/actions/actions"
+import {
+  loginAction,
+  setShowLoginRegisterForm,
+  setShowUserInfo,
+} from "../../state/actions/actions"
 import { selectLoginStatus } from "../../state/selectors/userData.selector"
 import { getTranslations } from "../../utils/utils"
 
@@ -47,6 +51,9 @@ export const MenuButton: React.FC<MyProps> = ({ language }) => {
     handleClose()
     dispatch(setShowUserInfo(true))
   }
+  const showLogin = () => {
+    dispatch(setShowLoginRegisterForm(true))
+  }
   return (
     <Box className={classes.root}>
       <Button
@@ -65,8 +72,10 @@ export const MenuButton: React.FC<MyProps> = ({ language }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleShowUserInfo}>My account</MenuItem>
-        <MenuItem onClick={handleLogout}>
+        <MenuItem onClick={loggedIn ? handleShowUserInfo : showLogin}>
+          My account
+        </MenuItem>
+        <MenuItem onClick={loggedIn ? handleLogout : showLogin}>
           {loggedIn ? "logout" : "signUp-signIn"}
         </MenuItem>
       </Menu>

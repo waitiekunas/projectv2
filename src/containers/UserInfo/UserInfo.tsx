@@ -1,9 +1,18 @@
-import React from "react"
+import { TextField } from "@material-ui/core"
+import { Form, Formik } from "formik"
+import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
+import * as Yup from "yup"
 
+import { Button } from "../../components/Button/Button"
+import { Languages } from "../../enums/languages/languages"
+import { useStyles } from "../../Functions/Hooks/useStyles"
 import { setShowUserInfo } from "../../state/actions/actions"
+import { editPasswordAction } from "../../state/actions/apiData.actions"
 import { selectUserInfoShow } from "../../state/selectors/appData.selector"
+import { selectUserInfo } from "../../state/selectors/userData.selector"
+import { getTranslations } from "../../utils/utils"
 
 type WrapperProps = {
   show: boolean
@@ -40,17 +49,129 @@ const StyledDiv = styled.div`
   }
   top: 25%;
 `
-export const UserInfo = () => {
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+`
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`
+const CenteredDiv = styled.div`
+  display: flex;
+  align-items: center;
+`
+type Props = {
+  language: Languages
+}
+export enum EditPasswordFields {
+  oldPassword = "oldPassword",
+  newPassword = "newPassword",
+  loginName = "loginName",
+}
+
+export type EditPasswordFormValues = {
+  [EditPasswordFields.newPassword]: string
+  [EditPasswordFields.oldPassword]: string
+  [EditPasswordFields.loginName]: string
+}
+
+export const UserInfo: React.FC<Props> = ({ language }) => {
   const dispatch = useDispatch()
   const show = useSelector(selectUserInfoShow)
+  const userInfoState = useSelector(selectUserInfo)
+  const [editPassword, setEditPassword] = useState<boolean>(false)
+  const classes = useStyles()
   const handleChildClick = e => {
     e.stopPropagation()
   }
-
+  const onSubmit = (values: EditPasswordFormValues) => {
+    dispatch(setShowUserInfo(false))
+    dispatch(editPasswordAction(values))
+  }
+  const EditPasswordScheme = () =>
+    Yup.object().shape({
+      [EditPasswordFields.oldPassword]: Yup.string().required(
+        "Please enter current password"
+      ),
+      [EditPasswordFields.newPassword]: Yup.string().required(
+        "Please enter new password"
+      ),
+    })
   return (
     <Wrapper show={show} onClick={() => dispatch(setShowUserInfo(false))}>
       <Container>
-        <StyledDiv onClick={handleChildClick}></StyledDiv>
+        <StyledDiv onClick={handleChildClick}>
+          <ContentWrapper>
+            {!editPassword ? (
+              <Content>
+                <CenteredDiv>
+                  {getTranslations(language, "password")}
+                </CenteredDiv>
+
+                <Button
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  handleClick={() => setEditPassword(true)}
+                  variant="contained"
+                  color="primary"
+                >
+                  {getTranslations(language, "Change password")}
+                </Button>
+              </Content>
+            ) : (
+              <Formik<EditPasswordFormValues>
+                enableReinitialize
+                initialValues={{
+                  loginName: userInfoState.loginName || "",
+                  oldPassword: "",
+                  newPassword: "",
+                }}
+                onSubmit={onSubmit}
+                validationSchema={EditPasswordScheme}
+                validateOnMount
+              >
+                {({
+                  handleChange,
+                  handleSubmit,
+                  isValid,
+                  values,
+                  isSubmitting,
+                }) => (
+                  <Form>
+                    <Content className={classes.root}>
+                      <TextField
+                        id="standard-basic"
+                        label="Current password"
+                        name={EditPasswordFields.oldPassword}
+                        onChange={handleChange}
+                        value={values.oldPassword}
+                      />
+                      <TextField
+                        id="standard-basic"
+                        label="New password"
+                        onChange={handleChange}
+                        name={EditPasswordFields.newPassword}
+                        value={values.newPassword}
+                      />
+                    </Content>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      disabled={!isValid || isSubmitting}
+                      handleClick={handleSubmit}
+                    >
+                      Submit
+                    </Button>
+                  </Form>
+                )}
+              </Formik>
+            )}
+          </ContentWrapper>
+        </StyledDiv>
       </Container>
     </Wrapper>
   )

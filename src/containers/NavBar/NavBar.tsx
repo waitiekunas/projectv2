@@ -6,9 +6,13 @@ import styled from "styled-components"
 import { Button } from "../../components/Button/Button"
 import { Logo } from "../../components/Logo/Logo"
 import { MenuButton } from "../../components/MenuButton/MenuButton"
-import { setShowLoginRegisterForm } from "../../state/actions/actions"
+import {
+  setResponseMessageAction,
+  setShowLoginRegisterForm,
+} from "../../state/actions/actions"
 import {
   selectLoginRegisterFormShow,
+  selectResponseMsgStatus,
   selectUserInfoShow,
 } from "../../state/selectors/appData.selector"
 import {
@@ -16,6 +20,7 @@ import {
   selectLoginStatus,
 } from "../../state/selectors/userData.selector"
 import LoginRegister from "../LoginRegister/LoginRegister"
+import { ResponseStatus } from "../ResponseStatus/ResponseStatus"
 import { UserInfo } from "../UserInfo/UserInfo"
 
 const Wrapper = styled.div`
@@ -41,11 +46,14 @@ const Box = styled.div`
 `
 export const NavBar: React.FC = () => {
   const loggedIn = useSelector(selectLoginStatus)
-
+  const responseMsgStatus = useSelector(selectResponseMsgStatus)
   const language = useSelector(selectLanguage)
   const dispatch = useDispatch()
   const showLoginRegisterForm = useSelector(selectLoginRegisterFormShow)
   const showUserInfo = useSelector(selectUserInfoShow)
+  const handleResponseMsgClose = () => {
+    dispatch(setResponseMessageAction({ text: "", show: false }))
+  }
   return (
     <Wrapper>
       <Wrapper2>
@@ -72,7 +80,14 @@ export const NavBar: React.FC = () => {
             }
           />
         )}
-        {showUserInfo && <UserInfo />}
+        {showUserInfo && <UserInfo language={language} />}
+        {responseMsgStatus?.show && (
+          <ResponseStatus
+            text={responseMsgStatus.text}
+            language={language}
+            handleClick={handleResponseMsgClose}
+          />
+        )}
       </Wrapper2>
     </Wrapper>
   )
