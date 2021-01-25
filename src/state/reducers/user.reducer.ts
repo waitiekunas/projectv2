@@ -19,6 +19,7 @@ export interface UserState {
   language:Languages
   lookups:any[]
   registerSuccess:boolean
+  
 }
 
 export const initialUserState:UserState = {
@@ -30,6 +31,8 @@ export const initialUserState:UserState = {
     stripeCustomerId: "",
     subscriptionId: "",
     loginName:"",
+    authorImageUrl:undefined,
+    authorDescription:undefined,
     },
     userId:0,
     language: Languages.LITHUANIA,

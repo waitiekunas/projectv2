@@ -5,11 +5,15 @@ import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import * as Yup from "yup"
 
+import { AuthorInfo } from "../../components/AuthorInfo/AuthorInfo"
 import { Button } from "../../components/Button/Button"
 import { Languages } from "../../enums/languages/languages"
 import { useStyles } from "../../Functions/Hooks/useStyles"
 import { setShowUserInfo } from "../../state/actions/actions"
-import { editPasswordAction } from "../../state/actions/apiData.actions"
+import {
+  editPasswordAction,
+  setAuthorInfoAction,
+} from "../../state/actions/apiData.actions"
 import { selectUserInfoShow } from "../../state/selectors/appData.selector"
 import { selectUserInfo } from "../../state/selectors/userData.selector"
 import { getTranslations } from "../../utils/utils"
@@ -85,12 +89,15 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
   const userInfoState = useSelector(selectUserInfo)
   const [editPassword, setEditPassword] = useState<boolean>(false)
   const classes = useStyles()
-  const handleChildClick = e => {
-    e.stopPropagation()
-  }
+  const editAuthorInfo = useState<boolean>(false)
+  const isAuthor = userInfoState.canUpload
+
   const onSubmit = (values: EditPasswordFormValues) => {
     dispatch(setShowUserInfo(false))
     dispatch(editPasswordAction(values))
+  }
+  const handleChildClick = e => {
+    e.stopPropagation()
   }
   const EditPasswordScheme = () =>
     Yup.object().shape({
@@ -169,6 +176,22 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
                   </Form>
                 )}
               </Formik>
+            )}
+            {isAuthor && editAuthorInfo ? (
+              <>Edit screen</>
+            ) : (
+              <>
+                <AuthorInfo />
+                <Container>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    handleClick={() => setAuthorInfoAction(false)}
+                  >
+                    EDIT INFO
+                  </Button>
+                </Container>
+              </>
             )}
           </ContentWrapper>
         </StyledDiv>

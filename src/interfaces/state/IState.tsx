@@ -11,6 +11,8 @@ export interface IUserState {
   stripeCustomerId: string
   subscriptionId: string
   loginName: string
+  authorImageUrl?: string
+  authorDescription?: string
 }
 export interface IUserId {
   userId: number
