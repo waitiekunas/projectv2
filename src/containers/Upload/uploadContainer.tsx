@@ -1,92 +1,97 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import React, { useCallback, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import styled from "styled-components"
 
-import { Button } from '../../components/Button/Button';
-import FileInput from '../../components/FileInput/FileInput';
-import { Input } from '../../components/Input/Input';
-import { TextArea } from '../../components/TextArea/TextArea';
-import { uploadLessonAction } from '../../state/actions/apiData.actions';
-import { selectLanguage, selectUserId } from '../../state/selectors/userData.selector';
-import { getTranslations } from '../../utils/utils';
-import { ResponseStatus } from '../ResponseStatus/ResponseStatus';
-import { StyledSpan } from './style';
+import { Button } from "../../components/Button/Button"
+import FileInput from "../../components/FileInput/FileInput"
+import { Input } from "../../components/Input/Input"
+import { TextArea } from "../../components/TextArea/TextArea"
+import { uploadLessonAction } from "../../state/actions/apiData.actions"
+import {
+  selectIsAuthorInfoExists,
+  selectLanguage,
+  selectUserId,
+} from "../../state/selectors/userData.selector"
+import { getTranslations } from "../../utils/utils"
+import { ResponseStatus } from "../ResponseStatus/ResponseStatus"
+import { StyledSpan } from "./style"
 
 const Wrapper = styled.div`
-  width:100%;
-  display:flex;
-  justify-content:center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `
 
 const Content = styled.div`
-  width:90%;
-  padding:5%;
-  @media(max-width: 480px){
-    width:60%;
+  width: 90%;
+  padding: 5%;
+  @media (max-width: 480px) {
+    width: 60%;
   }
 `
 const SectionWrapper = styled.div`
-  width:100%;
-  display:flex;
-  justify-content:center;
-  flex-direction:column;
-  padding:0.5rem;
-  @media(max-width:480px){
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.5rem;
+  @media (max-width: 480px) {
     flex-direction: row;
   }
 `
 const StyledDiv = styled.div`
-  width:100%;
-  display:flex;
-  justify-content:center;
-  @media(max-width:480px){
-    width:30%;
-    justify-content:start;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 480px) {
+    width: 30%;
+    justify-content: start;
   }
 `
 const InputWrapper = styled.div`
-  display:flex;
-  justify-content:center;
-  width:100%;
-  @media(max-width:480px){
-    width:70%;
-    justify-content:start;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  @media (max-width: 480px) {
+    width: 70%;
+    justify-content: start;
   }
 `
 const CustomSectionWrapper = styled.div`
-  width:100%;
-  height:50%;
-  display:flex;
-  justify-content:center;
-  flex-direction:column;
-  padding:0.5rem;
-  @media(max-width:480px){
-    flex-direction:row;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.5rem;
+  @media (max-width: 480px) {
+    flex-direction: row;
   }
 `
 const UploadedItemsWrapper = styled.div`
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 `
 const UploadedItemsContent = styled.div`
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
 `
 
 const ButtonWrapper = styled.div`
-  width:100%;
-  display:flex;
-  justify-content:center;
-  flex-direction:row;
-  padding-top:1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding-top: 1.5rem;
 `
 const StyledButtonBox = styled.div`
-  width:25%;
+  width: 25%;
 `
 const UploadContainer = () => {
   const dispatch = useDispatch()
   const language = useSelector(selectLanguage)
   const userId = useSelector(selectUserId)
+  const isUserAuthorInfoExists = useSelector(selectIsAuthorInfoExists)
   const [lessonName, setLessonName] = useState("")
   const [lessonDescription, setLessonDescription] = useState("")
   const [uploadedImage, setUploadedImage] = useState<any>([])
@@ -95,9 +100,6 @@ const UploadContainer = () => {
   const [upload, setUpload] = useState(false)
   const [imageErrorMessage, setImageErrorMessage] = useState("")
   const [fileErrorMessage, setFileErrorMessage] = useState("")
-  const [authorImage, setAuthorImage] = useState<any[]>([])
-  const [imageAuthorErrorMessage, setImageAuthorErrorMessage] = useState("")
-  const [authorDescription, setAuthorDescription] = useState("")
   const [filesList, setFilesList] = useState<any>()
   const [showUploadStatus, setShowUploadStatus] = useState(false)
   const [uploadSuccess, setUploadSuccess] = useState(false)
@@ -106,16 +108,12 @@ const UploadContainer = () => {
     let lessonDescriptionLocal = lessonDescription
     let uploadedImageLocal = uploadedImage
     let uploadedFilesLocal = uploadedFiles
-    let authorImageLocal = authorImage
-    let authorDescriptionLocal = authorDescription
     let fileListLocal = filesList
     if (uploadSuccess) {
       lessonNameLocal = ""
       lessonDescriptionLocal = ""
       uploadedImageLocal = []
       uploadedFilesLocal = []
-      authorImageLocal = []
-      authorDescriptionLocal = ""
       fileListLocal = []
     }
     setUploadSuccess(false)
@@ -124,8 +122,6 @@ const UploadContainer = () => {
     setUploadedImage(uploadedImageLocal)
     setFilesList(fileListLocal)
     setUploadedFiles(uploadedFilesLocal)
-    setAuthorImage(authorImageLocal)
-    setAuthorDescription(authorDescriptionLocal)
   })
   useEffect(() => {
     setFilesList(joinFileName(uploadedFiles))
@@ -150,12 +146,6 @@ const UploadContainer = () => {
     },
     [uploadedImage]
   )
-  const handleAuthorImageDelete = useCallback(
-    (key: number) => {
-      setAuthorImage([])
-    },
-    [authorImage]
-  )
   const handleFileDelete = (key: number) => {
     let array = uploadedFiles
     array.splice(key, 1)
@@ -176,20 +166,6 @@ const UploadContainer = () => {
     },
     [uploadedImage]
   )
-  const handleAuthorImageUpload = useCallback(
-    (file: File[]) => {
-      let message = ""
-      let newFile = authorImage
-      if (file[0].type.includes("image")) {
-        newFile = file
-      } else {
-        message = "File you tried to upload is not an image"
-      }
-      setAuthorImage(newFile)
-      setImageAuthorErrorMessage(message)
-    },
-    [uploadedImage]
-  )
   const hideResponseStatus = useCallback(() => {
     setShowUploadStatus(false)
   }, [showUploadStatus])
@@ -200,12 +176,6 @@ const UploadContainer = () => {
   useEffect(() => {
     if (upload) {
       let files = new FormData()
-      if (authorImage.length > 0) {
-        files.append("authorImage", authorImage[0])
-      }
-      if (authorDescription) {
-        files.append("authorDescription", authorDescription)
-      }
       files.append("image", uploadedImage[0])
       uploadedFiles.forEach(file => files.append("file", file))
       files.append("lessonName", lessonName)
@@ -235,21 +205,18 @@ const UploadContainer = () => {
       ))}
     </ul>
   )
+  //TODO: info message that author description is missing and you wont be able to update
   return (
     <Wrapper>
       <Content>
         {disabled && (
           <SectionWrapper>
-            <StyledDiv>
-              All field must have value
-            </StyledDiv>
+            <StyledDiv>All field must have value</StyledDiv>
           </SectionWrapper>
         )}
 
         <SectionWrapper>
-          <StyledDiv>
-            {getTranslations(language, "lessonName")}
-          </StyledDiv>
+          <StyledDiv>{getTranslations(language, "lessonName")}</StyledDiv>
           <InputWrapper>
             <Input
               value={lessonName}
@@ -269,9 +236,7 @@ const UploadContainer = () => {
           </InputWrapper>
         </CustomSectionWrapper>
         <SectionWrapper>
-          <StyledDiv>
-            {getTranslations(language, "lessonCover")}
-          </StyledDiv>
+          <StyledDiv>{getTranslations(language, "lessonCover")}</StyledDiv>
           <InputWrapper>
             <FileInput
               onChange={handleImageUpload}
@@ -284,9 +249,7 @@ const UploadContainer = () => {
         </SectionWrapper>
 
         <SectionWrapper>
-          <StyledDiv>
-            {getTranslations(language, "lessonMaterial")}
-          </StyledDiv>
+          <StyledDiv>{getTranslations(language, "lessonMaterial")}</StyledDiv>
           <InputWrapper>
             <FileInput
               onChange={handleFileUpload}
@@ -305,41 +268,13 @@ const UploadContainer = () => {
         </SectionWrapper>
 
         <SectionWrapper>
-          
           <InputWrapper>
             {Boolean(uploadedFiles.length) && (
               <UploadedItemsWrapper>
                 Selected files:
-                <UploadedItemsContent>
-                  {filesList}
-                </UploadedItemsContent>
+                <UploadedItemsContent>{filesList}</UploadedItemsContent>
               </UploadedItemsWrapper>
             )}
-          </InputWrapper>
-        </SectionWrapper>
-        <SectionWrapper>
-          <StyledDiv>
-            {getTranslations(language, "authorPicture")}
-          </StyledDiv>
-          <InputWrapper>
-            <FileInput
-              onChange={handleAuthorImageUpload}
-              label={getTranslations(language, "uploadImage")}
-              value={authorImage}
-              onDelete={handleAuthorImageDelete}
-              errorMessage={imageAuthorErrorMessage}
-            />
-          </InputWrapper>
-        </SectionWrapper>
-        <SectionWrapper>
-          <StyledDiv>
-            {getTranslations(language, "authorDescription")}
-          </StyledDiv>
-          <InputWrapper>
-            <TextArea
-              value={authorDescription}
-              handleChange={e => setAuthorDescription(e.target.value)}
-            />
           </InputWrapper>
         </SectionWrapper>
         <ButtonWrapper>
@@ -348,9 +283,9 @@ const UploadContainer = () => {
               handleClick={() => handleUpload()}
               label={"uploadLesson"}
               language={language}
-              disabled={disabled}
-              variant='contained'
-              color='primary'
+              disabled={disabled || !isUserAuthorInfoExists}
+              variant="contained"
+              color="primary"
             />
           </StyledButtonBox>
         </ButtonWrapper>

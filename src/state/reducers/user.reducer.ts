@@ -10,7 +10,7 @@ import {
   setUserIdAction,
 } from '../actions/actions';
 import { Languages } from './../../enums/languages/languages';
-import { setRegisterStatus } from './../actions/userData.actions';
+import { setRegisterStatus, setUpdatedUserAuthorInfo } from './../actions/userData.actions';
 import { lookups } from './../initialState';
 
 export interface UserState {
@@ -33,6 +33,7 @@ export const initialUserState:UserState = {
     loginName:"",
     authorImageUrl:undefined,
     authorDescription:undefined,
+    photo_public_id:undefined
     },
     userId:0,
     language: Languages.LITHUANIA,
@@ -77,6 +78,14 @@ export const initialUserState:UserState = {
         .addCase(setRegisterStatus,(state,{payload})=>({
           ...state,
           registerSuccess:payload
+        }))
+        .addCase(setUpdatedUserAuthorInfo, (state,{payload})=>({
+          ...state,
+          userInfo:{
+            ...state.userInfo,
+            authorImageUrl:payload.photo_url,
+            authorDescription:payload.description
+          }
         }))
     }
   )

@@ -5,7 +5,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { LoginData, RegisterBody } from '../../types/userData';
 import { loginAction, loginUserAction, setLessonsAction, setUserIdAction } from '../actions/actions';
-import { editPasswordAction, loadLessonsAction, registerUserAction } from '../actions/apiData.actions';
+import { editAuthorAction, editPasswordAction, loadLessonsAction, registerUserAction } from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
 import { setResponseMessageAction } from './../actions/actions';
 import {
@@ -14,7 +14,7 @@ import {
     setAuthorInfoAction,
     setLessonsMaterialAction,
 } from './../actions/apiData.actions';
-import { setRegisterStatus } from './../actions/userData.actions';
+import { setRegisterStatus, setUpdatedUserAuthorInfo } from './../actions/userData.actions';
 
 export function* loadAllLessonsSaga():SagaIterator{
     try{
@@ -73,7 +73,7 @@ export function* getAuthorInfoSaga({payload}:PayloadAction<FormData>){
         const {data} = yield call(()=>
             axios.post(process.env.GET_AUTHOR_INFO_URL, payload)
         )
-        yield put(setAuthorInfoAction({text:data.text, show:true}))
+        yield put(setAuthorInfoAction(data))
     } catch(e){
         console.log(e)
     }
@@ -88,6 +88,18 @@ export function* updatePasswordSaga({payload}:PayloadAction<EditPasswordFormValu
     }
 }
 
+export function* updateAuthorSaga({payload}:PayloadAction<FormData>){
+    try{
+        const {data} = yield call(()=>axios.post(process.env.EDIT_AUTHOR, payload))
+        
+        yield put(setResponseMessageAction(data))
+        yield put(setUpdatedUserAuthorInfo(data))
+    } catch(e){
+        console.log(e)
+    }
+ 
+}
+
 export function* apiDataSagas(){
     yield all([takeLatest(loadLessonsAction,loadAllLessonsSaga)])
     yield all([takeLatest(loginUserAction, loginUserSaga)])
@@ -95,4 +107,5 @@ export function* apiDataSagas(){
     yield all([takeLatest(loadLessonsMaterialAction,loadLessonMaterialSaga)])
     yield all([takeLatest(getAuthorInfoAction, getAuthorInfoSaga)])
     yield all([takeLatest(editPasswordAction,updatePasswordSaga)])
+    yield all([takeLatest(editAuthorAction,updateAuthorSaga)])
 }

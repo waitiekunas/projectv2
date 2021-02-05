@@ -1,22 +1,19 @@
-import { TextField } from "@material-ui/core"
-import { Form, Formik } from "formik"
-import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import styled from "styled-components"
-import * as Yup from "yup"
+import { TextField } from '@material-ui/core';
+import { Field, Form, Formik } from 'formik';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import * as Yup from 'yup';
 
-import { AuthorInfo } from "../../components/AuthorInfo/AuthorInfo"
-import { Button } from "../../components/Button/Button"
-import { Languages } from "../../enums/languages/languages"
-import { useStyles } from "../../Functions/Hooks/useStyles"
-import { setShowUserInfo } from "../../state/actions/actions"
-import {
-  editPasswordAction,
-  setAuthorInfoAction,
-} from "../../state/actions/apiData.actions"
-import { selectUserInfoShow } from "../../state/selectors/appData.selector"
-import { selectUserInfo } from "../../state/selectors/userData.selector"
-import { getTranslations } from "../../utils/utils"
+import { AuthorInfo } from '../../components/AuthorInfo/AuthorInfo';
+import { Button } from '../../components/Button/Button';
+import { Languages } from '../../enums/languages/languages';
+import { useStyles } from '../../Functions/Hooks/useStyles';
+import { setShowUserInfo } from '../../state/actions/actions';
+import { editAuthorAction, editPasswordAction } from '../../state/actions/apiData.actions';
+import { selectUserInfoShow } from '../../state/selectors/appData.selector';
+import { selectUserId, selectUserInfo } from '../../state/selectors/userData.selector';
+import { getTranslations } from '../../utils/utils';
 
 type WrapperProps = {
   show: boolean
@@ -63,11 +60,17 @@ const ContentWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin: 1rem;
 `
 const CenteredDiv = styled.div`
   display: flex;
   align-items: center;
 `
+
+const BorderedField = styled(Field)`
+  border: 1px solid;
+`
+
 type Props = {
   language: Languages
 }
@@ -83,22 +86,56 @@ export type EditPasswordFormValues = {
   [EditPasswordFields.loginName]: string
 }
 
+export enum EditAuthorFields {
+  image = "file",
+  description = "description",
+  loginName = "loginName",
+  photo_public_id = "photo_public_id",
+  userId = "userId",
+}
+
+export type EditAuthorValues = {
+  [EditAuthorFields.image]: any
+  [EditAuthorFields.description]: string
+  [EditAuthorFields.loginName]: string
+  [EditAuthorFields.photo_public_id]: string
+  [EditAuthorFields.userId]: number
+}
 export const UserInfo: React.FC<Props> = ({ language }) => {
   const dispatch = useDispatch()
   const show = useSelector(selectUserInfoShow)
   const userInfoState = useSelector(selectUserInfo)
   const [editPassword, setEditPassword] = useState<boolean>(false)
   const classes = useStyles()
-  const editAuthorInfo = useState<boolean>(false)
+  const [editAuthorInfo, setEditAuthorInfo] = useState<boolean>(false)
+  const userId = useSelector(selectUserId)
   const isAuthor = userInfoState.canUpload
 
-  const onSubmit = (values: EditPasswordFormValues) => {
+  const onEditPasswordSubmit = (values: EditPasswordFormValues) => {
     dispatch(setShowUserInfo(false))
     dispatch(editPasswordAction(values))
+  }
+  const onEditAuthorSubmit = (values: EditAuthorValues) => {
+    let files = new FormData()
+    files.append(EditAuthorFields.image, values.file)
+    files.append(EditAuthorFields.description, values.description)
+    files.append(EditAuthorFields.loginName, values.loginName)
+    files.append(EditAuthorFields.photo_public_id, values.photo_public_id)
+    files.append(EditAuthorFields.userId, values.userId.toString())
+    let author = new FormData()
+    author.append("id", values.userId.toString())
+    dispatch(editAuthorAction(files))
+    dispatch(setEditAuthorInfo(false))
   }
   const handleChildClick = e => {
     e.stopPropagation()
   }
+  const SUPPORTED_FORMATS = [
+    "image/jpg",
+    "image/jpeg",
+    "image/gif",
+    "image/png",
+  ]
   const EditPasswordScheme = () =>
     Yup.object().shape({
       [EditPasswordFields.oldPassword]: Yup.string().required(
@@ -108,6 +145,20 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
         "Please enter new password"
       ),
     })
+  const EditAuthorScheme = () =>
+    Yup.object().shape({
+      [EditAuthorFields.description]: Yup.string().required(
+        "Please enter description"
+      ),
+      [EditAuthorFields.image]: Yup.mixed().required("Please attach image"),
+      // .test(
+      //   "fileFormat",
+      //   "Unsupported format",
+      //   value =>
+      //     value && value.file && SUPPORTED_FORMATS.includes(value.file.type)
+      // ),
+    })
+
   return (
     <Wrapper show={show} onClick={() => dispatch(setShowUserInfo(false))}>
       <Container>
@@ -137,7 +188,7 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
                   oldPassword: "",
                   newPassword: "",
                 }}
-                onSubmit={onSubmit}
+                onSubmit={onEditPasswordSubmit}
                 validationSchema={EditPasswordScheme}
                 validateOnMount
               >
@@ -177,21 +228,84 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
                 )}
               </Formik>
             )}
-            {isAuthor && editAuthorInfo ? (
-              <>Edit screen</>
-            ) : (
+
+            {isAuthor && !editAuthorInfo && (
               <>
                 <AuthorInfo />
                 <Container>
                   <Button
                     color="primary"
                     variant="contained"
-                    handleClick={() => setAuthorInfoAction(false)}
+                    handleClick={() => setEditAuthorInfo(true)}
                   >
                     EDIT INFO
                   </Button>
                 </Container>
               </>
+            )}
+            {editAuthorInfo && (
+              <Formik<EditAuthorValues>
+                enableReinitialize
+                initialValues={{
+                  loginName: userInfoState.loginName || "",
+                  description: "",
+                  file: undefined,
+                  photo_public_id: userInfoState.photo_public_id,
+                  userId: userId,
+                }}
+                onSubmit={onEditAuthorSubmit}
+                validationSchema={EditAuthorScheme}
+                validateOnMount
+              >
+                {({
+                  handleChange,
+                  handleSubmit,
+                  isValid,
+                  values,
+                  isSubmitting,
+                  setFieldValue,
+                }) => (
+                  <Form>
+                    <ContentWrapper>
+                      <label htmlFor="description">Enter description</label>
+                      <ContentWrapper>
+                        <BorderedField
+                          name={EditAuthorFields.description}
+                          onChange={handleChange}
+                          value={values.description}
+                          as="textarea"
+                          id="description"
+                        />
+                      </ContentWrapper>
+                      <label htmlFor="image">Enter description</label>
+                      <ContentWrapper>
+                        <input
+                          onChange={e => {
+                            setFieldValue(
+                              EditAuthorFields.image,
+                              e.target.files[0]
+                            )
+                          }}
+                          name={EditAuthorFields.image}
+                          type="file"
+                          id="image"
+                        />
+                        {/* {values.image && (
+                          <img src={reader.readAsDataURL(values.image)} />
+                        )} */}
+                      </ContentWrapper>
+                    </ContentWrapper>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      disabled={!isValid || isSubmitting}
+                      handleClick={handleSubmit}
+                    >
+                      Submit
+                    </Button>
+                  </Form>
+                )}
+              </Formik>
             )}
           </ContentWrapper>
         </StyledDiv>

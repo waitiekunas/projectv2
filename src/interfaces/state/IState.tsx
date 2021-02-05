@@ -13,6 +13,7 @@ export interface IUserState {
   loginName: string
   authorImageUrl?: string
   authorDescription?: string
+  photo_public_id?: string
 }
 export interface IUserId {
   userId: number

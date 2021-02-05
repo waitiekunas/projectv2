@@ -8,3 +8,4 @@ export const selectStripeSubscriptionId = (state:RootState)=>state.userInformati
 export const selectCustomerEmail = (state:RootState)=>state.userInformation.userInfo.email
 export const selectUserInfo = (state:RootState)=>state.userInformation.userInfo
 export const selectRegisterStatus = (state:RootState)=>state.userInformation.registerSuccess
+export const selectIsAuthorInfoExists = (state:RootState)=> state.userInformation.userInfo.authorDescription && state.userInformation.userInfo.authorImageUrl?true:false
