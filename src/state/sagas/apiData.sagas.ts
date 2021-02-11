@@ -5,7 +5,13 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { LoginData, RegisterBody } from '../../types/userData';
 import { loginAction, loginUserAction, setLessonsAction, setUserIdAction } from '../actions/actions';
-import { editAuthorAction, editPasswordAction, loadLessonsAction, registerUserAction } from '../actions/apiData.actions';
+import {
+    editAuthorAction,
+    editPasswordAction,
+    loadLessonsAction,
+    registerUserAction,
+    uploadLessonAction,
+} from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
 import { setResponseMessageAction } from './../actions/actions';
 import {
@@ -63,6 +69,9 @@ export function* uploadLessonSaga({payload}:PayloadAction<FormData>){
         const {data} = yield call(()=>
             axios.post(process.env.UPLOAD_URL, payload)
         )
+        yield put(loadLessonsAction)
+        yield put(setResponseMessageAction(data))
+        
     } catch (e){
         console.log(e)
     }
@@ -108,4 +117,5 @@ export function* apiDataSagas(){
     yield all([takeLatest(getAuthorInfoAction, getAuthorInfoSaga)])
     yield all([takeLatest(editPasswordAction,updatePasswordSaga)])
     yield all([takeLatest(editAuthorAction,updateAuthorSaga)])
+    yield all([takeLatest(uploadLessonAction, uploadLessonSaga)])
 }

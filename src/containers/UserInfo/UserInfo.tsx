@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import { AuthorInfo } from '../../components/AuthorInfo/AuthorInfo';
 import { Button } from '../../components/Button/Button';
+import { SUPPORTED_IMAGE_FORMATS } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { useStyles } from '../../Functions/Hooks/useStyles';
 import { setShowUserInfo } from '../../state/actions/actions';
@@ -130,12 +131,7 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
   const handleChildClick = e => {
     e.stopPropagation()
   }
-  const SUPPORTED_FORMATS = [
-    "image/jpg",
-    "image/jpeg",
-    "image/gif",
-    "image/png",
-  ]
+
   const EditPasswordScheme = () =>
     Yup.object().shape({
       [EditPasswordFields.oldPassword]: Yup.string().required(
@@ -150,13 +146,16 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
       [EditAuthorFields.description]: Yup.string().required(
         "Please enter description"
       ),
-      [EditAuthorFields.image]: Yup.mixed().required("Please attach image"),
-      // .test(
-      //   "fileFormat",
-      //   "Unsupported format",
-      //   value =>
-      //     value && value.file && SUPPORTED_FORMATS.includes(value.file.type)
-      // ),
+      [EditAuthorFields.image]: Yup.mixed()
+        .required("Please attach image")
+        .test(
+          "fileFormat",
+          "Unsupported format",
+          value =>
+            value &&
+            value.file &&
+            SUPPORTED_IMAGE_FORMATS.includes(value.file.type)
+        ),
     })
 
   return (
