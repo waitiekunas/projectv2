@@ -1,5 +1,6 @@
 export interface LessonMaterial {
   resource_id: string
   type: string
-  queue: string
+  queue: number
+  name: string
 }

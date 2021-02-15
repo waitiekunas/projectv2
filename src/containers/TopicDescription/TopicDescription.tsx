@@ -100,7 +100,7 @@ const TopicDescription = (props: MyProps) => {
     <div>
       <Wrapper>
         <ContentArea>
-          {!userInfo.subscribed ? (
+          {userInfo.subscribed ? (
             <CancelSubscription />
           ) : (
             <CreateCustomerForm />
