@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { useDispatch, useSelector } from 'react-redux';
-import { Player } from 'video-react';
+import styled from 'styled-components';
+import { LoadingSpinner, Player } from 'video-react';
 
 import { Button } from '../../components/Button/Button';
 import { PlaylistItem } from '../../components/PlaylistItem/PlaylistItem';
@@ -9,7 +10,20 @@ import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
 import { loadLessonsMaterialAction } from '../../state/actions/apiData.actions';
 import { selectLessonsMaterial } from '../../state/selectors/apiData.selector';
 import { selectLanguage } from '../../state/selectors/userData.selector';
-import { Background, ButtonBox, Content, LessonFileList, LessonWrapper, MainScreen, ViewContainer, Wrapper } from './styles';
+import {
+  Background,
+  ButtonBox,
+  Content,
+  LessonFileList,
+  LessonWrapper,
+  MainScreen,
+  StyledCentered,
+  StyledExitDiv,
+  StyledP,
+  StyledPDFContainer,
+  ViewContainer,
+  Wrapper,
+} from './styles';
 
 export type ActiveView = {
   name: string
@@ -23,6 +37,10 @@ type MyProps = {
   topicId: number
 }
 
+const StyledPage = styled(Page)`
+  display: flex;
+  justify-content: center;
+`
 const LessonFlow: React.FC<MyProps> = ({ handleClick, topicId }) => {
   const dispatch = useDispatch()
   const materialInfo = useSelector(selectLessonsMaterial)
@@ -30,6 +48,8 @@ const LessonFlow: React.FC<MyProps> = ({ handleClick, topicId }) => {
   const [sortedLesson, setSortedLesson] = useState<LessonMaterial[]>([])
   const [activeView, setActiveView] = useState<ActiveView | undefined>()
   const [showPdf, setShowPDF] = useState<boolean>(false)
+  const [numPages, setNumPages] = useState(null)
+  const [pageNumber, setPageNumber] = useState(1)
   useEffect(() => {
     let topicInfo = new FormData()
     topicInfo.append("id", topicId.toString())
@@ -48,27 +68,81 @@ const LessonFlow: React.FC<MyProps> = ({ handleClick, topicId }) => {
     e.preventDefault()
     handleClick()
   }
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages)
+    setPageNumber(1)
+  }
+  const changePage = offset => {
+    setPageNumber(prevPageNumber => prevPageNumber + offset)
+  }
 
+  const previousPage = () => {
+    changePage(-1)
+  }
+
+  const nextPage = () => {
+    changePage(1)
+  }
   return (
     <>
       <Background />
+
       <Wrapper>
         <MainScreen>
+          <StyledExitDiv>
+            <button onClick={handleLocalClick}>X</button>
+          </StyledExitDiv>
           <LessonWrapper>
-            <ViewContainer>
-              {showPdf ? (
-                <Document
-                  file={activeView?.resource_id}
-                  onLoadSuccess={() => null}
-                >
-                  <Page pageNumber={1} />
-                </Document>
-              ) : (
-                <Player queue={activeView?.queue}>
-                  <source src={activeView?.resource_id} />
-                </Player>
-              )}
-            </ViewContainer>
+            {activeView && (
+              <ViewContainer>
+                {showPdf ? (
+                  <StyledPDFContainer>
+                    <Document
+                      file={activeView?.resource_id}
+                      onLoadSuccess={onDocumentLoadSuccess}
+                    >
+                      <StyledPage pageNumber={pageNumber} />
+                    </Document>
+                    <StyledPDFContainer>
+                      <StyledCentered>
+                        <StyledP>
+                          Page {pageNumber || (numPages ? 1 : "--")} of{" "}
+                          {numPages || "--"}
+                        </StyledP>
+                      </StyledCentered>
+                      <Content>
+                        <ButtonBox>
+                          <Button
+                            language={language}
+                            label="back"
+                            handleClick={previousPage}
+                            disabled={pageNumber <= 1}
+                            color="primary"
+                            variant="contained"
+                          />
+                        </ButtonBox>
+
+                        <ButtonBox>
+                          <Button
+                            language={language}
+                            label="forward"
+                            handleClick={nextPage}
+                            disabled={pageNumber >= numPages}
+                            color="primary"
+                            variant="contained"
+                          />
+                        </ButtonBox>
+                      </Content>
+                    </StyledPDFContainer>
+                  </StyledPDFContainer>
+                ) : (
+                  <Player queue={activeView?.queue}>
+                    <LoadingSpinner />
+                    <source src={activeView?.resource_id} />
+                  </Player>
+                )}
+              </ViewContainer>
+            )}
             <LessonFileList>
               {sortedLesson.map(lesson => (
                 <PlaylistItem
@@ -79,39 +153,6 @@ const LessonFlow: React.FC<MyProps> = ({ handleClick, topicId }) => {
               ))}
             </LessonFileList>
           </LessonWrapper>
-          <Content>
-            <ButtonBox>
-              <Button
-                language={language}
-                label="back"
-                handleClick={() => null}
-                disabled={false}
-                color="primary"
-                variant="contained"
-              />
-            </ButtonBox>
-
-            <ButtonBox>
-              <Button
-                language={language}
-                label="forward"
-                handleClick={() => null}
-                disabled={false}
-                color="primary"
-                variant="contained"
-              />
-            </ButtonBox>
-
-            <ButtonBox>
-              <Button
-                language={language}
-                label="close"
-                handleClick={handleLocalClick}
-                color="primary"
-                variant="contained"
-              />
-            </ButtonBox>
-          </Content>
         </MainScreen>
       </Wrapper>
     </>

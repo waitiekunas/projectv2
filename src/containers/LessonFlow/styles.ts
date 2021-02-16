@@ -11,6 +11,9 @@ export const Background = styled.div`
 export const MainScreen = styled.div`
   width: 85%;
   z-index: 10;
+  display:flex;
+  justify-content:flex-start;
+  flex-direction:column;
 `
 export const Wrapper = styled.div`
   display: flex;
@@ -40,19 +43,24 @@ export const LessonWrapper = styled.div`
     display:flex;
     justify-content:center;
     flex-direction:row;
-    @media (max-width: 480px){
+    @media (max-width: 720px){
         flex-direction: column;
     }
 `
 
 export const LessonFileList = styled.div`
-    width:30%;
+    max-width:30%;
+    width:25%;
     display: flex;
     justify-content:left;
     flex-direction:column;
-    @media(max-width:480px){
+    @media(max-width:720px){
+        max-width:100%;
         width:100%;
+        max-height:100vw;
     }
+    max-height:50vw;
+    overflow:auto;
 `
 
 export const ViewContainer = styled.div`
@@ -62,4 +70,25 @@ export const ViewContainer = styled.div`
     @media(max-width:480px){
         width:100%;
     }
+`
+export const StyledPDFContainer = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+`
+export const StyledCentered = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:center;
+`
+export const StyledP = styled.p`
+    margin:0;
+`
+export const StyledExitDiv = styled.div`
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    padding:0.5rem;
+    margin-bottom:0.5rem;
 `

@@ -13,7 +13,7 @@ type WrapperProps = {
   active: boolean
 }
 const Wrapper = styled.div<WrapperProps>`
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: left;
   flex-direction: row;
