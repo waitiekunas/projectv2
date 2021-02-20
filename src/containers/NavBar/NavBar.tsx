@@ -1,27 +1,23 @@
-import { Link } from "gatsby"
-import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import styled from "styled-components"
+import { Link } from 'gatsby';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import { Button } from "../../components/Button/Button"
-import { Logo } from "../../components/Logo/Logo"
-import { MenuButton } from "../../components/MenuButton/MenuButton"
-import {
-  setResponseMessageAction,
-  setShowLoginRegisterForm,
-} from "../../state/actions/actions"
+import { Button } from '../../components/Button/Button';
+import { Logo } from '../../components/Logo/Logo';
+import { MenuButton } from '../../components/MenuButton/MenuButton';
+import { setResponseMessageAction, setShowLoginRegisterForm } from '../../state/actions/actions';
 import {
   selectLoginRegisterFormShow,
+  selectResetPasswordShow,
   selectResponseMsgStatus,
   selectUserInfoShow,
-} from "../../state/selectors/appData.selector"
-import {
-  selectLanguage,
-  selectLoginStatus,
-} from "../../state/selectors/userData.selector"
-import LoginRegister from "../LoginRegister/LoginRegister"
-import { ResponseStatus } from "../ResponseStatus/ResponseStatus"
-import { UserInfo } from "../UserInfo/UserInfo"
+} from '../../state/selectors/appData.selector';
+import { selectLanguage, selectLoginStatus } from '../../state/selectors/userData.selector';
+import LoginRegister from '../LoginRegister/LoginRegister';
+import { ResetPassword } from '../ResetPassword/ResetPassword';
+import { ResponseStatus } from '../ResponseStatus/ResponseStatus';
+import { UserInfo } from '../UserInfo/UserInfo';
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,6 +47,7 @@ export const NavBar: React.FC = () => {
   const dispatch = useDispatch()
   const showLoginRegisterForm = useSelector(selectLoginRegisterFormShow)
   const showUserInfo = useSelector(selectUserInfoShow)
+  const showResetPassword = useSelector(selectResetPasswordShow)
   const handleResponseMsgClose = () => {
     dispatch(setResponseMessageAction({ text: "", show: false }))
   }
@@ -88,6 +85,7 @@ export const NavBar: React.FC = () => {
             handleClick={handleResponseMsgClose}
           />
         )}
+        {showResetPassword && <ResetPassword />}
       </Wrapper2>
     </Wrapper>
   )

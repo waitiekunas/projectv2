@@ -3,6 +3,7 @@ import axios from 'axios';
 import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
+import { ResetPasswordValues } from '../../containers/ResetPassword/ResetPassword';
 import { LoginData, RegisterBody } from '../../types/userData';
 import { loginAction, loginUserAction, setLessonsAction, setUserIdAction } from '../actions/actions';
 import {
@@ -10,6 +11,7 @@ import {
     editPasswordAction,
     loadLessonsAction,
     registerUserAction,
+    resetPasswordAction,
     uploadLessonAction,
 } from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
@@ -109,6 +111,15 @@ export function* updateAuthorSaga({payload}:PayloadAction<FormData>){
  
 }
 
+export function* resetPasswordSaga({payload}:PayloadAction<ResetPasswordValues>){
+    try{
+        const {data} = yield call(()=>axios.post(process.env.RESET_PASSWORD, payload))
+        yield put(setResponseMessageAction({text:data.text, show:true}))
+    } catch(e){
+        console.log(e)
+    }
+}
+
 export function* apiDataSagas(){
     yield all([takeLatest(loadLessonsAction,loadAllLessonsSaga)])
     yield all([takeLatest(loginUserAction, loginUserSaga)])
@@ -118,4 +129,5 @@ export function* apiDataSagas(){
     yield all([takeLatest(editPasswordAction,updatePasswordSaga)])
     yield all([takeLatest(editAuthorAction,updateAuthorSaga)])
     yield all([takeLatest(uploadLessonAction, uploadLessonSaga)])
+    yield all([takeLatest(resetPasswordAction,resetPasswordSaga)])
 }

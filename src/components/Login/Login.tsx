@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import { Languages } from '../../enums/languages/languages';
-import { loginUserAction } from '../../state/actions/actions';
+import { loginUserAction, setResetPasswordShow, setShowLoginRegisterForm } from '../../state/actions/actions';
 import { Button } from '../Button/Button';
 
 const ButtonWrapper = styled.div`
@@ -20,6 +20,19 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
+`
+
+const CenteredDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+`
+
+const StyledP = styled.p`
+  color: #3f51b5;
+  &:hover {
+    color: darkblue;
+  }
 `
 export enum LoginFormFields {
   username = "username",
@@ -57,6 +70,11 @@ const Login = (props: MyProps) => {
         "Please enter password"
       ),
     })
+
+  const handlePasswordResetClick = () => {
+    dispatch(setResetPasswordShow(true))
+    dispatch(setShowLoginRegisterForm(false))
+  }
   return (
     <Formik<LoginFormFieldValues>
       enableReinitialize
@@ -98,6 +116,9 @@ const Login = (props: MyProps) => {
               ></input>
             </div>
           </div>
+          <CenteredDiv onClick={handlePasswordResetClick}>
+            <StyledP>Reset password</StyledP>
+          </CenteredDiv>
           <ButtonWrapper>
             <ButtonBox>
               <Button

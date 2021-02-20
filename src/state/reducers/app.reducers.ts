@@ -1,12 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { ResponseMessageInfo } from '../../types/appState';
-import { setResponseMessageAction, setShowLoginRegisterForm, setShowUserInfo } from './../actions/actions';
+import {
+    setResetPasswordShow,
+    setResponseMessageAction,
+    setShowLoginRegisterForm,
+    setShowUserInfo,
+} from './../actions/actions';
 
 export interface AppState{
     showLoginRegister:boolean;
     showUserInfo:boolean;
-    responseMessageInfo:ResponseMessageInfo
+    responseMessageInfo:ResponseMessageInfo;
+    showResetPassword:boolean;
 }
 
 export const initialAppState:AppState={
@@ -15,7 +21,8 @@ export const initialAppState:AppState={
     responseMessageInfo:{
         text:'',
         show:false,
-    }
+    },
+    showResetPassword:false,
 }
 
 export const appReducer = createReducer<AppState>(
@@ -33,6 +40,10 @@ export const appReducer = createReducer<AppState>(
         .addCase(setResponseMessageAction,(state,{payload})=>({
             ...state,
             responseMessageInfo:payload
+        }))
+        .addCase(setResetPasswordShow,(state, {payload})=>({
+            ...state,
+            showResetPassword:payload
         }))
     }
 )
