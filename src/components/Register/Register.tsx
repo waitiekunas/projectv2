@@ -1,15 +1,12 @@
 import { Formik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import { ResponseStatus } from '../../containers/ResponseStatus/ResponseStatus';
 import { Languages } from '../../enums/languages/languages';
 import { registerUserAction } from '../../state/actions/apiData.actions';
 import { setRegisterStatus } from '../../state/actions/userData.actions';
-import { selectRegisterStatus } from '../../state/selectors/userData.selector';
-import { getTranslations } from '../../utils/utils';
 import { Button } from '../Button/Button';
 
 const StyledP = styled.p`
@@ -62,7 +59,6 @@ type MyProps = {
 
 const Register = (props: MyProps) => {
   const dispatch = useDispatch()
-  const showResponseStatus = useSelector(selectRegisterStatus)
 
   useEffect(() => {
     dispatch(setRegisterStatus(false))
@@ -164,16 +160,6 @@ const Register = (props: MyProps) => {
               />
             </ButtonBox>
           </ButtonWrapper>
-          {showResponseStatus && (
-            <ResponseStatus
-              language={props.language}
-              handleClick={() => props.register(showResponseStatus)}
-              text={getTranslations(
-                props.language,
-                showResponseStatus ? "registerSuccess" : "registerFailed"
-              )}
-            />
-          )}
         </>
       )}
     </Formik>

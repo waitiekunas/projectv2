@@ -5,7 +5,13 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { ResetPasswordValues } from '../../containers/ResetPassword/ResetPassword';
 import { LoginData, RegisterBody } from '../../types/userData';
-import { loginAction, loginUserAction, setLessonsAction, setUserIdAction } from '../actions/actions';
+import {
+    loginAction,
+    loginUserAction,
+    setLessonsAction,
+    setShowLoginRegisterForm,
+    setUserIdAction,
+} from '../actions/actions';
 import {
     editAuthorAction,
     editPasswordAction,
@@ -49,7 +55,9 @@ export function* registerUserSaga({payload}:PayloadAction<RegisterBody>){
         const {data}=yield call(()=>
         axios.post(process.env.REGISTER_URL, payload)
         )
-        yield put(setRegisterStatus(data))
+        yield put(setRegisterStatus(data?.success))
+        yield put(setShowLoginRegisterForm(false))
+        yield put(setResponseMessageAction(data))
     } catch(e){
         console.log(e)
     }
