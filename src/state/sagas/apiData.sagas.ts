@@ -68,7 +68,9 @@ export function* loadLessonMaterialSaga({payload}:PayloadAction<FormData>){
         const {data}=yield call(()=>
             axios.post(process.env.GET_LESSON_URL, payload)
         )
-        yield put(setLessonsMaterialAction(data))
+        let decoded = data;
+        decoded.forEach((lesson)=>lesson.resource_id = atob(lesson.resource_id))
+        yield put(setLessonsMaterialAction(decoded))
     } catch(e){
         console.log(e)
     }
