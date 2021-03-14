@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
+import { Spinner } from '../../components/Loader/Loader';
 import { Logo } from '../../components/Logo/Logo';
 import { MenuButton } from '../../components/MenuButton/MenuButton';
 import { setResponseMessageAction, setShowLoginRegisterForm } from '../../state/actions/actions';
@@ -86,6 +87,7 @@ export const NavBar: React.FC = () => {
           />
         )}
         {showResetPassword && <ResetPassword />}
+        <Spinner />
       </Wrapper2>
     </Wrapper>
   )

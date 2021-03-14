@@ -10,6 +10,7 @@ import {
     loginUserAction,
     setLessonsAction,
     setShowLoginRegisterForm,
+    setShowSpinner,
     setUserIdAction,
 } from '../actions/actions';
 import {
@@ -31,26 +32,40 @@ import {
 import { setRegisterStatus, setUpdatedUserAuthorInfo } from './../actions/userData.actions';
 
 export function* loadAllLessonsSaga():SagaIterator{
+    yield put(setShowSpinner(true))
+
     try{
         const {data}= yield call(axios.get, process.env.GET_ALL_LESSONS_URL);
         yield put(setLessonsAction(data))
+
     } catch (e){
         console.log(e)
     }
+    yield put(setShowSpinner(false))
+
 }
 
 export function* loginUserSaga({payload}:PayloadAction<LoginData>){
+    yield put(setShowSpinner(true))
+
     try{
         const {data}= yield call(()=>
         axios.post(process.env.LOGIN_URL, payload))
         yield put (loginAction(data.loginData))
         yield put(setUserIdAction(data.id))
+        yield put(setShowSpinner(false))
+
     } catch(e){
         console.log(e)
+        
     }
+    yield put(setShowSpinner(false))
+
 }
 
 export function* registerUserSaga({payload}:PayloadAction<RegisterBody>){
+    yield put(setShowSpinner(true))
+
     try{
         const {data}=yield call(()=>
         axios.post(process.env.REGISTER_URL, payload)
@@ -61,9 +76,13 @@ export function* registerUserSaga({payload}:PayloadAction<RegisterBody>){
     } catch(e){
         console.log(e)
     }
+    yield put(setShowSpinner(false))
+
 }
 
 export function* loadLessonMaterialSaga({payload}:PayloadAction<FormData>){
+    yield put(setShowSpinner(true))
+
     try{
         const {data}=yield call(()=>
             axios.post(process.env.GET_LESSON_URL, payload)
@@ -74,9 +93,13 @@ export function* loadLessonMaterialSaga({payload}:PayloadAction<FormData>){
     } catch(e){
         console.log(e)
     }
+    yield put(setShowSpinner(false))
+
 }
 
 export function* uploadLessonSaga({payload}:PayloadAction<FormData>){
+    yield put(setShowSpinner(true))
+
     try{
         const {data} = yield call(()=>
             axios.post(process.env.UPLOAD_URL, payload)
@@ -87,9 +110,13 @@ export function* uploadLessonSaga({payload}:PayloadAction<FormData>){
     } catch (e){
         console.log(e)
     }
+    yield put(setShowSpinner(false))
+
 }
 
 export function* getAuthorInfoSaga({payload}:PayloadAction<FormData>){
+    yield put(setShowSpinner(true))
+
     try{
         const {data} = yield call(()=>
             axios.post(process.env.GET_AUTHOR_INFO_URL, payload)
@@ -98,18 +125,26 @@ export function* getAuthorInfoSaga({payload}:PayloadAction<FormData>){
     } catch(e){
         console.log(e)
     }
+    yield put(setShowSpinner(false))
+
 }
 
 export function* updatePasswordSaga({payload}:PayloadAction<EditPasswordFormValues>){
+    yield put(setShowSpinner(true))
+
     try{
         const {data} = yield call(()=>axios.post(process.env.EDIT_PASSWORD, payload))
         yield put(setResponseMessageAction({text:data.text, show:true}))
     } catch(e){
         console.log(e)
     }
+    yield put(setShowSpinner(false))
+
 }
 
 export function* updateAuthorSaga({payload}:PayloadAction<FormData>){
+    yield put(setShowSpinner(true))
+
     try{
         const {data} = yield call(()=>axios.post(process.env.EDIT_AUTHOR, payload))
         
@@ -118,16 +153,21 @@ export function* updateAuthorSaga({payload}:PayloadAction<FormData>){
     } catch(e){
         console.log(e)
     }
+    yield put(setShowSpinner(false))
  
 }
 
 export function* resetPasswordSaga({payload}:PayloadAction<ResetPasswordValues>){
+    yield put(setShowSpinner(true))
+
     try{
         const {data} = yield call(()=>axios.post(process.env.RESET_PASSWORD, payload))
         yield put(setResponseMessageAction({text:data.text, show:true}))
     } catch(e){
         console.log(e)
     }
+    yield put(setShowSpinner(false))
+
 }
 
 export function* apiDataSagas(){

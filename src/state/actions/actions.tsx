@@ -27,3 +27,4 @@ export const setResponseMessageAction = createAction<ResponseMessageInfo>(
 export const setResetPasswordShow = createAction<boolean>(
   "SET_SHOW_RESET_PASSWORD"
 )
+export const setShowSpinner = createAction<boolean>("SET_SHOW_SPINNER")

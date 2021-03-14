@@ -5,6 +5,7 @@ import {
     setResetPasswordShow,
     setResponseMessageAction,
     setShowLoginRegisterForm,
+    setShowSpinner,
     setShowUserInfo,
 } from './../actions/actions';
 
@@ -13,6 +14,7 @@ export interface AppState{
     showUserInfo:boolean;
     responseMessageInfo:ResponseMessageInfo;
     showResetPassword:boolean;
+    showSpinner:boolean;
 }
 
 export const initialAppState:AppState={
@@ -23,6 +25,7 @@ export const initialAppState:AppState={
         show:false,
     },
     showResetPassword:false,
+    showSpinner:false,
 }
 
 export const appReducer = createReducer<AppState>(
@@ -44,6 +47,10 @@ export const appReducer = createReducer<AppState>(
         .addCase(setResetPasswordShow,(state, {payload})=>({
             ...state,
             showResetPassword:payload
+        }))
+        .addCase(setShowSpinner,(state,{payload})=>({
+            ...state,
+            showSpinner:payload
         }))
     }
 )

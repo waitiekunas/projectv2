@@ -12,26 +12,26 @@ import { loadLessonsAction } from '../../state/actions/apiData.actions';
 import { selectLessons } from '../../state/selectors/apiData.selector';
 
 const Wrapper = styled.div`
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
 `
 const Content = styled.div`
   width: 66%;
   max-height: 10%;
 `
 export const ClassList = () => {
-  let lessons:any[] = useSelector(selectLessons)
+  let lessons: any[] = useSelector(selectLessons)
   const dispatch = useDispatch()
   useEffect(() => {
-    if(lessons.length===0){
+    if (lessons.length === 0) {
       dispatch(loadLessonsAction())
     }
   }, [])
-  
+
   useEffect(() => {
     dispatch(setLookupsAction(getTopics(lessons)))
   }, [lessons])
-  
+
   const settings = {
     dots: false,
     infinite: true,
@@ -59,7 +59,7 @@ export const ClassList = () => {
     <Wrapper>
       <Content>
         <Slider {...settings}>
-          {lessons.length>0 &&
+          {lessons.length > 0 &&
             lessons.map((value, index) => (
               <ClassTicket
                 key={index}
