@@ -151,10 +151,7 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
         .test(
           "fileFormat",
           "Unsupported format",
-          value =>
-            value &&
-            value.file &&
-            SUPPORTED_IMAGE_FORMATS.includes(value.file.type)
+          value => value && SUPPORTED_IMAGE_FORMATS.includes(value.type)
         ),
     })
 
