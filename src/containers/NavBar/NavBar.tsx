@@ -12,6 +12,7 @@ import {
   selectLoginRegisterFormShow,
   selectResetPasswordShow,
   selectResponseMsgStatus,
+  selectSpinnerState,
   selectUserInfoShow,
 } from '../../state/selectors/appData.selector';
 import { selectLanguage, selectLoginStatus } from '../../state/selectors/userData.selector';
@@ -52,6 +53,8 @@ export const NavBar: React.FC = () => {
   const handleResponseMsgClose = () => {
     dispatch(setResponseMessageAction({ text: "", show: false }))
   }
+  const showSpinner = useSelector(selectSpinnerState)
+
   return (
     <Wrapper>
       <Wrapper2>
@@ -87,7 +90,7 @@ export const NavBar: React.FC = () => {
           />
         )}
         {showResetPassword && <ResetPassword />}
-        <Spinner />
+        {showSpinner && <Spinner />}
       </Wrapper2>
     </Wrapper>
   )
