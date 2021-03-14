@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { selectSpinnerState } from '../../state/selectors/appData.selector';
 
 const Wrapper = styled.div`
-  display: flex;
+  display: ${props => (props.show ? "flex" : "none")};
   justify-content: center;
   position: fixed;
   z-index: 10;
@@ -26,12 +26,10 @@ const StyledLoader = styled(Loader)`
 export const Spinner = () => {
   const show = useSelector(selectSpinnerState)
   return (
-    show && (
-      <Wrapper>
-        <Container>
-          <StyledLoader color="#00bfff" scale={2.0} />
-        </Container>
-      </Wrapper>
-    )
+    <Wrapper show={show}>
+      <Container>
+        <StyledLoader color="#00bfff" scale={2.0} />
+      </Container>
+    </Wrapper>
   )
 }
