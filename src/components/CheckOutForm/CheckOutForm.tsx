@@ -1,12 +1,37 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import { selectStripeCustomerId } from '../../state/selectors/userData.selector';
 import { createSubscription, retryInvoiceWithNewPaymentMethod } from '../../utils/paymentUtils';
+import { Button } from '../Button/Button';
+import { CardDetails } from '../CardDetails/CardDetails';
 import CardSection from '../CardSection/CardSection';
-import { Modal } from '../Modal/Modal';
 
+const StyledDiv = styled.div`
+  width: 50%;
+  position: fixed;
+  margin-bottom: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 1.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: #fff;
+  @media (max-width: 760px) {
+    width: 90%;
+  }
+  top: 25%;
+`
+
+const StyledRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+`
 const CheckoutForm = () => {
   const customerId = useSelector(selectStripeCustomerId)
   const [showCard, setShowCard] = useState<boolean>(true)
@@ -57,12 +82,17 @@ const CheckoutForm = () => {
   return (
     <>
       {showCard ? (
-        <Modal onCloseClick={() => setShowCard(false)}>
-          <form onSubmit={handleSubmit}>
-            <CardSection />
-            <button disabled={!stripe}>Confirm order</button>
-          </form>
-        </Modal>
+        <CardDetails onCloseClick={() => setShowCard(false)}>
+          <StyledDiv>
+            <StyledRight onClick={() => setShowCard(false)}>x</StyledRight>
+            <form onSubmit={handleSubmit}>
+              <CardSection />
+              <Button color="primary" variant="contained" disabled={!stripe}>
+                Confirm order
+              </Button>
+            </form>
+          </StyledDiv>
+        </CardDetails>
       ) : null}
     </>
   )

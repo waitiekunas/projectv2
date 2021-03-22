@@ -17,11 +17,12 @@ const Box = styled.div`
 type MyProps = {
   language?: Languages
   label?: string
-  handleClick: (...args: any[]) => void
+  handleClick?: (...args: any[]) => void
   disabled?: boolean
   variant: "text" | "outlined" | "contained"
   color: "default" | "inherit" | "primary" | "secondary"
   type?: string
+  href?: string
 }
 
 export const Button: React.FC<MyProps> = ({
@@ -32,6 +33,7 @@ export const Button: React.FC<MyProps> = ({
   color,
   children,
   type,
+  href,
 }) => {
   const classes = useStyles()
   const language = useSelector(selectLanguage)
@@ -43,6 +45,7 @@ export const Button: React.FC<MyProps> = ({
         variant={variant}
         color={color}
         type={type}
+        href={href}
       >
         {children || getTranslations(language, label)}
       </MaterialButton>

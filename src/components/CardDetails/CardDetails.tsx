@@ -18,14 +18,15 @@ const ModalWrapper = styled.div`
 const ModalChildWrapper = styled.div`
   display: flex;
   justify-content: center;
-  flex-direction: column;
   width: 100%;
 `
-export const Modal: React.FC<Props> = ({ children, onCloseClick }) => {
+export const CardDetails: React.FC<Props> = ({ children, onCloseClick }) => {
   return (
     <ModalWrapper onClick={onCloseClick}>
       <ModalChildWrapper>
-        <div onClick={e => e.stopPropagation()}>{children}</div>
+        <ModalChildWrapper onClick={e => e.stopPropagation()}>
+          {children}
+        </ModalChildWrapper>
       </ModalChildWrapper>
     </ModalWrapper>
   )
