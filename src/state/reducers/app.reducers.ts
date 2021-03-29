@@ -4,53 +4,57 @@ import { ResponseMessageInfo } from '../../types/appState';
 import {
     setResetPasswordShow,
     setResponseMessageAction,
+    setShowCancelSubscriptionAction,
     setShowLoginRegisterForm,
     setShowSpinner,
     setShowUserInfo,
 } from './../actions/actions';
 
-export interface AppState{
-    showLoginRegister:boolean;
-    showUserInfo:boolean;
-    responseMessageInfo:ResponseMessageInfo;
-    showResetPassword:boolean;
-    showSpinner:boolean;
+export interface AppState {
+  showLoginRegister: boolean
+  showUserInfo: boolean
+  responseMessageInfo: ResponseMessageInfo
+  showResetPassword: boolean
+  showSpinner: boolean
+  showCancelSubscription: boolean
 }
 
-export const initialAppState:AppState={
-    showLoginRegister:false,
-    showUserInfo:false,
-    responseMessageInfo:{
-        text:'',
-        show:false,
-    },
-    showResetPassword:false,
-    showSpinner:false,
+export const initialAppState: AppState = {
+  showLoginRegister: false,
+  showUserInfo: false,
+  responseMessageInfo: {
+    text: "",
+    show: false,
+  },
+  showResetPassword: false,
+  showSpinner: false,
+  showCancelSubscription: false,
 }
 
-export const appReducer = createReducer<AppState>(
-    initialAppState,
-    (builder)=>{
-        builder
-        .addCase(setShowLoginRegisterForm,(state, {payload})=>({
-            ...state,
-            showLoginRegister:payload
-        }))
-        .addCase(setShowUserInfo,(state,{payload})=>({
-            ...state,
-            showUserInfo:payload
-        }))
-        .addCase(setResponseMessageAction,(state,{payload})=>({
-            ...state,
-            responseMessageInfo:payload
-        }))
-        .addCase(setResetPasswordShow,(state, {payload})=>({
-            ...state,
-            showResetPassword:payload
-        }))
-        .addCase(setShowSpinner,(state,{payload})=>({
-            ...state,
-            showSpinner:payload
-        }))
-    }
-)
+export const appReducer = createReducer<AppState>(initialAppState, builder => {
+  builder
+    .addCase(setShowLoginRegisterForm, (state, { payload }) => ({
+      ...state,
+      showLoginRegister: payload,
+    }))
+    .addCase(setShowUserInfo, (state, { payload }) => ({
+      ...state,
+      showUserInfo: payload,
+    }))
+    .addCase(setResponseMessageAction, (state, { payload }) => ({
+      ...state,
+      responseMessageInfo: payload,
+    }))
+    .addCase(setResetPasswordShow, (state, { payload }) => ({
+      ...state,
+      showResetPassword: payload,
+    }))
+    .addCase(setShowSpinner, (state, { payload }) => ({
+      ...state,
+      showSpinner: payload,
+    }))
+    .addCase(setShowCancelSubscriptionAction, (state, { payload }) => ({
+      ...state,
+      showCancelSubscription: payload,
+    }))
+})

@@ -8,7 +8,6 @@ import { Image } from '../../components/Image/Image';
 import { getAuthorInfoAction } from '../../state/actions/apiData.actions';
 import { selectAuthorInfo } from '../../state/selectors/apiData.selector';
 import { selectLanguage, selectUserInfo } from '../../state/selectors/userData.selector';
-import CancelSubscription from '../CancelSubscription/CancelSubscription';
 import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
 import LessonFlow from '../LessonFlow/LessonFlow';
 
@@ -100,11 +99,7 @@ const TopicDescription = (props: MyProps) => {
     <div>
       <Wrapper>
         <ContentArea>
-          {userInfo.subscribed ? (
-            <CancelSubscription />
-          ) : (
-            <CreateCustomerForm />
-          )}
+          {!userInfo.subscribed && <CreateCustomerForm />}
           {authorInfo && (
             <AuthorInfoArea>
               <AuthorPhotoArea>

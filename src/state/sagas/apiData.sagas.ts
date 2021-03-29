@@ -6,28 +6,28 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { ResetPasswordValues } from '../../containers/ResetPassword/ResetPassword';
 import { LoginData, RegisterBody } from '../../types/userData';
 import {
-    loginAction,
-    loginUserAction,
-    setLessonsAction,
-    setShowLoginRegisterForm,
-    setShowSpinner,
-    setUserIdAction,
+  loginAction,
+  loginUserAction,
+  setLessonsAction,
+  setShowLoginRegisterForm,
+  setShowSpinner,
+  setUserIdAction,
 } from '../actions/actions';
 import {
-    editAuthorAction,
-    editPasswordAction,
-    loadLessonsAction,
-    registerUserAction,
-    resetPasswordAction,
-    uploadLessonAction,
+  editAuthorAction,
+  editPasswordAction,
+  loadLessonsAction,
+  registerUserAction,
+  resetPasswordAction,
+  uploadLessonAction,
 } from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
 import { setResponseMessageAction } from './../actions/actions';
 import {
-    getAuthorInfoAction,
-    loadLessonsMaterialAction,
-    setAuthorInfoAction,
-    setLessonsMaterialAction,
+  getAuthorInfoAction,
+  loadLessonsMaterialAction,
+  setAuthorInfoAction,
+  setLessonsMaterialAction,
 } from './../actions/apiData.actions';
 import { setRegisterStatus, setUpdatedUserAuthorInfo } from './../actions/userData.actions';
 

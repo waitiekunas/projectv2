@@ -10,7 +10,7 @@ import { Button } from '../../components/Button/Button';
 import { SUPPORTED_IMAGE_FORMATS } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { useStyles } from '../../Functions/Hooks/useStyles';
-import { setShowUserInfo } from '../../state/actions/actions';
+import { setShowCancelSubscriptionAction, setShowUserInfo } from '../../state/actions/actions';
 import { editAuthorAction, editPasswordAction } from '../../state/actions/apiData.actions';
 import { selectUserInfoShow } from '../../state/selectors/appData.selector';
 import { selectUserId, selectUserInfo } from '../../state/selectors/userData.selector';
@@ -111,6 +111,7 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
   const [editAuthorInfo, setEditAuthorInfo] = useState<boolean>(false)
   const userId = useSelector(selectUserId)
   const isAuthor = userInfoState.canUpload
+  const isSubscribed = userInfoState.subscribed
 
   const onEditPasswordSubmit = (values: EditPasswordFormValues) => {
     dispatch(setShowUserInfo(false))
@@ -302,6 +303,20 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
                   </Form>
                 )}
               </Formik>
+            )}
+            {isSubscribed && !editAuthorInfo && (
+              <Container>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  handleClick={() => {
+                    dispatch(setShowCancelSubscriptionAction(true))
+                    dispatch(setShowUserInfo(false))
+                  }}
+                >
+                  Cancel subscription
+                </Button>
+              </Container>
             )}
           </ContentWrapper>
         </StyledDiv>
