@@ -4,6 +4,7 @@ import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { ResetPasswordValues } from '../../containers/ResetPassword/ResetPassword';
+import { CancelSubscription } from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import {
   loginAction,
@@ -14,6 +15,7 @@ import {
   setUserIdAction,
 } from '../actions/actions';
 import {
+  cancelSubscriptionAction,
   editAuthorAction,
   editPasswordAction,
   loadLessonsAction,
@@ -195,6 +197,22 @@ export function* resetPasswordSaga({
   }
 }
 
+export function* cancelSubscriptionSaga({
+  payload,
+}: PayloadAction<CancelSubscription>) {
+  yield put(setShowSpinner(true))
+  try {
+    const { data } = yield call(() =>
+      axios.post(process.env.CANCEL_SUBSCRIPTION_URL, payload)
+    )
+    yield put(setShowSpinner(false))
+    yield put(setResponseMessageAction(data))
+  } catch (e) {
+    yield put(setShowSpinner(false))
+    yield put(setResponseMessageAction({ text: "Technical error", show: true }))
+  }
+}
+
 export function* apiDataSagas() {
   yield all([takeLatest(loadLessonsAction, loadAllLessonsSaga)])
   yield all([takeLatest(loginUserAction, loginUserSaga)])
@@ -205,4 +223,5 @@ export function* apiDataSagas() {
   yield all([takeLatest(editAuthorAction, updateAuthorSaga)])
   yield all([takeLatest(uploadLessonAction, uploadLessonSaga)])
   yield all([takeLatest(resetPasswordAction, resetPasswordSaga)])
+  yield all([takeLatest(cancelSubscriptionAction, cancelSubscriptionSaga)])
 }

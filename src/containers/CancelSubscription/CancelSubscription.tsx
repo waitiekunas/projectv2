@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import { setShowCancelSubscriptionAction } from '../../state/actions/actions';
+import { cancelSubscriptionAction } from '../../state/actions/apiData.actions';
 import { selectStripeSubscriptionId } from '../../state/selectors/userData.selector';
 
 const Wrapper = styled.div`
@@ -52,7 +53,7 @@ const StyledButtonDiv = styled.div`
 const StyledP = styled.p`
   text-align: center;
 `
-const CancelSubscription = (props: any) => {
+const CancelSubscription = () => {
   const dispatch = useDispatch()
 
   const stripeSubscriptionId = useSelector(selectStripeSubscriptionId)
@@ -65,22 +66,12 @@ const CancelSubscription = (props: any) => {
   }
   const handleClick = evt => {
     evt.preventDefault()
-    return fetch(process.env.CANCEL_SUBSCRIPTION_URL, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    dispatch(
+      cancelSubscriptionAction({
         subscriptionId: stripeSubscriptionId,
-      }),
-    })
-      .then(response => {
-        return response.json()
       })
-      .then(result => {
-        console.log(result)
-        alert("Subscription canceled")
-      })
+    )
+    dispatch(setShowCancelSubscriptionAction(false))
   }
 
   return (
