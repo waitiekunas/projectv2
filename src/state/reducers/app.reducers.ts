@@ -2,12 +2,13 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import { ResponseMessageInfo } from '../../types/appState';
 import {
-    setResetPasswordShow,
-    setResponseMessageAction,
-    setShowCancelSubscriptionAction,
-    setShowLoginRegisterForm,
-    setShowSpinner,
-    setShowUserInfo,
+  setPaymentCardShow,
+  setResetPasswordShow,
+  setResponseMessageAction,
+  setShowCancelSubscriptionAction,
+  setShowLoginRegisterForm,
+  setShowSpinner,
+  setShowUserInfo,
 } from './../actions/actions';
 
 export interface AppState {
@@ -17,6 +18,7 @@ export interface AppState {
   showResetPassword: boolean
   showSpinner: boolean
   showCancelSubscription: boolean
+  showPaymentCard: boolean
 }
 
 export const initialAppState: AppState = {
@@ -29,6 +31,7 @@ export const initialAppState: AppState = {
   showResetPassword: false,
   showSpinner: false,
   showCancelSubscription: false,
+  showPaymentCard: false,
 }
 
 export const appReducer = createReducer<AppState>(initialAppState, builder => {
@@ -56,5 +59,9 @@ export const appReducer = createReducer<AppState>(initialAppState, builder => {
     .addCase(setShowCancelSubscriptionAction, (state, { payload }) => ({
       ...state,
       showCancelSubscription: payload,
+    }))
+    .addCase(setPaymentCardShow, (state, { payload }) => ({
+      ...state,
+      showPaymentCard: payload,
     }))
 })

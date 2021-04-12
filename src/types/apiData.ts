@@ -6,3 +6,7 @@ export type AuthorInfo = {
 export type CancelSubscription = {
   subscriptionId: string
 }
+
+export type CreateStripeCustomerPayload = {
+  email: string
+}

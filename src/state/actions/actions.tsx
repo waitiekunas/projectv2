@@ -31,3 +31,6 @@ export const setShowSpinner = createAction<boolean>("SET_SHOW_SPINNER")
 export const setShowCancelSubscriptionAction = createAction<boolean>(
   "SET_SHOW_SUBSCRIPTION"
 )
+export const setPaymentCardShowAction = createAction<boolean>(
+  "SET_SHOW_PAYMENT_CARD"
+)

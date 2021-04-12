@@ -12,3 +12,5 @@ export const selectSpinnerState = (state: RootState) =>
   state.appState.showSpinner
 export const selectShowCancelSubscription = (state: RootState) =>
   state.appState.showCancelSubscription
+export const selectShowPaymentCard = (state: RootState) =>
+  state.appState.showPaymentCard

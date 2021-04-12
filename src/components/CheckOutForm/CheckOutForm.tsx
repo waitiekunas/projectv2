@@ -1,8 +1,10 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
+import { setPaymentCardShowAction } from '../../state/actions/actions';
+import { selectShowPaymentCard } from '../../state/selectors/appData.selector';
 import { selectStripeCustomerId } from '../../state/selectors/userData.selector';
 import { createSubscription, retryInvoiceWithNewPaymentMethod } from '../../utils/paymentUtils';
 import { Button } from '../Button/Button';
@@ -33,8 +35,9 @@ const StyledRight = styled.div`
   cursor: pointer;
 `
 const CheckoutForm = () => {
+  const dispatch = useDispatch()
   const customerId = useSelector(selectStripeCustomerId)
-  const [showCard, setShowCard] = useState<boolean>(true)
+  const showCard = useSelector(selectShowPaymentCard)
   const priceId = "price_1HLREkJtXEcPW0ZhZRnicWYk"
   const stripe = useStripe()
   const elements = useElements()
@@ -82,12 +85,23 @@ const CheckoutForm = () => {
   return (
     <>
       {showCard ? (
-        <CardDetails onCloseClick={() => setShowCard(false)}>
+        <CardDetails
+          onCloseClick={() => dispatch(setPaymentCardShowAction(false))}
+        >
           <StyledDiv>
-            <StyledRight onClick={() => setShowCard(false)}>x</StyledRight>
+            <StyledRight
+              onClick={() => dispatch(setPaymentCardShowAction(false))}
+            >
+              x
+            </StyledRight>
             <form onSubmit={handleSubmit}>
               <CardSection />
-              <Button color="primary" variant="contained" disabled={!stripe}>
+              <Button
+                color="primary"
+                variant="contained"
+                disabled={!stripe}
+                type="submit"
+              >
                 Confirm order
               </Button>
             </form>

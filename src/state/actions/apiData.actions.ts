@@ -5,7 +5,7 @@ import { AuthorInfo } from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import { ResetPasswordValues } from './../../containers/ResetPassword/ResetPassword';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
-import { CancelSubscription } from './../../types/apiData';
+import { CancelSubscription, CreateStripeCustomerPayload } from './../../types/apiData';
 
 export const loadLessonsAction = createAction<LoginData>("LOAD_LESSONS")
 export const registerUserAction = createAction<RegisterBody>("REGISTER_USER")
@@ -26,3 +26,6 @@ export const resetPasswordAction = createAction<ResetPasswordValues>(
 export const cancelSubscriptionAction = createAction<CancelSubscription>(
   "CANCEL_SUBSCRIPTION"
 )
+export const createStripeCustomerAction = createAction<
+  CreateStripeCustomerPayload
+>("CREATE_STRIPE_CUSTOMER")

@@ -4,18 +4,20 @@ import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { ResetPasswordValues } from '../../containers/ResetPassword/ResetPassword';
-import { CancelSubscription } from '../../types/apiData';
+import { CancelSubscription, CreateStripeCustomerPayload } from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import {
   loginAction,
   loginUserAction,
   setLessonsAction,
+  setPaymentCardShowAction,
   setShowLoginRegisterForm,
   setShowSpinner,
   setUserIdAction,
 } from '../actions/actions';
 import {
   cancelSubscriptionAction,
+  createStripeCustomerAction,
   editAuthorAction,
   editPasswordAction,
   loadLessonsAction,
@@ -24,7 +26,7 @@ import {
   uploadLessonAction,
 } from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
-import { setResponseMessageAction } from './../actions/actions';
+import { setResponseMessageAction, setStripeCustomerIdAction } from './../actions/actions';
 import {
   getAuthorInfoAction,
   loadLessonsMaterialAction,
@@ -213,6 +215,23 @@ export function* cancelSubscriptionSaga({
   }
 }
 
+export function* createStripeCustomerSaga({
+  payload,
+}: PayloadAction<CreateStripeCustomerPayload>) {
+  yield put(setShowSpinner(true))
+  try {
+    const { data } = yield call(() =>
+      axios.post(process.env.CREATE_CUSTOMER_STRIPE_URL, payload)
+    )
+    yield put(setStripeCustomerIdAction(data.customer.id))
+    yield put(setPaymentCardShowAction(true))
+    yield put(setShowSpinner(false))
+  } catch (e) {
+    yield put(setShowSpinner(false))
+    yield put(setResponseMessageAction({ text: "Technical error", show: true }))
+  }
+}
+
 export function* apiDataSagas() {
   yield all([takeLatest(loadLessonsAction, loadAllLessonsSaga)])
   yield all([takeLatest(loginUserAction, loginUserSaga)])
@@ -224,4 +243,5 @@ export function* apiDataSagas() {
   yield all([takeLatest(uploadLessonAction, uploadLessonSaga)])
   yield all([takeLatest(resetPasswordAction, resetPasswordSaga)])
   yield all([takeLatest(cancelSubscriptionAction, cancelSubscriptionSaga)])
+  yield all([takeLatest(createStripeCustomerAction, createStripeCustomerSaga)])
 }
