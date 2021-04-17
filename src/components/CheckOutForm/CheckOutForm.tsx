@@ -1,12 +1,12 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { setPaymentCardShowAction } from '../../state/actions/actions';
+import { createStripeSubscriptionAction, retryStripeSubscriptionAction } from '../../state/actions/apiData.actions';
 import { selectShowPaymentCard } from '../../state/selectors/appData.selector';
 import { selectStripeCustomerId } from '../../state/selectors/userData.selector';
-import { createSubscription, retryInvoiceWithNewPaymentMethod } from '../../utils/paymentUtils';
 import { Button } from '../Button/Button';
 import { CardDetails } from '../CardDetails/CardDetails';
 import CardSection from '../CardSection/CardSection';
@@ -70,15 +70,23 @@ const CheckoutForm = () => {
       if (latestInvoicePaymentIntentStatus === "requires_payment_method") {
         // Update the payment method and retry invoice payment
         const invoiceId = localStorage.getItem("latestInvoiceId")
-        retryInvoiceWithNewPaymentMethod({
-          customerId,
-          paymentMethodId,
-          invoiceId,
-          priceId,
-        })
+        dispatch(
+          retryStripeSubscriptionAction({
+            customerId,
+            paymentMethodId,
+            invoiceId,
+            priceId,
+          })
+        )
       } else {
         // Create the subscription
-        createSubscription({ customerId, paymentMethodId, priceId })
+        dispatch(
+          createStripeSubscriptionAction({
+            customerId,
+            paymentMethodId,
+            priceId,
+          })
+        )
       }
     }
   }

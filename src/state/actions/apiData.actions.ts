@@ -1,11 +1,11 @@
 import { createAction } from '@reduxjs/toolkit';
 
 import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
-import { AuthorInfo } from '../../types/apiData';
+import { AuthorInfo, CreateStripeSubscription } from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import { ResetPasswordValues } from './../../containers/ResetPassword/ResetPassword';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
-import { CancelSubscription, CreateStripeCustomerPayload } from './../../types/apiData';
+import { CancelSubscription, CreateStripeCustomerPayload, RetryCreateStripeSubscription } from './../../types/apiData';
 
 export const loadLessonsAction = createAction<LoginData>("LOAD_LESSONS")
 export const registerUserAction = createAction<RegisterBody>("REGISTER_USER")
@@ -29,3 +29,11 @@ export const cancelSubscriptionAction = createAction<CancelSubscription>(
 export const createStripeCustomerAction = createAction<
   CreateStripeCustomerPayload
 >("CREATE_STRIPE_CUSTOMER")
+
+export const createStripeSubscriptionAction = createAction<
+  CreateStripeSubscription
+>("CREATE_STRIPE_SUBSCRIPTION")
+
+export const retryStripeSubscriptionAction = createAction<
+  RetryCreateStripeSubscription
+>("RETRY_STRIPE_SUBSCRIPTION")

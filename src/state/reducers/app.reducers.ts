@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 
 import { ResponseMessageInfo } from '../../types/appState';
 import {
-  setPaymentCardShow,
+  setPaymentCardShowAction,
   setResetPasswordShow,
   setResponseMessageAction,
   setShowCancelSubscriptionAction,
@@ -60,7 +60,7 @@ export const appReducer = createReducer<AppState>(initialAppState, builder => {
       ...state,
       showCancelSubscription: payload,
     }))
-    .addCase(setPaymentCardShow, (state, { payload }) => ({
+    .addCase(setPaymentCardShowAction, (state, { payload }) => ({
       ...state,
       showPaymentCard: payload,
     }))

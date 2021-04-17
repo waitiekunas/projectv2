@@ -4,7 +4,7 @@ import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { ResetPasswordValues } from '../../containers/ResetPassword/ResetPassword';
-import { CancelSubscription, CreateStripeCustomerPayload } from '../../types/apiData';
+import { CancelSubscription, CreateStripeCustomerPayload, CreateStripeSubscription } from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import {
   loginAction,
@@ -18,14 +18,17 @@ import {
 import {
   cancelSubscriptionAction,
   createStripeCustomerAction,
+  createStripeSubscriptionAction,
   editAuthorAction,
   editPasswordAction,
   loadLessonsAction,
   registerUserAction,
   resetPasswordAction,
+  retryStripeSubscriptionAction,
   uploadLessonAction,
 } from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
+import { RetryCreateStripeSubscription } from './../../types/apiData';
 import { setResponseMessageAction, setStripeCustomerIdAction } from './../actions/actions';
 import {
   getAuthorInfoAction,
@@ -232,6 +235,157 @@ export function* createStripeCustomerSaga({
   }
 }
 
+export function* createStripeSubscriptionSaga({
+  payload,
+}: PayloadAction<CreateStripeSubscription>) {
+  yield put(setShowSpinner(true))
+  try {
+    const { data } = yield call(() =>
+      axios.post(process.env.CREATE_SUBSCRIPTION_STRIPE_URL, payload)
+    )
+    if (data.error) {
+      yield put(setShowSpinner(false))
+      yield put(
+        setResponseMessageAction({ text: "Technical error", show: true })
+      )
+    }
+    if (data.status === "active") {
+      yield put(setShowSpinner(false))
+      yield put(setResponseMessageAction({ text: "Subscribed", show: true }))
+    }
+    let paymentIntent = data.invoice
+      ? data.invoice.payment_intent
+      : data.subscription.latest_invoice.payment_intent
+    if (
+      paymentIntent.status === "requires_action" ||
+      (data.isRetry === true &&
+        paymentIntent.status === "requires_payment_method")
+    ) {
+      yield put(setShowSpinner(false))
+      yield put(
+        setResponseMessageAction({ text: "Technical error", show: true })
+      )
+      // Some payment methods require a customer to be on session
+      // to complete the payment process. Check the status of the
+      // payment intent to handle these actions.
+      // stripe
+      // .confirmCardPayment(paymentIntent.client_secret, {
+      //   payment_method: paymentMethodId,
+      // })
+      // .then(result => {
+      //   if (result.error) {
+      //     // Start code flow to handle updating the payment details.
+      //     // Display error message in your UI.
+      //     // The card was declined (i.e. insufficient funds, card has expired, etc).
+      //     throw result
+      //   } else {
+      //     if (result.paymentIntent.status === "succeeded") {
+      //       // Show a success message to your customer.
+      //       // There's a risk of the customer closing the window before the callback.
+      //       // We recommend setting up webhook endpoints later in this guide.
+      //       return {
+      //         priceId: priceId,
+      //         subscription: subscription,
+      //         invoice: invoice,
+      //         paymentMethodId: paymentMethodId,
+      //       }
+      //     }
+      //   }
+      // })
+      // .catch(error => {
+      //   console.error(error)
+      // })
+    }
+    // If attaching this card to a Customer object succeeds,
+    // but attempts to charge the customer fail, you
+    // get a requires_payment_method error.
+    if (
+      data.latest_invoice.payment_intent.status === "requires_payment_method"
+    ) {
+      // Using localStorage to manage the state of the retry here,
+      // feel free to replace with what you prefer.
+      // Store the latest invoice ID and status.
+      localStorage.setItem("latestInvoiceId", data.latest_invoice.id)
+      localStorage.setItem(
+        "latestInvoicePaymentIntentStatus",
+        data.latest_invoice.payment_intent.status
+      )
+      yield put(setShowSpinner(false))
+      yield put(
+        setResponseMessageAction({
+          text: "Card declined, try again",
+          show: true,
+        })
+      )
+    }
+  } catch (e) {
+    yield put(setShowSpinner(false))
+    setResponseMessageAction({
+      text: "Technical error",
+      show: true,
+    })
+  }
+}
+
+export function* retryStripeSubscriptionSaga({
+  payload,
+}: PayloadAction<RetryCreateStripeSubscription>) {
+  yield put(setShowSpinner(true))
+  try {
+    const { data } = yield call(() =>
+      axios.post(process.env.CREATE_RETRY_INVOICE_URL, payload)
+    )
+    if (data.error) {
+      yield put(setShowSpinner(false))
+      setResponseMessageAction({
+        text: "Technical error",
+        show: true,
+      })
+    }
+    // Some payment methods require a customer to be on session
+    // to complete the payment process. Check the status of the
+    // payment intent to handle these actions.
+    // stripe
+    // .confirmCardPayment(paymentIntent.client_secret, {
+    //   payment_method: paymentMethodId,
+    // })
+    // .then(result => {
+    //   if (result.error) {
+    //     // Start code flow to handle updating the payment details.
+    //     // Display error message in your UI.
+    //     // The card was declined (i.e. insufficient funds, card has expired, etc).
+    //     throw result
+    //   } else {
+    //     if (result.paymentIntent.status === "succeeded") {
+    //       // Show a success message to your customer.
+    //       // There's a risk of the customer closing the window before the callback.
+    //       // We recommend setting up webhook endpoints later in this guide.
+    //       return {
+    //         priceId: priceId,
+    //         subscription: subscription,
+    //         invoice: invoice,
+    //         paymentMethodId: paymentMethodId,
+    //       }
+    //     }
+    //   }
+    // })
+    // .catch(error => {
+    //   console.error(error)
+    // })
+
+    if (data.status === "active") {
+      yield put(setShowSpinner(false))
+      yield put(setResponseMessageAction({ text: "Subscribed", show: true }))
+    }
+  } catch (e) {
+    yield put(setShowSpinner(false))
+    setResponseMessageAction({
+      text: "Technical error",
+      show: true,
+    })
+  }
+}
+
 export function* apiDataSagas() {
   yield all([takeLatest(loadLessonsAction, loadAllLessonsSaga)])
   yield all([takeLatest(loginUserAction, loginUserSaga)])
@@ -244,4 +398,10 @@ export function* apiDataSagas() {
   yield all([takeLatest(resetPasswordAction, resetPasswordSaga)])
   yield all([takeLatest(cancelSubscriptionAction, cancelSubscriptionSaga)])
   yield all([takeLatest(createStripeCustomerAction, createStripeCustomerSaga)])
+  yield all([
+    takeLatest(createStripeSubscriptionAction, createStripeSubscriptionSaga),
+  ])
+  yield all([
+    takeLatest(retryStripeSubscriptionAction, retryStripeSubscriptionSaga),
+  ])
 }
