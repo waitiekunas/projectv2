@@ -7,7 +7,7 @@ import { Button } from '../../components/Button/Button';
 import { Image } from '../../components/Image/Image';
 import { getAuthorInfoAction } from '../../state/actions/apiData.actions';
 import { selectAuthorInfo } from '../../state/selectors/apiData.selector';
-import { selectLanguage, selectUserInfo } from '../../state/selectors/userData.selector';
+import { selectLanguage, selectUserId, selectUserInfo } from '../../state/selectors/userData.selector';
 import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
 import LessonFlow from '../LessonFlow/LessonFlow';
 
@@ -80,6 +80,7 @@ const TopicDescription = (props: MyProps) => {
   const [clicked, setClicked] = useState(false)
   const [selectedClassId, setSelectedClassId] = useState(0)
   const authorInfo = useSelector(selectAuthorInfo)
+  const userId = useSelector(selectUserId)
   useEffect(() => {
     let author = new FormData()
     author.append("id", props.topicInfo.authorId.toString())
@@ -89,6 +90,12 @@ const TopicDescription = (props: MyProps) => {
     e.preventDefault()
     setClicked(!clicked)
     setSelectedClassId(props.topicInfo.id)
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "click", {
+        authorId: props.topicInfo.authorId,
+        userId: userId,
+      })
+    }
   }
 
   const closeChildScreen = useCallback(() => setClicked(false), [false])
