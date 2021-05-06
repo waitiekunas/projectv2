@@ -91,7 +91,7 @@ const TopicDescription = (props: MyProps) => {
     setClicked(!clicked)
     setSelectedClassId(props.topicInfo.id)
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "click", {
+      window.gtag("event", "lesson_view", {
         authorId: props.topicInfo.authorId,
         userId: userId,
       })
