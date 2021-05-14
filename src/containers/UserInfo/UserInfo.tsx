@@ -10,7 +10,7 @@ import { Button } from '../../components/Button/Button';
 import { SUPPORTED_IMAGE_FORMATS } from '../../Constants/Constants';
 import { Languages } from '../../enums/languages/languages';
 import { useStyles } from '../../Functions/Hooks/useStyles';
-import { setShowCancelSubscriptionAction, setShowUserInfo } from '../../state/actions/actions';
+import { setShowAuthorLessonsAction, setShowCancelSubscriptionAction, setShowUserInfo } from '../../state/actions/actions';
 import { editAuthorAction, editPasswordAction } from '../../state/actions/apiData.actions';
 import { selectUserInfoShow } from '../../state/selectors/appData.selector';
 import { selectUserId, selectUserInfo } from '../../state/selectors/userData.selector';
@@ -315,6 +315,20 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
                   }}
                 >
                   Cancel subscription
+                </Button>
+              </Container>
+            )}
+            {isAuthor && (
+              <Container>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  handleClick={() => {
+                    dispatch(setShowAuthorLessonsAction(true))
+                    dispatch(setShowUserInfo(false))
+                  }}
+                >
+                  Manage your lessons
                 </Button>
               </Container>
             )}

@@ -1,7 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
 
 import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
-import { AuthorInfo, CreateStripeSubscription } from '../../types/apiData';
+import {
+  AuthorInfo,
+  AuthorLessonsInfo,
+  AuthorLessonsListReq,
+  CreateStripeSubscription,
+  RegisterView,
+} from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import { ResetPasswordValues } from './../../containers/ResetPassword/ResetPassword';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
@@ -37,3 +43,12 @@ export const createStripeSubscriptionAction = createAction<
 export const retryStripeSubscriptionAction = createAction<
   RetryCreateStripeSubscription
 >("RETRY_STRIPE_SUBSCRIPTION")
+
+export const registerViewAction = createAction<RegisterView>("REGISTER_VIEW")
+
+export const getAuthorLessonsAction = createAction<AuthorLessonsListReq>(
+  "GET_AUTHOR_LESSONS"
+)
+export const setAuthorLessons = createAction<AuthorLessonsInfo[]>(
+  "SETTING_AUTHOR_LESSONS"
+)

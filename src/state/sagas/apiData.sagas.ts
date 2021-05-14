@@ -4,7 +4,13 @@ import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { ResetPasswordValues } from '../../containers/ResetPassword/ResetPassword';
-import { CancelSubscription, CreateStripeCustomerPayload, CreateStripeSubscription } from '../../types/apiData';
+import {
+  AuthorLessonsListReq,
+  CancelSubscription,
+  CreateStripeCustomerPayload,
+  CreateStripeSubscription,
+  RegisterView,
+} from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import {
   loginAction,
@@ -12,7 +18,6 @@ import {
   setLessonsAction,
   setPaymentCardShowAction,
   setShowLoginRegisterForm,
-  setShowSpinner,
   setUserIdAction,
 } from '../actions/actions';
 import {
@@ -21,15 +26,22 @@ import {
   createStripeSubscriptionAction,
   editAuthorAction,
   editPasswordAction,
+  getAuthorLessonsAction,
   loadLessonsAction,
   registerUserAction,
+  registerViewAction,
   resetPasswordAction,
   retryStripeSubscriptionAction,
   uploadLessonAction,
 } from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
 import { RetryCreateStripeSubscription } from './../../types/apiData';
-import { setResponseMessageAction, setStripeCustomerIdAction } from './../actions/actions';
+import {
+  setResponseMessageAction,
+  setShowAuthorLessonsAction,
+  setShowSpinner,
+  setStripeCustomerIdAction,
+} from './../actions/actions';
 import {
   getAuthorInfoAction,
   loadLessonsMaterialAction,
@@ -386,6 +398,36 @@ export function* retryStripeSubscriptionSaga({
   }
 }
 
+export function* registerViewSaga({ payload }: PayloadAction<RegisterView>) {
+  yield put(setShowSpinner(true))
+
+  try {
+    const { data } = yield call(() =>
+      axios.post(process.env.REGISTER_VIEW, payload)
+    )
+    yield put(setShowSpinner(false))
+  } catch (e) {
+    yield put(setShowSpinner(false))
+  }
+}
+
+export function* getAuthorLessonsSaga({
+  payload,
+}: PayloadAction<AuthorLessonsListReq>) {
+  yield put(setShowSpinner(true))
+
+  try {
+    const { data } = yield call(() =>
+      axios.post(process.env.GET_AUTHOR_LESSONS, payload)
+    )
+    yield put(setShowAuthorLessonsAction(data))
+    yield put(setShowSpinner(false))
+  } catch (error) {
+    yield put(setShowSpinner(false))
+    yield put(setResponseMessageAction({ text: "Error", show: true }))
+  }
+}
+
 export function* apiDataSagas() {
   yield all([takeLatest(loadLessonsAction, loadAllLessonsSaga)])
   yield all([takeLatest(loginUserAction, loginUserSaga)])
@@ -404,4 +446,6 @@ export function* apiDataSagas() {
   yield all([
     takeLatest(retryStripeSubscriptionAction, retryStripeSubscriptionSaga),
   ])
+  yield all([takeLatest(registerViewAction, registerViewSaga)]),
+    yield all([takeLatest(getAuthorLessonsAction, getAuthorLessonsSaga)])
 }

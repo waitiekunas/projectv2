@@ -14,3 +14,5 @@ export const selectShowCancelSubscription = (state: RootState) =>
   state.appState.showCancelSubscription
 export const selectShowPaymentCard = (state: RootState) =>
   state.appState.showPaymentCard
+export const selectAuthorLessonsShow = (state: RootState) =>
+  state.appState.showAuthorLessons

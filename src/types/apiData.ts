@@ -23,3 +23,18 @@ export type RetryCreateStripeSubscription = {
   invoiceId: string
   priceId: string
 }
+
+export type RegisterView = {
+  customerId: string
+  authorId: string
+  date: Date
+}
+
+export type AuthorLessonsListReq = {
+  authorId: string
+}
+
+export type AuthorLessonsInfo = {
+  id: string
+  lesson_name: string
+}

@@ -5,6 +5,7 @@ import {
   setPaymentCardShowAction,
   setResetPasswordShow,
   setResponseMessageAction,
+  setShowAuthorLessonsAction,
   setShowCancelSubscriptionAction,
   setShowLoginRegisterForm,
   setShowSpinner,
@@ -19,6 +20,7 @@ export interface AppState {
   showSpinner: boolean
   showCancelSubscription: boolean
   showPaymentCard: boolean
+  showAuthorLessons: boolean
 }
 
 export const initialAppState: AppState = {
@@ -32,6 +34,7 @@ export const initialAppState: AppState = {
   showSpinner: false,
   showCancelSubscription: false,
   showPaymentCard: false,
+  showAuthorLessons: false,
 }
 
 export const appReducer = createReducer<AppState>(initialAppState, builder => {
@@ -63,5 +66,9 @@ export const appReducer = createReducer<AppState>(initialAppState, builder => {
     .addCase(setPaymentCardShowAction, (state, { payload }) => ({
       ...state,
       showPaymentCard: payload,
+    }))
+    .addCase(setShowAuthorLessonsAction, (state, { payload }) => ({
+      ...state,
+      showAuthorLessons: payload,
     }))
 })
