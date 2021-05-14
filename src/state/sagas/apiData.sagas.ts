@@ -4,7 +4,12 @@ import { SagaIterator } from 'redux-saga';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { ResetPasswordValues } from '../../containers/ResetPassword/ResetPassword';
-import { CancelSubscription, CreateStripeCustomerPayload, CreateStripeSubscription } from '../../types/apiData';
+import {
+  CancelSubscription,
+  CreateStripeCustomerPayload,
+  CreateStripeSubscription,
+  RegisterView,
+} from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import {
   loginAction,
@@ -23,6 +28,7 @@ import {
   editPasswordAction,
   loadLessonsAction,
   registerUserAction,
+  registerViewAction,
   resetPasswordAction,
   retryStripeSubscriptionAction,
   uploadLessonAction,
@@ -386,6 +392,19 @@ export function* retryStripeSubscriptionSaga({
   }
 }
 
+export function* registerViewSaga({ payload }: PayloadAction<RegisterView>) {
+  yield put(setShowSpinner(true))
+
+  try {
+    const { data } = yield call(() =>
+      axios.post(process.env.REGISTER_VIEW, payload)
+    )
+    yield put(setShowSpinner(false))
+  } catch (e) {
+    yield put(setShowSpinner(false))
+  }
+}
+
 export function* apiDataSagas() {
   yield all([takeLatest(loadLessonsAction, loadAllLessonsSaga)])
   yield all([takeLatest(loginUserAction, loginUserSaga)])
@@ -404,4 +423,5 @@ export function* apiDataSagas() {
   yield all([
     takeLatest(retryStripeSubscriptionAction, retryStripeSubscriptionSaga),
   ])
+  yield all([takeLatest(registerViewAction, registerViewSaga)])
 }

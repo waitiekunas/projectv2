@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import { Image } from '../../components/Image/Image';
-import { getAuthorInfoAction } from '../../state/actions/apiData.actions';
+import { getAuthorInfoAction, registerViewAction } from '../../state/actions/apiData.actions';
 import { selectAuthorInfo } from '../../state/selectors/apiData.selector';
 import { selectLanguage, selectUserId, selectUserInfo } from '../../state/selectors/userData.selector';
 import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
@@ -90,12 +90,13 @@ const TopicDescription = (props: MyProps) => {
     e.preventDefault()
     setClicked(!clicked)
     setSelectedClassId(props.topicInfo.id)
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "lesson_view", {
-        authorId: props.topicInfo.authorId,
-        userId: userId,
+    dispatch(
+      registerViewAction({
+        authorId: props.topicInfo.authorId.toString(),
+        customerId: userId.toString(),
+        date: new Date(),
       })
-    }
+    )
   }
 
   const closeChildScreen = useCallback(() => setClicked(false), [false])

@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 
 import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
-import { AuthorInfo, CreateStripeSubscription } from '../../types/apiData';
+import { AuthorInfo, CreateStripeSubscription, RegisterView } from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
 import { ResetPasswordValues } from './../../containers/ResetPassword/ResetPassword';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
@@ -37,3 +37,5 @@ export const createStripeSubscriptionAction = createAction<
 export const retryStripeSubscriptionAction = createAction<
   RetryCreateStripeSubscription
 >("RETRY_STRIPE_SUBSCRIPTION")
+
+export const registerViewAction = createAction<RegisterView>("REGISTER_VIEW")

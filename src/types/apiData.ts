@@ -23,3 +23,9 @@ export type RetryCreateStripeSubscription = {
   invoiceId: string
   priceId: string
 }
+
+export type RegisterView = {
+  customerId: string
+  authorId: string
+  date: Date
+}
