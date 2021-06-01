@@ -20,7 +20,11 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 120%;
   background-color: rgba(0, 0, 0, 0.5);
-  top: 0%;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `
 const Container = styled.div`
   display: flex;

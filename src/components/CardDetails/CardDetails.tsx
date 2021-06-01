@@ -9,6 +9,10 @@ const ModalWrapper = styled.div`
   position: fixed;
   height: 100vw;
   top: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;

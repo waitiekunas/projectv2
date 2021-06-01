@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
+import { Button } from '../../components/Button/Button';
 import { setShowAuthorLessonsAction } from '../../state/actions/actions';
 import { getAuthorLessonsAction } from '../../state/actions/apiData.actions';
+import { selectAuthorLessonsList } from '../../state/selectors/apiData.selector';
 import { selectUserId } from '../../state/selectors/userData.selector';
 
 const Wrapper = styled.div`
@@ -11,9 +13,13 @@ const Wrapper = styled.div`
   position: fixed;
   z-index: 10;
   width: 100vw;
-  height: 120%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  top: 0%;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `
 const Container = styled.div`
   display: flex;
@@ -22,8 +28,8 @@ const Container = styled.div`
 `
 const StyledDiv = styled.div`
   width: 50%;
-  position: fixed;
   margin-bottom: 1rem;
+  margin-top: 1rem;
   padding-bottom: 2rem;
   padding-top: 1.5rem;
   padding-left: 2rem;
@@ -35,12 +41,16 @@ const StyledDiv = styled.div`
   @media (max-width: 760px) {
     width: 90%;
   }
-  top: 25%;
+`
+const StyledContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
 export const AuthorLessonsList: React.FC = () => {
   const dispatch = useDispatch()
   const userId = useSelector(selectUserId).toString()
+  const lessonList = useSelector(selectAuthorLessonsList)
   useEffect(() => {
     dispatch(getAuthorLessonsAction({ authorId: userId }))
   }, [])
@@ -55,7 +65,18 @@ export const AuthorLessonsList: React.FC = () => {
   return (
     <Wrapper onClick={handleParentClick}>
       <Container>
-        <StyledDiv onClick={handleChildClick}></StyledDiv>
+        <StyledDiv onClick={handleChildClick}>
+          {lessonList.map((lesson, key) => (
+            <StyledContentWrapper key={lesson.lesson_name.concat(lesson.id)}>
+              <div>{lesson.lesson_name}</div>
+              <div>
+                <Button color="primary" variant="contained">
+                  DELETE
+                </Button>
+              </div>
+            </StyledContentWrapper>
+          ))}
+        </StyledDiv>
       </Container>
     </Wrapper>
   )

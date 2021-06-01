@@ -1,10 +1,10 @@
-import React from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
-import { Button } from "../../components/Button/Button"
-import { Languages } from "../../enums/languages/languages"
-import { setResponseMessageAction } from "../../state/actions/actions"
+import { Button } from '../../components/Button/Button';
+import { Languages } from '../../enums/languages/languages';
+import { setResponseMessageAction } from '../../state/actions/actions';
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,7 +14,11 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 120%;
   background-color: rgba(0, 0, 0, 0.5);
-  top: 0%;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `
 const Container = styled.div`
   display: flex;

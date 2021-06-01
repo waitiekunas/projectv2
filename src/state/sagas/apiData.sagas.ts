@@ -32,16 +32,12 @@ import {
   registerViewAction,
   resetPasswordAction,
   retryStripeSubscriptionAction,
+  setAuthorLessons,
   uploadLessonAction,
 } from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
 import { RetryCreateStripeSubscription } from './../../types/apiData';
-import {
-  setResponseMessageAction,
-  setShowAuthorLessonsAction,
-  setShowSpinner,
-  setStripeCustomerIdAction,
-} from './../actions/actions';
+import { setResponseMessageAction, setShowSpinner, setStripeCustomerIdAction } from './../actions/actions';
 import {
   getAuthorInfoAction,
   loadLessonsMaterialAction,
@@ -420,7 +416,7 @@ export function* getAuthorLessonsSaga({
     const { data } = yield call(() =>
       axios.post(process.env.GET_AUTHOR_LESSONS, payload)
     )
-    yield put(setShowAuthorLessonsAction(data))
+    yield put(setAuthorLessons(data))
     yield put(setShowSpinner(false))
   } catch (error) {
     yield put(setShowSpinner(false))
