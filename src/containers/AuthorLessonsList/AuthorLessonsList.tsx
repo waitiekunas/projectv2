@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
 import { setShowAuthorLessonsAction } from '../../state/actions/actions';
-import { getAuthorLessonsAction } from '../../state/actions/apiData.actions';
+import { deleteLessonAction, getAuthorLessonsAction } from '../../state/actions/apiData.actions';
 import { selectAuthorLessonsList } from '../../state/selectors/apiData.selector';
 import { selectUserId } from '../../state/selectors/userData.selector';
 
@@ -70,7 +70,18 @@ export const AuthorLessonsList: React.FC = () => {
             <StyledContentWrapper key={lesson.lesson_name.concat(lesson.id)}>
               <div>{lesson.lesson_name}</div>
               <div>
-                <Button color="primary" variant="contained">
+                <Button
+                  color="primary"
+                  variant="contained"
+                  handleClick={() =>
+                    dispatch(
+                      deleteLessonAction({
+                        authorId: userId,
+                        lessonId: lesson.id,
+                      })
+                    )
+                  }
+                >
                   DELETE
                 </Button>
               </div>

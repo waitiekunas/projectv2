@@ -6,6 +6,7 @@ import {
   AuthorLessonsInfo,
   AuthorLessonsListReq,
   CreateStripeSubscription,
+  DeleteLesson,
   RegisterView,
 } from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
@@ -52,3 +53,4 @@ export const getAuthorLessonsAction = createAction<AuthorLessonsListReq>(
 export const setAuthorLessons = createAction<AuthorLessonsInfo[]>(
   "SETTING_AUTHOR_LESSONS"
 )
+export const deleteLessonAction = createAction<DeleteLesson>("DELETE_LESSON")

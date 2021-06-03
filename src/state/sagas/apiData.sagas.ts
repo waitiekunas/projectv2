@@ -9,6 +9,7 @@ import {
   CancelSubscription,
   CreateStripeCustomerPayload,
   CreateStripeSubscription,
+  DeleteLesson,
   RegisterView,
 } from '../../types/apiData';
 import { LoginData, RegisterBody } from '../../types/userData';
@@ -24,6 +25,7 @@ import {
   cancelSubscriptionAction,
   createStripeCustomerAction,
   createStripeSubscriptionAction,
+  deleteLessonAction,
   editAuthorAction,
   editPasswordAction,
   getAuthorLessonsAction,
@@ -424,6 +426,21 @@ export function* getAuthorLessonsSaga({
   }
 }
 
+export function* deleteLessonSaga({ payload }: PayloadAction<DeleteLesson>) {
+  yield put(setShowSpinner(true))
+
+  try {
+    const { data } = yield call(() =>
+      axios.post(process.env.DELETE_LESSON, payload)
+    )
+    yield put(setShowSpinner(false))
+    yield put(getAuthorLessonsAction(payload))
+  } catch (error) {
+    yield put(setShowSpinner(false))
+    yield put(setResponseMessageAction({ text: "Error", show: true }))
+  }
+}
+
 export function* apiDataSagas() {
   yield all([takeLatest(loadLessonsAction, loadAllLessonsSaga)])
   yield all([takeLatest(loginUserAction, loginUserSaga)])
@@ -443,5 +460,6 @@ export function* apiDataSagas() {
     takeLatest(retryStripeSubscriptionAction, retryStripeSubscriptionSaga),
   ])
   yield all([takeLatest(registerViewAction, registerViewSaga)]),
-    yield all([takeLatest(getAuthorLessonsAction, getAuthorLessonsSaga)])
+    yield all([takeLatest(getAuthorLessonsAction, getAuthorLessonsSaga)]),
+    yield all([takeLatest(deleteLessonAction, deleteLessonSaga)])
 }

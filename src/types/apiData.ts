@@ -38,3 +38,8 @@ export type AuthorLessonsInfo = {
   id: string
   lesson_name: string
 }
+
+export type DeleteLesson = {
+  authorId: string
+  lessonId: string
+}
