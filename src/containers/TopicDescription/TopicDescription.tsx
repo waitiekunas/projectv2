@@ -150,7 +150,6 @@ const TopicDescription = (props: MyProps) => {
           <LessonFlow
             handleClick={closeChildScreen}
             topicId={selectedClassId}
-            language={language}
           />
         ) : null}
       </Wrapper>

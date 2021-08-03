@@ -1,5 +1,6 @@
 import { TextField } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
+import { Link } from 'gatsby';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -334,6 +335,20 @@ export const UserInfo: React.FC<Props> = ({ language }) => {
                 >
                   Manage your lessons
                 </Button>
+              </Container>
+            )}
+            {isAuthor && (
+              <Container>
+                <Link to={`/upload-screen/`}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    label={"upload"}
+                    handleClick={() => {
+                      dispatch(setShowUserInfo(false))
+                    }}
+                  />
+                </Link>
               </Container>
             )}
           </ContentWrapper>
