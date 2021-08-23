@@ -51,10 +51,10 @@ const ContentWrapper = styled.div`
   width: 100%;
 `
 export enum ResetPasswordFields {
-  EMAIL = "email",
+  LOGINNAME = "login",
 }
 export type ResetPasswordValues = {
-  [ResetPasswordFields.EMAIL]: string
+  [ResetPasswordFields.LOGINNAME]: string
 }
 export const ResetPassword: React.FC = () => {
   const dispatch = useDispatch()
@@ -68,9 +68,7 @@ export const ResetPassword: React.FC = () => {
 
   const ResetPasswordScheme = () =>
     Yup.object().shape({
-      [ResetPasswordFields.EMAIL]: Yup.string()
-        .email()
-        .required(),
+      [ResetPasswordFields.LOGINNAME]: Yup.string().required(),
     })
 
   const handleResetPasswordSubmitSubmit = (values: ResetPasswordValues) => {
@@ -84,7 +82,7 @@ export const ResetPassword: React.FC = () => {
           <Formik<ResetPasswordValues>
             enableReinitialize
             initialValues={{
-              email: "",
+              login: "",
             }}
             onSubmit={handleResetPasswordSubmitSubmit}
             validationSchema={ResetPasswordScheme}
@@ -101,10 +99,10 @@ export const ResetPassword: React.FC = () => {
                 <ContentWrapper>
                   <TextField
                     id="standard-basic"
-                    label="Email"
-                    name={ResetPasswordFields.EMAIL}
+                    label="Login name"
+                    name={ResetPasswordFields.LOGINNAME}
                     onChange={handleChange}
-                    value={values.email}
+                    value={values.login}
                   />
                 </ContentWrapper>
                 <ContentWrapper>
