@@ -1,4 +1,3 @@
-import { Link } from 'gatsby';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -129,19 +128,6 @@ const TopicDescription = (props: MyProps) => {
                   variant="contained"
                   color="primary"
                 />
-              </ButtonWrapper>
-            )}
-            {userInfo.isLoggedIn && userInfo.canUpload && (
-              <ButtonWrapper>
-                <Link to={`/upload-screen/`}>
-                  <Button
-                    handleClick={() => null}
-                    label={"upload"}
-                    language={language}
-                    variant="contained"
-                    color="primary"
-                  />
-                </Link>
               </ButtonWrapper>
             )}
           </ButtonsWrapper>

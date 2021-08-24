@@ -144,17 +144,17 @@ const Register = (props: MyProps) => {
           <ButtonWrapper>
             <ButtonBox>
               <Button
-                handleClick={handleSubmit}
-                label={"register"}
+                handleClick={props.handleViewChange}
+                label={"toLogin"}
                 language={props.language}
-                disabled={!isValid || isSubmitting}
                 variant="contained"
                 color="primary"
               />
               <Button
-                handleClick={props.handleViewChange}
-                label={"toLogin"}
+                handleClick={handleSubmit}
+                label={"register"}
                 language={props.language}
+                disabled={!isValid || isSubmitting}
                 variant="contained"
                 color="primary"
               />

@@ -122,19 +122,19 @@ const Login = (props: MyProps) => {
           <ButtonWrapper>
             <ButtonBox>
               <Button
+                handleClick={props.handleViewChange}
+                label={"toRegister"}
+                language={props.language}
+                variant="contained"
+                color="primary"
+              />
+              <Button
                 handleClick={handleSubmit}
                 label={"login"}
                 language={props.language}
                 variant="contained"
                 color="primary"
                 disabled={!isValid || isSubmitting}
-              />
-              <Button
-                handleClick={props.handleViewChange}
-                label={"toRegister"}
-                language={props.language}
-                variant="contained"
-                color="primary"
               />
             </ButtonBox>
           </ButtonWrapper>
