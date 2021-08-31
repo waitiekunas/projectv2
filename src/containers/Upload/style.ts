@@ -50,6 +50,18 @@ export const StyledDiv = styled.div`
     justify-content: start;
   }
 `
+export const StyledDivInfo = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  font-size: 16px;
+  color: red;
+  @media (max-width: 480px) {
+    width: 30%;
+    justify-content: start;
+  }
+`
 export const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -99,4 +111,9 @@ export const StyledButtonBox = styled.div`
 export const StyledCenterRow = styled.div`
   display: flex;
   justify-content: center;
+`
+export const StyledColumnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `

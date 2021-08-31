@@ -20,7 +20,9 @@ import {
   SectionWrapper,
   StyledButtonBox,
   StyledCenterRow,
+  StyledColumnContainer,
   StyledDiv,
+  StyledDivInfo,
   StyledFieldArray,
   StyledFileName,
   Wrapper,
@@ -153,26 +155,41 @@ const UploadContainer = () => {
 
             <SectionWrapper>
               <StyledDiv>
-                {getTranslations(language, "lessonMaterial")}
+                <StyledColumnContainer>
+                  <StyledDiv>
+                    {getTranslations(language, "lessonMaterial")}
+                  </StyledDiv>
+
+                  <StyledDivInfo>
+                    Pamokos eigos tvarka bus ta pati kaip įkėlimo tvarka
+                  </StyledDivInfo>
+                </StyledColumnContainer>
               </StyledDiv>
+
               <StyledFieldArray
                 name={UploadFields.FILE}
                 render={arrayHelpers => (
                   <ArrayInputWrapper>
-                    {values.file?.length > 0 &&
-                      values.file.map((f, i) => (
-                        <AttachedFilesWrapper key={i}>
-                          <StyledFileName>{values.file[i].name}</StyledFileName>
-                          <Button
-                            handleClick={() => arrayHelpers.remove(i)}
-                            label="Remove"
-                            language={language}
-                            variant="contained"
-                            color="primary"
-                            type="button"
-                          />
-                        </AttachedFilesWrapper>
-                      ))}
+                    <div>
+                      {values.file?.length > 0 &&
+                        values.file.map((f, i) => (
+                          <AttachedFilesWrapper key={f.name}>
+                            {console.log(values)}
+                            {console.log(f)}
+                            <StyledFileName>{`${i + 1}. ${
+                              f.name
+                            }`}</StyledFileName>
+                            <Button
+                              handleClick={() => arrayHelpers.remove(i)}
+                              label="Remove"
+                              language={language}
+                              variant="contained"
+                              color="primary"
+                              type="button"
+                            />
+                          </AttachedFilesWrapper>
+                        ))}
+                    </div>
                     <StyledCenterRow>
                       <input
                         onChange={e =>
