@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react"
+import styled from "styled-components"
 
-import NavBar from '../../containers/NavBar/NavBar';
+import NavBar from "../../containers/NavBar/NavBar"
 
 const StyledHeader = styled.header`
   margin-bottom: 1.45rem;

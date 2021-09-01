@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux"
 
-import { ApiDataState, apiReducer } from './api.reducer';
-import { appReducer, AppState } from './app.reducers';
-import { userReducer, UserState } from './user.reducer';
+import { ApiDataState, apiReducer } from "./api.reducer"
+import { appReducer, AppState } from "./app.reducers"
+import { userReducer, UserState } from "./user.reducer"
 
 export interface RootState {
   userInformation: UserState

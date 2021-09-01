@@ -1,5 +1,10 @@
-import { Languages } from '../enums/languages/languages';
-import { ILanguage, ILookups, IUserId, IUserState } from '../interfaces/state/IState';
+import { Languages } from "../enums/languages/languages"
+import {
+  ILanguage,
+  ILookups,
+  IUserId,
+  IUserState,
+} from "../interfaces/state/IState"
 
 export const Language: ILanguage = {
   language: Languages.LITHUANIA,

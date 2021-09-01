@@ -1,12 +1,12 @@
-import { Button as MaterialButton } from '@material-ui/core';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import { Button as MaterialButton } from "@material-ui/core"
+import React from "react"
+import { useSelector } from "react-redux"
+import styled from "styled-components"
 
-import { Languages } from '../../enums/languages/languages';
-import { useStyles } from '../../Functions/Hooks/useStyles';
-import { selectLanguage } from '../../state/selectors/userData.selector';
-import { getTranslations } from '../../utils/utils';
+import { Languages } from "../../enums/languages/languages"
+import { useStyles } from "../../Functions/Hooks/useStyles"
+import { selectLanguage } from "../../state/selectors/userData.selector"
+import { getTranslations } from "../../utils/utils"
 
 const Box = styled.div`
   display: flex;

@@ -8,6 +8,7 @@ import { Button } from '../../components/Button/Button';
 import { uploadLessonAction } from '../../state/actions/apiData.actions';
 import { selectIsAuthorInfoExists, selectLanguage, selectUserId } from '../../state/selectors/userData.selector';
 import { getTranslations } from '../../utils/utils';
+import { AuthorDataIsMissing } from '../AuthorDataIsMissing/AuthorDataIsMissing';
 import { ResponseStatus } from '../ResponseStatus/ResponseStatus';
 import {
   ArrayInputWrapper,
@@ -49,7 +50,6 @@ const UploadContainer = () => {
   const isUserAuthorInfoExists = useSelector(selectIsAuthorInfoExists)
   const [showUploadStatus, setShowUploadStatus] = useState(false)
   const [uploadSuccess, setUploadSuccess] = useState(false)
-
   const hideResponseStatus = useCallback(() => {
     setShowUploadStatus(false)
   }, [showUploadStatus])
@@ -86,6 +86,7 @@ const UploadContainer = () => {
   //TODO: info message that author description is missing and you wont be able to update
   return (
     <Wrapper>
+      {!isUserAuthorInfoExists && <AuthorDataIsMissing />}
       <Formik<UploadFieldValues>
         enableReinitialize
         initialValues={{
@@ -136,6 +137,7 @@ const UploadContainer = () => {
                   value={values.lessonDescription}
                   as="textarea"
                   id="lessonDescription"
+                  maxLength={500}
                 />
               </InputWrapper>
             </CustomSectionWrapper>

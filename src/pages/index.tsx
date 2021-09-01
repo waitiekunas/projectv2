@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-import Layout from '../components/Layout/layout';
-import { MainBanner } from '../components/MainBanner/MainBanner';
-import SEO from '../components/Seo/seo';
-import ClassListFullContent from '../containers/ClassListFullContent/ClassListFullContent';
-import { CookiesCont } from '../containers/CookiesCont/CookiesCont';
-import { selectLanguage } from '../state/selectors/userData.selector';
+import Layout from "../components/Layout/layout"
+import { MainBanner } from "../components/MainBanner/MainBanner"
+import SEO from "../components/Seo/seo"
+import ClassListFullContent from "../containers/ClassListFullContent/ClassListFullContent"
+import { CookiesCont } from "../containers/CookiesCont/CookiesCont"
+import { selectLanguage } from "../state/selectors/userData.selector"
 
 export const IndexPage = () => {
   const language = useSelector(selectLanguage)

@@ -1,4 +1,4 @@
-import { RootState } from './../reducers/allReducers';
+import { RootState } from "./../reducers/allReducers"
 
 export const selectUserId = (state: RootState) => state.userInformation.userId
 export const selectLanguage = (state: RootState) =>

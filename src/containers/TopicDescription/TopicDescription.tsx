@@ -1,14 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import React, { useCallback, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import styled from "styled-components"
 
-import { Button } from '../../components/Button/Button';
-import { Image } from '../../components/Image/Image';
-import { getAuthorInfoAction, registerViewAction } from '../../state/actions/apiData.actions';
-import { selectAuthorInfo } from '../../state/selectors/apiData.selector';
-import { selectLanguage, selectUserId, selectUserInfo } from '../../state/selectors/userData.selector';
-import CreateCustomerForm from '../CreateCustomerForm/CreateCustomerForm';
-import LessonFlow from '../LessonFlow/LessonFlow';
+import { Button } from "../../components/Button/Button"
+import { Image } from "../../components/Image/Image"
+import {
+  getAuthorInfoAction,
+  registerViewAction,
+} from "../../state/actions/apiData.actions"
+import { selectAuthorInfo } from "../../state/selectors/apiData.selector"
+import {
+  selectLanguage,
+  selectUserId,
+  selectUserInfo,
+} from "../../state/selectors/userData.selector"
+import CreateCustomerForm from "../CreateCustomerForm/CreateCustomerForm"
+import LessonFlow from "../LessonFlow/LessonFlow"
 
 const Wrapper = styled.div`
   display: flex;

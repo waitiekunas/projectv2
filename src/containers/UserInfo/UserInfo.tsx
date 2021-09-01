@@ -1,21 +1,31 @@
-import { TextField } from '@material-ui/core';
-import { Field, Form, Formik } from 'formik';
-import { Link } from 'gatsby';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import * as Yup from 'yup';
+import { TextField } from "@material-ui/core"
+import { Field, Form, Formik } from "formik"
+import { Link } from "gatsby"
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import styled from "styled-components"
+import * as Yup from "yup"
 
-import { AuthorInfo } from '../../components/AuthorInfo/AuthorInfo';
-import { Button } from '../../components/Button/Button';
-import { SUPPORTED_IMAGE_FORMATS } from '../../Constants/Constants';
-import { Languages } from '../../enums/languages/languages';
-import { useStyles } from '../../Functions/Hooks/useStyles';
-import { setShowAuthorLessonsAction, setShowCancelSubscriptionAction, setShowUserInfo } from '../../state/actions/actions';
-import { editAuthorAction, editPasswordAction } from '../../state/actions/apiData.actions';
-import { selectUserInfoShow } from '../../state/selectors/appData.selector';
-import { selectUserId, selectUserInfo } from '../../state/selectors/userData.selector';
-import { getTranslations } from '../../utils/utils';
+import { AuthorInfo } from "../../components/AuthorInfo/AuthorInfo"
+import { Button } from "../../components/Button/Button"
+import { SUPPORTED_IMAGE_FORMATS } from "../../Constants/Constants"
+import { Languages } from "../../enums/languages/languages"
+import { useStyles } from "../../Functions/Hooks/useStyles"
+import {
+  setShowAuthorLessonsAction,
+  setShowCancelSubscriptionAction,
+  setShowUserInfo,
+} from "../../state/actions/actions"
+import {
+  editAuthorAction,
+  editPasswordAction,
+} from "../../state/actions/apiData.actions"
+import { selectUserInfoShow } from "../../state/selectors/appData.selector"
+import {
+  selectUserId,
+  selectUserInfo,
+} from "../../state/selectors/userData.selector"
+import { getTranslations } from "../../utils/utils"
 
 type WrapperProps = {
   show: boolean

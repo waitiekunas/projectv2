@@ -1,5 +1,5 @@
-import { Field, FieldArray } from 'formik';
-import styled from 'styled-components';
+import { Field, FieldArray } from "formik"
+import styled from "styled-components"
 
 export const StyledSpan = styled.span`
   padding-left: 0.5rem;

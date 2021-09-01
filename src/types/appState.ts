@@ -1,4 +1,4 @@
-export type ResponseMessageInfo={
-    text:string;
-    show:boolean;
+export type ResponseMessageInfo = {
+  text: string
+  show: boolean
 }

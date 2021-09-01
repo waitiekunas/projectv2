@@ -1,12 +1,12 @@
-import { Link } from 'gatsby';
-import React from 'react';
-import styled from 'styled-components';
+import { Link } from "gatsby"
+import React from "react"
+import styled from "styled-components"
 
-import { Button } from '../../components/Button/Button';
-import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
-import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
-import { Header } from './style';
+import { Button } from "../../components/Button/Button"
+import { DEFAULT_BUTTON_CLASSES } from "../../Constants/Constants"
+import { Languages } from "../../enums/languages/languages"
+import { translations } from "../../resources/translations/translations"
+import { Header } from "./style"
 
 interface MyProps {
   language: Languages
@@ -25,67 +25,67 @@ const StyledUl = styled.ul`
   list-style: decimal;
 `
 const ContentWrapper = styled.div`
-  display:flex;
-  flex-direction:column;
-  justify-content:start;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 `
 const HeaderWrapper = styled.div`
-  display:flex;
-  justify-content:start;
-  padding-top:6px;
-  padding-bottom:6px;
+  display: flex;
+  justify-content: start;
+  padding-top: 6px;
+  padding-bottom: 6px;
 `
 const CenteredBox = styled.div`
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
 `
 const FlexEndBox = styled.div`
-  display:flex;
-  justify-content:flex-end;
+  display: flex;
+  justify-content: flex-end;
 `
 const CenteredBoxLessWidth = styled.div`
-  display:flex;
-  justify-content:center;
-  width:90%;
+  display: flex;
+  justify-content: center;
+  width: 90%;
 `
 const ButtonWrapper = styled.div`
-  width:100%;
-  display:flex;
-  justify-content:center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   flex-direction: row;
-  padding-top:1.5rem;
+  padding-top: 1.5rem;
 `
 const Margin1 = styled.div`
-  margin:1%;
+  margin: 1%;
 `
 const ButtonBox = styled.div`
-  width:35%;
-  display:flex;
-  justify-content:space-between;
-  flex-direction:row;
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 `
 const CookieWrapper = styled.div`
-  position:fixed;
-  background-color: rgba(0,0,0,0.5);
-  width:100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
   height: 100%;
-  top:0%;
-  left:0%;
-  display:flex;
-  justify-content:center;
-  flex-direction:column;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `
 const CookieContent = styled.div`
-  position:relative;
-  background-color:aliceblue;
-  width:50%;
-  height:50%;
-  top:0%;
-  display:flex;
-  justify-content:center;
-  flex-direction:row;
-  align-self:center;
-  overflow:auto;
+  position: relative;
+  background-color: aliceblue;
+  width: 50%;
+  height: 50%;
+  top: 0%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-self: center;
+  overflow: auto;
 `
 export const CookiesCont = (props: MyProps) => {
   const setAgreeCookie = () => {
@@ -221,9 +221,7 @@ export const CookiesCont = (props: MyProps) => {
   }
   return (
     <CookieWrapper>
-      <CookieContent>
-        {cookieCont(props.language)}
-      </CookieContent>
+      <CookieContent>{cookieCont(props.language)}</CookieContent>
     </CookieWrapper>
   )
 }

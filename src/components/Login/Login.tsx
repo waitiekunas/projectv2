@@ -1,12 +1,16 @@
-import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import * as Yup from 'yup';
+import { Formik } from "formik"
+import React, { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import styled from "styled-components"
+import * as Yup from "yup"
 
-import { Languages } from '../../enums/languages/languages';
-import { loginUserAction, setResetPasswordShow, setShowLoginRegisterForm } from '../../state/actions/actions';
-import { Button } from '../Button/Button';
+import { Languages } from "../../enums/languages/languages"
+import {
+  loginUserAction,
+  setResetPasswordShow,
+  setShowLoginRegisterForm,
+} from "../../state/actions/actions"
+import { Button } from "../Button/Button"
 
 const ButtonWrapper = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit"
 
-import { ResponseMessageInfo } from '../../types/appState';
+import { ResponseMessageInfo } from "../../types/appState"
 import {
   setPaymentCardShowAction,
   setResetPasswordShow,
@@ -10,7 +10,7 @@ import {
   setShowLoginRegisterForm,
   setShowSpinner,
   setShowUserInfo,
-} from './../actions/actions';
+} from "./../actions/actions"
 
 export interface AppState {
   showLoginRegister: boolean
@@ -21,6 +21,7 @@ export interface AppState {
   showCancelSubscription: boolean
   showPaymentCard: boolean
   showAuthorLessons: boolean
+  showAuthorDataMissing: boolean
 }
 
 export const initialAppState: AppState = {
@@ -35,6 +36,7 @@ export const initialAppState: AppState = {
   showCancelSubscription: false,
   showPaymentCard: false,
   showAuthorLessons: false,
+  showAuthorDataMissing: false,
 }
 
 export const appReducer = createReducer<AppState>(initialAppState, builder => {

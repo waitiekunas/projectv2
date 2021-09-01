@@ -1,6 +1,6 @@
-import { getClassesFieldFromBack } from '../backEnd/ClassesUtils';
-import { Languages } from '../enums/languages/languages';
-import { translations } from '../resources/translations/translations';
+import { getClassesFieldFromBack } from "../backEnd/ClassesUtils"
+import { Languages } from "../enums/languages/languages"
+import { translations } from "../resources/translations/translations"
 
 export const getTranslations = (language: Languages, label: string) => {
   let translation = translations.find(item => item.label === label)

@@ -4,18 +4,18 @@
  *
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
-import '../../styles/main.scss';
-import './layout.css';
+import "../../styles/main.scss"
+import "./layout.css"
 
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import { graphql, useStaticQuery } from 'gatsby';
-import PropTypes from 'prop-types';
-import React from 'react';
-import styled from 'styled-components';
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
+import { graphql, useStaticQuery } from "gatsby"
+import PropTypes from "prop-types"
+import React from "react"
+import styled from "styled-components"
 
-import Footer from '../../containers/Footer/Footer';
-import Header from '../Header/header';
+import Footer from "../../containers/Footer/Footer"
+import Header from "../Header/header"
 
 const StyledDiv = styled.div`
   margin: 0 auto;

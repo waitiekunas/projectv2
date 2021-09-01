@@ -1,10 +1,10 @@
 /**
  * Use the CSS tab above to style your Element's container.
  */
-import './CardSectionStyles.css';
+import "./CardSectionStyles.css"
 
-import { CardElement } from '@stripe/react-stripe-js';
-import React from 'react';
+import { CardElement } from "@stripe/react-stripe-js"
+import React from "react"
 
 const CARD_ELEMENT_OPTIONS = {
   style: {

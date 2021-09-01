@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react"
+import styled from "styled-components"
 
-import { ActiveView } from '../../containers/LessonFlow/LessonFlow';
-import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
+import { ActiveView } from "../../containers/LessonFlow/LessonFlow"
+import { LessonMaterial } from "../../interfaces/lesson/ILessonMaterial"
 
 type MyProps = {
   active: boolean

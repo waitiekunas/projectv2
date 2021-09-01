@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react"
 
-import Layout from '../components/Layout/layout';
-import SEO from '../components/Seo/seo';
-import TopicsContainer from '../containers/TopicsContainer/TopicsContainer';
+import Layout from "../components/Layout/layout"
+import SEO from "../components/Seo/seo"
+import TopicsContainer from "../containers/TopicsContainer/TopicsContainer"
 
 const TopicsScreen = () => (
   <Layout>

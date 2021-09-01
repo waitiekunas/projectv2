@@ -1,9 +1,13 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit"
 
-import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
-import { AuthorInfo, AuthorLessonsInfo } from '../../types/apiData';
-import { setLessonsAction } from '../actions/actions';
-import { setAuthorInfoAction, setAuthorLessons, setLessonsMaterialAction } from './../actions/apiData.actions';
+import { LessonMaterial } from "../../interfaces/lesson/ILessonMaterial"
+import { AuthorInfo, AuthorLessonsInfo } from "../../types/apiData"
+import { setLessonsAction } from "../actions/actions"
+import {
+  setAuthorInfoAction,
+  setAuthorLessons,
+  setLessonsMaterialAction,
+} from "./../actions/apiData.actions"
 
 export interface ApiDataState {
   lessons: any[]

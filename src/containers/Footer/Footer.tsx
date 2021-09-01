@@ -1,10 +1,10 @@
-import { Link } from 'gatsby';
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { Link } from "gatsby"
+import React, { useState } from "react"
+import styled from "styled-components"
 
-import { Button } from '../../components/Button/Button';
-import { Copyright } from '../../components/Copyright/Copyright';
-import { Contacts } from '../Contacts/Contacts';
+import { Button } from "../../components/Button/Button"
+import { Copyright } from "../../components/Copyright/Copyright"
+import { Contacts } from "../Contacts/Contacts"
 
 const FooterStyle = styled.div`
   margin-top: 5%;

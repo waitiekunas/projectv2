@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
 
-import { DEFAULT_BUTTON_CLASSES } from '../../Constants/Constants';
-import { StyledLabel } from './style';
+import { DEFAULT_BUTTON_CLASSES } from "../../Constants/Constants"
+import { StyledLabel } from "./style"
 
 const Wrapper = styled.div`
-  width:100%;
-  padding-bottom:8px;
-  display:flex;
+  width: 100%;
+  padding-bottom: 8px;
+  display: flex;
   flex-direction: column;
 `
-const Content=styled.div`
-  width:100%;
-  display:flex;
-  padding-bottom:8px;
-  justify-content:center;
-  @media(max-width:480px){
-    justify-content:start;
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  padding-bottom: 8px;
+  justify-content: center;
+  @media (max-width: 480px) {
+    justify-content: start;
   }
 `
-const StyledDiv=styled.div`
-  width:50%;
+const StyledDiv = styled.div`
+  width: 50%;
 `
 
 type MyProps = {

@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import styled from "styled-components"
 
-import { Button } from '../../components/Button/Button';
-import { setShowAuthorLessonsAction } from '../../state/actions/actions';
-import { deleteLessonAction, getAuthorLessonsAction } from '../../state/actions/apiData.actions';
-import { selectAuthorLessonsList } from '../../state/selectors/apiData.selector';
-import { selectUserId } from '../../state/selectors/userData.selector';
+import { Button } from "../../components/Button/Button"
+import { setShowAuthorLessonsAction } from "../../state/actions/actions"
+import {
+  deleteLessonAction,
+  getAuthorLessonsAction,
+} from "../../state/actions/apiData.actions"
+import { selectAuthorLessonsList } from "../../state/selectors/apiData.selector"
+import { selectUserId } from "../../state/selectors/userData.selector"
 
 const Wrapper = styled.div`
   justify-content: center;

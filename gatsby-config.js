@@ -67,7 +67,7 @@ module.exports = {
       resolve: `gatsby-plugin-react-redux`,
       options: {
         // [required] - path to your createStore module
-        pathToCreateStoreModule: './src/state/createStore',
+        pathToCreateStoreModule: "./src/state/createStore",
         // [optional] - options passed to `serialize-javascript`
         // info: https://github.com/yahoo/serialize-javascript#options
         // will be merged with these defaults:
@@ -79,11 +79,9 @@ module.exports = {
         // [optional] - if true will clean up after itself on the client, default:
         cleanupOnClient: true,
         // [optional] - name of key on `window` where serialized state will be stored, default:
-        windowKey: '__PRELOADED_STATE__',
+        windowKey: "__PRELOADED_STATE__",
       },
     },
-  
-
 
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline

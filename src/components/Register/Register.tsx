@@ -1,13 +1,13 @@
-import { Formik } from 'formik';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import * as Yup from 'yup';
+import { Formik } from "formik"
+import React, { useCallback, useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import styled from "styled-components"
+import * as Yup from "yup"
 
-import { Languages } from '../../enums/languages/languages';
-import { registerUserAction } from '../../state/actions/apiData.actions';
-import { setRegisterStatus } from '../../state/actions/userData.actions';
-import { Button } from '../Button/Button';
+import { Languages } from "../../enums/languages/languages"
+import { registerUserAction } from "../../state/actions/apiData.actions"
+import { setRegisterStatus } from "../../state/actions/userData.actions"
+import { Button } from "../Button/Button"
 
 const StyledP = styled.p`
   font-style: italic;

@@ -1,15 +1,15 @@
-import 'slick-carousel/slick/slick-theme.css';
-import 'slick-carousel/slick/slick.css';
+import "slick-carousel/slick/slick-theme.css"
+import "slick-carousel/slick/slick.css"
 
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Slider from 'react-slick';
-import styled from 'styled-components';
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import Slider from "react-slick"
+import styled from "styled-components"
 
-import { ClassTicket } from '../../components/ClassTicket/ClassTicket';
-import { setLookupsAction } from '../../state/actions/actions';
-import { loadLessonsAction } from '../../state/actions/apiData.actions';
-import { selectLessons } from '../../state/selectors/apiData.selector';
+import { ClassTicket } from "../../components/ClassTicket/ClassTicket"
+import { setLookupsAction } from "../../state/actions/actions"
+import { loadLessonsAction } from "../../state/actions/apiData.actions"
+import { selectLessons } from "../../state/selectors/apiData.selector"
 
 const Wrapper = styled.div`
   display: flex;

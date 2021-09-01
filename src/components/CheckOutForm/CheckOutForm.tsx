@@ -1,15 +1,18 @@
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import React from "react"
+import { useDispatch, useSelector } from "react-redux"
+import styled from "styled-components"
 
-import { setPaymentCardShowAction } from '../../state/actions/actions';
-import { createStripeSubscriptionAction, retryStripeSubscriptionAction } from '../../state/actions/apiData.actions';
-import { selectShowPaymentCard } from '../../state/selectors/appData.selector';
-import { selectStripeCustomerId } from '../../state/selectors/userData.selector';
-import { Button } from '../Button/Button';
-import { CardDetails } from '../CardDetails/CardDetails';
-import CardSection from '../CardSection/CardSection';
+import { setPaymentCardShowAction } from "../../state/actions/actions"
+import {
+  createStripeSubscriptionAction,
+  retryStripeSubscriptionAction,
+} from "../../state/actions/apiData.actions"
+import { selectShowPaymentCard } from "../../state/selectors/appData.selector"
+import { selectStripeCustomerId } from "../../state/selectors/userData.selector"
+import { Button } from "../Button/Button"
+import { CardDetails } from "../CardDetails/CardDetails"
+import CardSection from "../CardSection/CardSection"
 
 const StyledDiv = styled.div`
   width: 50%;

@@ -126,7 +126,8 @@ export function* uploadLessonSaga({ payload }: PayloadAction<FormData>) {
     const { data } = yield call(() =>
       axios.post(process.env.UPLOAD_URL, payload)
     )
-    yield put(loadLessonsAction)
+
+    yield put(loadLessonsAction())
     yield put(setResponseMessageAction(data))
     yield put(setShowSpinner(false))
   } catch (e) {

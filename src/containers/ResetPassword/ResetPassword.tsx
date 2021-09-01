@@ -1,13 +1,13 @@
-import { TextField } from '@material-ui/core';
-import { Form, Formik } from 'formik';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import * as Yup from 'yup';
+import { TextField } from "@material-ui/core"
+import { Form, Formik } from "formik"
+import React from "react"
+import { useDispatch } from "react-redux"
+import styled from "styled-components"
+import * as Yup from "yup"
 
-import { Button } from '../../components/Button/Button';
-import { setResetPasswordShow } from '../../state/actions/actions';
-import { resetPasswordAction } from '../../state/actions/apiData.actions';
+import { Button } from "../../components/Button/Button"
+import { setResetPasswordShow } from "../../state/actions/actions"
+import { resetPasswordAction } from "../../state/actions/apiData.actions"
 
 const Wrapper = styled.div`
   justify-content: center;

@@ -1,9 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import ClipLoader from 'react-spinners/ClipLoader';
-import styled from 'styled-components';
+import React from "react"
+import { useSelector } from "react-redux"
+import ClipLoader from "react-spinners/ClipLoader"
+import styled from "styled-components"
 
-import { selectSpinnerState } from '../../state/selectors/appData.selector';
+import { selectSpinnerState } from "../../state/selectors/appData.selector"
 
 const Wrapper = styled.div`
   display: flex;

@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react"
+import styled from "styled-components"
 
-import Layout from '../components/Layout/layout';
-import SEO from '../components/Seo/seo';
+import Layout from "../components/Layout/layout"
+import SEO from "../components/Seo/seo"
 
 const StyledParagraph = styled.p`
   text-align: justify;
@@ -28,15 +28,15 @@ const StyledTd = styled.td`
   border: 1px solid black;
 `
 const Wrapper = styled.div`
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
 `
 
 const Content = styled.div`
-  display:flex;
-  justify-content:center;
-  flex-direction:column;
-  width:60%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
 `
 
 const PrivacyPolicy = ({ location }) => (

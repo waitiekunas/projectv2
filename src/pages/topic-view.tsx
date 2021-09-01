@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react"
 
-import Layout from '../components/Layout/layout';
-import SEO from '../components/Seo/seo';
-import TopicDescription from '../containers/TopicDescription/TopicDescription';
+import Layout from "../components/Layout/layout"
+import SEO from "../components/Seo/seo"
+import TopicDescription from "../containers/TopicDescription/TopicDescription"
 
 const TopicView = ({ location }) => (
   <Layout>

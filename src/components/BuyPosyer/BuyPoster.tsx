@@ -1,8 +1,8 @@
-import { loadStripe } from '@stripe/stripe-js';
-import React from 'react';
-import styled from 'styled-components';
+import { loadStripe } from "@stripe/stripe-js"
+import React from "react"
+import styled from "styled-components"
 
-import { Button } from '../Button/Button';
+import { Button } from "../Button/Button"
 
 const TextBox = styled.div`
   display: flex;

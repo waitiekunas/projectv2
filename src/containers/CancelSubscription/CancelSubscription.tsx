@@ -1,11 +1,11 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import React from "react"
+import { useDispatch, useSelector } from "react-redux"
+import styled from "styled-components"
 
-import { Button } from '../../components/Button/Button';
-import { setShowCancelSubscriptionAction } from '../../state/actions/actions';
-import { cancelSubscriptionAction } from '../../state/actions/apiData.actions';
-import { selectStripeSubscriptionId } from '../../state/selectors/userData.selector';
+import { Button } from "../../components/Button/Button"
+import { setShowCancelSubscriptionAction } from "../../state/actions/actions"
+import { cancelSubscriptionAction } from "../../state/actions/apiData.actions"
+import { selectStripeSubscriptionId } from "../../state/selectors/userData.selector"
 
 const Wrapper = styled.div`
   justify-content: center;

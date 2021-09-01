@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components"
 
 export const StyledLabel = styled.label`
   padding: 0.5rem;

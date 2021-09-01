@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { LoadingSpinner, Player } from 'video-react';
+import React, { useEffect, useState } from "react"
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack"
+import { useDispatch, useSelector } from "react-redux"
+import styled from "styled-components"
+import { LoadingSpinner, Player } from "video-react"
 
-import { Button } from '../../components/Button/Button';
-import { PlaylistItem } from '../../components/PlaylistItem/PlaylistItem';
-import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
-import { loadLessonsMaterialAction } from '../../state/actions/apiData.actions';
-import { selectLessonsMaterial } from '../../state/selectors/apiData.selector';
-import { selectLanguage } from '../../state/selectors/userData.selector';
+import { Button } from "../../components/Button/Button"
+import { PlaylistItem } from "../../components/PlaylistItem/PlaylistItem"
+import { LessonMaterial } from "../../interfaces/lesson/ILessonMaterial"
+import { loadLessonsMaterialAction } from "../../state/actions/apiData.actions"
+import { selectLessonsMaterial } from "../../state/selectors/apiData.selector"
+import { selectLanguage } from "../../state/selectors/userData.selector"
 import {
   Background,
   ButtonBox,
@@ -23,7 +23,7 @@ import {
   StyledPDFContainer,
   ViewContainer,
   Wrapper,
-} from './styles';
+} from "./styles"
 
 export type ActiveView = {
   name: string

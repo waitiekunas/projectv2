@@ -1,6 +1,6 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit"
 
-import { LessonMaterial } from '../../interfaces/lesson/ILessonMaterial';
+import { LessonMaterial } from "../../interfaces/lesson/ILessonMaterial"
 import {
   AuthorInfo,
   AuthorLessonsInfo,
@@ -8,11 +8,15 @@ import {
   CreateStripeSubscription,
   DeleteLesson,
   RegisterView,
-} from '../../types/apiData';
-import { LoginData, RegisterBody } from '../../types/userData';
-import { ResetPasswordValues } from './../../containers/ResetPassword/ResetPassword';
-import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
-import { CancelSubscription, CreateStripeCustomerPayload, RetryCreateStripeSubscription } from './../../types/apiData';
+} from "../../types/apiData"
+import { LoginData, RegisterBody } from "../../types/userData"
+import { ResetPasswordValues } from "./../../containers/ResetPassword/ResetPassword"
+import { EditPasswordFormValues } from "./../../containers/UserInfo/UserInfo"
+import {
+  CancelSubscription,
+  CreateStripeCustomerPayload,
+  RetryCreateStripeSubscription,
+} from "./../../types/apiData"
 
 export const loadLessonsAction = createAction<LoginData>("LOAD_LESSONS")
 export const registerUserAction = createAction<RegisterBody>("REGISTER_USER")

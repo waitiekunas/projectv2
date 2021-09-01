@@ -7,7 +7,7 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 
 import { Button } from '../../components/Button/Button';
-import { ClassTicket } from '../../components/ClassTicket/ClassTicket';
+import { LessonTicket } from '../../components/LessonTicket/LessonTicket';
 import { selectLessons } from '../../state/selectors/apiData.selector';
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ const TopicsBox = styled.div`
   flex-wrap: wrap;
 `
 const TopicWrapper = styled.div`
-  width: 25%;
+  width: 50%;
   margin: 0px;
 `
 
@@ -50,8 +50,8 @@ const ButtonsBox = styled.div`
 const TopicsContainer = () => {
   const lessons = useSelector(selectLessons)
   const [startIndex, setStartIndex] = useState<number>(0)
-  const [endIndex, setEndIndex] = useState<number>(20)
-  const pagesNo = Math.ceil(lessons?.length / 20)
+  const [endIndex, setEndIndex] = useState<number>(4)
+  const pagesNo = Math.ceil(lessons?.length / 4)
   const [buttonArray, setButtonArray] = useState([])
   const [activeButtonIndex, setActiveButtonIndex] = useState<number>(0)
   useEffect(() => {
@@ -71,8 +71,8 @@ const TopicsContainer = () => {
     setButtonArray(arr)
   }, [pagesNo, activeButtonIndex])
   const setIndexes = (index: number) => {
-    setStartIndex(index * 20)
-    setEndIndex(index * 20 + 20)
+    setStartIndex(index * 4)
+    setEndIndex(index * 4 + 4)
     setActiveButtonIndex(index)
   }
   const settings = {
@@ -94,7 +94,7 @@ const TopicsContainer = () => {
             if (!value) return
             return (
               <TopicWrapper key={index} className={"TopicWrapper"}>
-                <ClassTicket
+                <LessonTicket
                   key={index}
                   text={value.lesson_name}
                   id={value.id}

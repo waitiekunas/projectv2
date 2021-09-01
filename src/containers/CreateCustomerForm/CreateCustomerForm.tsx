@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-import BuyPoster from '../../components/BuyPosyer/BuyPoster';
-import CheckoutForm from '../../components/CheckOutForm/CheckOutForm';
-import { createStripeCustomerAction } from '../../state/actions/apiData.actions';
-import { selectShowPaymentCard } from '../../state/selectors/appData.selector';
-import { selectCustomerEmail, selectLoginStatus } from '../../state/selectors/userData.selector';
+import BuyPoster from "../../components/BuyPosyer/BuyPoster"
+import CheckoutForm from "../../components/CheckOutForm/CheckOutForm"
+import { createStripeCustomerAction } from "../../state/actions/apiData.actions"
+import { selectShowPaymentCard } from "../../state/selectors/appData.selector"
+import {
+  selectCustomerEmail,
+  selectLoginStatus,
+} from "../../state/selectors/userData.selector"
 
 function CreateCustomerForm() {
   const dispatch = useDispatch()

@@ -1,5 +1,5 @@
-import { classes } from '../mockData/classDescriptions/classes';
-import { classMaterial } from '../mockData/classDescriptions/classMaterial';
+import { classes } from "../mockData/classDescriptions/classes"
+import { classMaterial } from "../mockData/classDescriptions/classMaterial"
 
 export const getClassesFieldFromBack = (field: string): Array<string> => {
   let allValues = Array.from(classes, value => {

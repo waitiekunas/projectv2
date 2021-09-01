@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import React, { useState } from "react"
+import { useSelector } from "react-redux"
+import styled from "styled-components"
 
-import Login from '../../components/Login/Login';
-import Register from '../../components/Register/Register';
-import { Languages } from '../../enums/languages/languages';
-import { translations } from '../../resources/translations/translations';
-import { selectLanguage } from '../../state/selectors/userData.selector';
+import Login from "../../components/Login/Login"
+import Register from "../../components/Register/Register"
+import { Languages } from "../../enums/languages/languages"
+import { translations } from "../../resources/translations/translations"
+import { selectLanguage } from "../../state/selectors/userData.selector"
 
 type WrapperProps = {
   show: boolean

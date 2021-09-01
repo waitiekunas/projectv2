@@ -3,5 +3,4 @@
  *
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
-import './src/styles/main.scss'
-
+import "./src/styles/main.scss"
