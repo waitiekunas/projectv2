@@ -1,5 +1,5 @@
-import { Field, FieldArray } from "formik"
-import styled from "styled-components"
+import { Field, FieldArray } from 'formik';
+import styled from 'styled-components';
 
 export const StyledSpan = styled.span`
   padding-left: 0.5rem;
@@ -64,7 +64,7 @@ export const StyledDivInfo = styled.div`
 `
 export const InputWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
   width: 100%;
   align-self: center;
   @media (max-width: 480px) {
@@ -116,4 +116,16 @@ export const StyledColumnContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+`
+export const StyledFileInput = styled.input`
+  color: rgba(0, 0, 0, 0);
+`
+export const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 64px;
+`
+export const StyledImg = styled.img`
+  max-height: 100px;
+  margin: 0;
 `
