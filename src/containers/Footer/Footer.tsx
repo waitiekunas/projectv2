@@ -1,10 +1,10 @@
-import { Link } from "gatsby"
-import React, { useState } from "react"
-import styled from "styled-components"
+import { Link } from 'gatsby';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-import { Button } from "../../components/Button/Button"
-import { Copyright } from "../../components/Copyright/Copyright"
-import { Contacts } from "../Contacts/Contacts"
+import { Button } from '../../components/Button/Button';
+import { Copyright } from '../../components/Copyright/Copyright';
+import { Contacts } from '../Contacts/Contacts';
 
 const FooterStyle = styled.div`
   margin-top: 5%;
@@ -21,7 +21,12 @@ const StyledDiv = styled.div`
 const ButtonWrapper = styled.div`
   align-items: center;
 `
-
+const StyledBox = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 30%;
+  align-items: center;
+`
 const Footer = () => {
   const [showExtended, setShowExtended] = useState<boolean>(false)
   return (
@@ -30,16 +35,22 @@ const Footer = () => {
         <Contacts handleClick={() => setShowExtended(false)} />
       ) : (
         <StyledDiv>
-          <Copyright />
-          <ButtonWrapper>
-            <Button
-              variant="text"
-              color="primary"
-              handleClick={() => setShowExtended(true)}
-              label="contacts"
-            />
-          </ButtonWrapper>
-          <Link to="/privacy-policy">Privatumo politika</Link>
+          <StyledBox>
+            <Copyright />
+          </StyledBox>
+          <StyledBox>
+            <ButtonWrapper>
+              <Button
+                variant="text"
+                color="primary"
+                handleClick={() => setShowExtended(true)}
+                label="contacts"
+              />
+            </ButtonWrapper>
+          </StyledBox>
+          <StyledBox>
+            <Link to="/privacy-policy">Privatumo politika</Link>
+          </StyledBox>
         </StyledDiv>
       )}
     </FooterStyle>
