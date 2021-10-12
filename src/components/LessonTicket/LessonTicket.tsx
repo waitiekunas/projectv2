@@ -12,6 +12,9 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: center;
 `
+const StyledP = styled.p`
+  overflow-wrap: anywhere;
+`
 
 type Props = {
   text: string
@@ -32,10 +35,10 @@ export const LessonTicket: React.FC<Props> = props => {
         <ImageWrapper>
           <Image imageUri={props.imageUri} showText={false} />
           <HeaderWrapper>
-            <p>{props.text}</p>
+            <StyledP>{props.text}</StyledP>
           </HeaderWrapper>
           <HeaderWrapper>
-            <p>{props.description}</p>
+            <StyledP>{props.description}</StyledP>
           </HeaderWrapper>
         </ImageWrapper>
       </Link>
