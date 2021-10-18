@@ -24,11 +24,9 @@ export const Wrapper = styled.div`
 `
 
 export const Content = styled.div`
+  height: 100%;
   width: 90%;
   padding: 5%;
-  @media (max-width: 480px) {
-    width: 60%;
-  }
 `
 export const SectionWrapper = styled.div`
   width: 100%;
@@ -46,7 +44,7 @@ export const StyledDiv = styled.div`
   justify-content: center;
   align-self: center;
   @media (max-width: 480px) {
-    width: 30%;
+    width: 100%;
     justify-content: start;
   }
 `
@@ -58,7 +56,7 @@ export const StyledDivInfo = styled.div`
   font-size: 16px;
   color: red;
   @media (max-width: 480px) {
-    width: 30%;
+    width: 100%;
     justify-content: start;
   }
 `
