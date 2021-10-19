@@ -39,7 +39,12 @@ import {
 } from '../actions/apiData.actions';
 import { EditPasswordFormValues } from './../../containers/UserInfo/UserInfo';
 import { RetryCreateStripeSubscription } from './../../types/apiData';
-import { setResponseMessageAction, setShowSpinner, setStripeCustomerIdAction } from './../actions/actions';
+import {
+  setResponseMessageAction,
+  setShowSpinner,
+  setStripeCustomerIdAction,
+  setSubscriptionStatus,
+} from './../actions/actions';
 import {
   getAuthorInfoAction,
   loadLessonsMaterialAction,
@@ -261,6 +266,8 @@ export function* createStripeSubscriptionSaga({
       )
     }
     if (data.status === "active") {
+      yield put(setPaymentCardShowAction(false))
+      yield put(setSubscriptionStatus(true))
       yield put(setShowSpinner(false))
       yield put(setResponseMessageAction({ text: "Subscribed", show: true }))
     }

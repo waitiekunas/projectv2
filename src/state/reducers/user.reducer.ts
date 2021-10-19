@@ -1,6 +1,6 @@
-import { createReducer } from "@reduxjs/toolkit"
+import { createReducer } from '@reduxjs/toolkit';
 
-import { IUserState } from "../../interfaces/state/IState"
+import { IUserState } from '../../interfaces/state/IState';
 import {
   changeLoginStatusAction,
   loginAction,
@@ -8,13 +8,11 @@ import {
   setLookupsAction,
   setStripeCustomerIdAction,
   setUserIdAction,
-} from "../actions/actions"
-import { Languages } from "./../../enums/languages/languages"
-import {
-  setRegisterStatus,
-  setUpdatedUserAuthorInfo,
-} from "./../actions/userData.actions"
-import { lookups } from "./../initialState"
+} from '../actions/actions';
+import { Languages } from './../../enums/languages/languages';
+import { setSubscriptionStatus } from './../actions/actions';
+import { setRegisterStatus, setUpdatedUserAuthorInfo } from './../actions/userData.actions';
+import { lookups } from './../initialState';
 
 export interface UserState {
   userInfo: IUserState
@@ -87,6 +85,13 @@ export const userReducer = createReducer<UserState>(
           ...state.userInfo,
           authorImageUrl: payload.photo_url,
           authorDescription: payload.description,
+        },
+      }))
+      .addCase(setSubscriptionStatus, (state, { payload }) => ({
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          subscribed: payload,
         },
       }))
   }
