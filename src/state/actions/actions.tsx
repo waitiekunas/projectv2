@@ -37,3 +37,6 @@ export const setPaymentCardShowAction = createAction<boolean>(
 export const setShowAuthorLessonsAction = createAction<boolean>(
   "SET_SHOW_AUTHOR_LESSONS"
 )
+export const setSubscriptionStatus = createAction<boolean>(
+  "SET_SUBSCRIPTION_STATUS"
+)

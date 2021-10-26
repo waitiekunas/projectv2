@@ -31,6 +31,15 @@ const ButtonContainer = styled.div`
   .slick-next:before {
     color: #3f51b5 !important;
   }
+  @media (max-width: 770px) {
+    .slick-slide,
+    .slick-track {
+      width: 100% !important;
+    }
+    .slick-track {
+      display: flex;
+    }
+  }
 `
 
 const TopicsWrapper = styled.div`
@@ -39,13 +48,16 @@ const TopicsWrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  width: min-content;
+  width: 100%;
 `
 
 const ButtonsBox = styled.div`
   padding: 5%;
   display: flex;
   justify-content: center;
+`
+const StyledButton = styled(Button)`
+  width: 100%;
 `
 const TopicsContainer = () => {
   const lessons = useSelector(selectLessons)
@@ -59,7 +71,7 @@ const TopicsContainer = () => {
     for (let i = 0; i < pagesNo; i++) {
       arr.push(
         <ButtonWrapper>
-          <Button
+          <StyledButton
             label={`${i + 1}`}
             variant={activeButtonIndex === i ? "contained" : "outlined"}
             color="primary"
