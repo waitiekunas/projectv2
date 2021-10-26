@@ -1,10 +1,10 @@
-import React from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
-import { Button } from "../../components/Button/Button"
-import { Languages } from "../../enums/languages/languages"
-import { setResponseMessageAction } from "../../state/actions/actions"
+import { Button } from '../../components/Button/Button';
+import { Languages } from '../../enums/languages/languages';
+import { setResponseMessageAction } from '../../state/actions/actions';
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,7 +67,9 @@ const ButtonWrapper = styled.div`
 `
 
 const ButtonBox = styled.div`
-  width: 25%;
+  @media (min-width: 480px) {
+    width: 25%;
+  }
 `
 
 interface MyProps {

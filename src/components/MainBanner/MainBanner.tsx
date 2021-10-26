@@ -1,11 +1,11 @@
-import { Link } from "gatsby"
-import React from "react"
-import { useDispatch, useSelector } from "react-redux"
-import styled from "styled-components"
+import { Link } from 'gatsby';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import { setShowLoginRegisterForm } from "../../state/actions/actions"
-import { selectLoginStatus } from "../../state/selectors/userData.selector"
-import { Button } from "../Button/Button"
+import { setShowLoginRegisterForm } from '../../state/actions/actions';
+import { selectLoginStatus } from '../../state/selectors/userData.selector';
+import { Button } from '../Button/Button';
 
 const Wrapper = styled.div`
   position: relative;
@@ -25,6 +25,9 @@ const Content = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   opacity: 0.5;
+  @media (max-width: 480px) {
+    left: 0%;
+  }
 `
 const StyledHeader = styled.h4`
   padding-top: 1rem;

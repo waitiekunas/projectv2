@@ -1,10 +1,11 @@
-import { TextField } from '@material-ui/core';
+import { Button as MaterialButton, TextField } from '@material-ui/core';
 import { Formik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 import { Button } from '../../components/Button/Button';
+import { useStyles } from '../../Functions/Hooks/useStyles';
 import { uploadLessonAction } from '../../state/actions/apiData.actions';
 import { selectIsAuthorInfoExists, selectLanguage, selectUserId } from '../../state/selectors/userData.selector';
 import { getTranslations } from '../../utils/utils';
@@ -14,18 +15,20 @@ import {
   ArrayInputWrapper,
   AttachedFilesWrapper,
   BorderedField,
+  Box,
   ButtonWrapper,
   Content,
   CustomSectionWrapper,
   InputWrapper,
   SectionWrapper,
   StyledButtonBox,
-  StyledCenterRow,
   StyledColumnContainer,
   StyledDiv,
   StyledDivInfo,
   StyledFieldArray,
+  StyledFileInput,
   StyledFileName,
+  StyledImg,
   Wrapper,
 } from './style';
 
@@ -53,7 +56,7 @@ const UploadContainer = () => {
   const hideResponseStatus = useCallback(() => {
     setShowUploadStatus(false)
   }, [showUploadStatus])
-
+  const classes = useStyles()
   const UploadLessonScheme = () =>
     Yup.object().shape({
       [UploadFields.LESSON_NAME]: Yup.string().required(
@@ -123,6 +126,9 @@ const UploadContainer = () => {
                   onChange={handleChange}
                   name={UploadFields.LESSON_NAME}
                   value={values.lessonName}
+                  style={{
+                    width: "100%",
+                  }}
                 />
               </InputWrapper>
             </SectionWrapper>
@@ -137,22 +143,43 @@ const UploadContainer = () => {
                   value={values.lessonDescription}
                   as="textarea"
                   id="lessonDescription"
-                  maxLength={500}
+                  maxLength={255}
+                  style={{
+                    width: "100%",
+                    height: "150px",
+                  }}
                 />
               </InputWrapper>
             </CustomSectionWrapper>
             <SectionWrapper>
               <StyledDiv>{getTranslations(language, "lessonCover")}</StyledDiv>
-              <InputWrapper>
-                <input
-                  onChange={e => {
-                    setFieldValue(UploadFields.IMAGE, e.target.files[0])
-                  }}
-                  name={UploadFields.IMAGE}
-                  type="file"
-                  id="image"
-                />
-              </InputWrapper>
+              <SectionWrapper>
+                <InputWrapper>
+                  <Box className={classes.root}>
+                    <MaterialButton
+                      variant="contained"
+                      color="primary"
+                      component="label"
+                    >
+                      Įkelti
+                      <StyledFileInput
+                        onChange={e => {
+                          setFieldValue(UploadFields.IMAGE, e.target.files[0])
+                        }}
+                        name={UploadFields.IMAGE}
+                        type="file"
+                        id="image"
+                        hidden
+                      />
+                    </MaterialButton>
+                  </Box>
+                </InputWrapper>
+                <StyledColumnContainer>
+                  <StyledImg
+                    src={values.image && URL.createObjectURL(values.image)}
+                  />
+                </StyledColumnContainer>
+              </SectionWrapper>
             </SectionWrapper>
 
             <SectionWrapper>
@@ -192,17 +219,28 @@ const UploadContainer = () => {
                           </AttachedFilesWrapper>
                         ))}
                     </div>
-                    <StyledCenterRow>
-                      <input
-                        onChange={e =>
-                          setFieldValue(
-                            `file.${values.file.length}`,
-                            e.target.files[0]
-                          )
-                        }
-                        type="file"
-                      />
-                    </StyledCenterRow>
+                    <InputWrapper>
+                      <Box className={classes.root}>
+                        <MaterialButton
+                          variant="contained"
+                          color="primary"
+                          component="label"
+                        >
+                          Įkelti
+                          <StyledFileInput
+                            onChange={e =>
+                              setFieldValue(
+                                `file.${values.file.length}`,
+                                e.target.files[0]
+                              )
+                            }
+                            type="file"
+                            id="lessonFiles"
+                            hidden
+                          />
+                        </MaterialButton>
+                      </Box>
+                    </InputWrapper>
                   </ArrayInputWrapper>
                 )}
               />

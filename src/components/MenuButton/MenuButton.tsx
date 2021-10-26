@@ -1,19 +1,15 @@
-import Button from "@material-ui/core/Button"
-import Menu from "@material-ui/core/Menu"
-import MenuItem from "@material-ui/core/MenuItem"
-import React from "react"
-import { useDispatch, useSelector } from "react-redux"
-import styled from "styled-components"
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import { Languages } from "../../enums/languages/languages"
-import { useStyles } from "../../Functions/Hooks/useStyles"
-import {
-  loginAction,
-  setShowLoginRegisterForm,
-  setShowUserInfo,
-} from "../../state/actions/actions"
-import { selectLoginStatus } from "../../state/selectors/userData.selector"
-import { getTranslations } from "../../utils/utils"
+import { Languages } from '../../enums/languages/languages';
+import { useStyles } from '../../Functions/Hooks/useStyles';
+import { loginAction, setShowLoginRegisterForm, setShowUserInfo } from '../../state/actions/actions';
+import { selectLoginStatus } from '../../state/selectors/userData.selector';
+import { getTranslations } from '../../utils/utils';
+import { Button } from '../Button/Button';
 
 type MyProps = {
   language?: Languages
@@ -21,7 +17,6 @@ type MyProps = {
 const Box = styled.div`
   display: flex;
   justify-content: center;
-  height: 64px;
 `
 export const MenuButton: React.FC<MyProps> = ({ language }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -41,6 +36,7 @@ export const MenuButton: React.FC<MyProps> = ({ language }) => {
         email: "",
         stripeCustomerId: "",
         subscriptionId: "",
+        loginName: "",
       })
     )
   }
@@ -59,7 +55,7 @@ export const MenuButton: React.FC<MyProps> = ({ language }) => {
       <Button
         aria-controls="simple-menu"
         aria-haspopup="true"
-        onClick={handleClick}
+        handleClick={handleClick}
         variant="contained"
         color="primary"
       >

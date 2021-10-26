@@ -1,5 +1,5 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react';
+import styled from 'styled-components';
 
 type Props = {
   onCloseClick: (...args: any[]) => void
@@ -7,7 +7,7 @@ type Props = {
 const ModalWrapper = styled.div`
   width: 100vw;
   position: fixed;
-  height: 100vw;
+  height: 100%;
   top: 0;
   bottom: 0;
   position: fixed;

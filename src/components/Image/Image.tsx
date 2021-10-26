@@ -1,5 +1,5 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   position: relative;
@@ -23,6 +23,12 @@ const Content = styled.div`
 const StyledHeader = styled.h4`
   padding-top: 1rem;
 `
+const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 150px;
+  width: 150px;
+`
 
 type Props = {
   imageUri?: string
@@ -39,7 +45,9 @@ export const Image: React.FC<Props> = ({
 }) => {
   return (
     <Wrapper>
-      <img src={imageUri} alt={"description"} />
+      <ImageWrapper>
+        <img src={imageUri} alt={"description"} />
+      </ImageWrapper>
       {showText && (
         <Content>
           <StyledHeader>{imgHeader}</StyledHeader>
